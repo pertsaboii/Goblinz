@@ -12,7 +12,7 @@ public class testmove : MonoBehaviour
     private State state;
     private Rigidbody rb;
     [SerializeField] private float moveSpeed;
-    [SerializeField] private float targetScanningRadius;
+    [SerializeField] private float targetScanningRange;
     public GameObject target = null;
 
     private float timeBtwWalks;
@@ -81,7 +81,7 @@ public class testmove : MonoBehaviour
 
     void ScanArea()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, targetScanningRadius, layerMask);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, targetScanningRange * 2, layerMask);
         if (colliders != null)
         {
             foreach (Collider col in colliders)

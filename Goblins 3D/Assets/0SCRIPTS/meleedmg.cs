@@ -5,14 +5,14 @@ using UnityEngine;
 public class meleedmg : MonoBehaviour
 {
     [SerializeField] private float dmgAmount;
-    private testmove targetFindingScript;
+    private NMtestgobbo targetFindingScript;
     private health enemyHealth;
     private bool targetFound;
     [HideInInspector] public bool dealDmg;
     private bool dmgDealed;
     void Start()
     {
-        targetFindingScript = GetComponent<testmove>();
+        targetFindingScript = GetComponent<NMtestgobbo>();
     }
 
     void Update()

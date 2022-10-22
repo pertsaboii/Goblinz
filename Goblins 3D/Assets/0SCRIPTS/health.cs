@@ -20,13 +20,13 @@ public class health : MonoBehaviour
     {
         if (currentHealth <= maxHealth) hpBar.SetActive(true);
         currentHealth += healthChange;
-        if (currentHealth > maxHealth)
+        hpSprite.fillAmount = currentHealth / maxHealth;
+        if (currentHealth <= 0) Death();
+        if (currentHealth >= maxHealth)
         {
             currentHealth = maxHealth;
             hpBar.SetActive(false);
         }
-        hpSprite.fillAmount = currentHealth / maxHealth;
-        if (currentHealth <= 0) Death();
     }
     private void Update()
     {
@@ -35,5 +35,6 @@ public class health : MonoBehaviour
     void Death()
     {
         Destroy(gameObject);
+        if (gameObject.CompareTag("Building") == true) gamemanager.buildings.Remove(gameObject);
     }
 }
