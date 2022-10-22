@@ -22,10 +22,12 @@ public class NEWmeleedmg : MonoBehaviour
             targetDead = false;
             attackStateOn = true;
             targetHealth = target.GetComponent<health>();
-            anim.SetFloat("AttackSpeed", attackSpeed);   
+            anim.SetFloat("AttackSpeed", attackSpeed);
 
             while (target != null)
             {
+                anim.SetInteger("State", 3);
+                anim.SetInteger("State", 2);
 
                 yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length * 0.5f);
 
@@ -38,7 +40,7 @@ public class NEWmeleedmg : MonoBehaviour
                     yield break;
                 }
 
-                yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length * 0.5f); 
+                yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length * 0.5f);    
             }
             if (target == null)
             {
