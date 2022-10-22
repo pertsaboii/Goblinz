@@ -33,6 +33,7 @@ public class NMtestgobbo : MonoBehaviour
     [SerializeField] private LayerMask layerMask;
 
     private NEWmeleedmg attackScript;
+    private float attackDistance;
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -54,6 +55,7 @@ public class NMtestgobbo : MonoBehaviour
         {
             default:
             case State.Roaming:
+                if (Vector3.Distance(randomPos, transform.position) < 0.1f && navMeshAgent.enabled == true) navMeshAgent.ResetPath();
                 if (timeBtwWalks <= 0)
                 {
                     StartCoroutine("RandomMovement");
@@ -64,16 +66,18 @@ public class NMtestgobbo : MonoBehaviour
                 ScanArea();
                 break;
             case State.ChaseTarget:
+                anim.SetInteger("State", 1);
                 if (target != null) agent.SetDestination(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
                 ApproachTarget();
                 if (target == null) ReturnToRoam();
                 break;
             case State.Attack:
+                if (target != null && Vector3.Distance(target.transform.position, transform.position) > attackDistance + 0.2f) StartChaseState();
                 if (navMeshAgent.enabled == true) navMeshAgent.ResetPath();
                 anim.SetInteger("State", 2);
                 if (target == null && attackScript.targetDead == true)
                 {
-                    Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange * 2, layerMask);
+                    Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, layerMask);
                     if (colliders != null)
                     {
                         foreach (Collider col in colliders)
@@ -101,7 +105,7 @@ public class NMtestgobbo : MonoBehaviour
     }
     void ScanArea()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, targetScanningRange * 2, layerMask);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, targetScanningRange, layerMask);
         if (colliders != null)
         {
             foreach (Collider col in colliders)
@@ -111,27 +115,37 @@ public class NMtestgobbo : MonoBehaviour
                     target = col.gameObject;
                     attackScript.target = target;
                     state = State.ChaseTarget;
-                    anim.SetInteger("State", 1);
                 }
             }
         }
     }
     void ApproachTarget()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange * 2, layerMask);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, layerMask);
         if (colliders != null)
         {
             foreach (Collider col in colliders)
             {
-                if (col.gameObject == target) state = State.Attack;
+                if (col.gameObject == target) StartAttackState();
                 else
                 {
                     target = col.gameObject;
                     attackScript.target = target;
-                    state = State.Attack;
+                    StartAttackState();
                 }
             }
         }
+    }
+    void StartAttackState()
+    {
+        attackDistance = Vector3.Distance(target.transform.position, transform.position);
+        state = State.Attack;
+        attackScript.targetInRange = true;
+    }
+    void StartChaseState()
+    {
+        attackScript.targetInRange = false;
+        state = State.ChaseTarget;
     }
     IEnumerator RandomMovement()
     {

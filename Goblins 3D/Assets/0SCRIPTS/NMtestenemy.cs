@@ -35,6 +35,7 @@ public class NMtestenemy : MonoBehaviour
     [SerializeField] private LayerMask layerMask;
 
     private NEWmeleedmg attackScript;
+    private float attackDistance;
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -44,7 +45,9 @@ public class NMtestenemy : MonoBehaviour
         navMeshAgent.speed = moveSpeed;
         agent = GetComponent<ObstacleAgent>();
         attackScript = GetComponent<NEWmeleedmg>();
-        StartWalkToMiddle();
+        if (Vector3.Distance(new Vector3(0, transform.position.y, 0), transform.position) > 8) StartWalkToMiddle();
+        else ReturnToRoam();
+
     }
     
     void Update()
@@ -53,6 +56,7 @@ public class NMtestenemy : MonoBehaviour
         {
             default:
             case State.Roaming:
+                if (Vector3.Distance(randomPos, transform.position) < 0.1f && navMeshAgent.enabled == true) navMeshAgent.ResetPath();
                 if (controlAreaFound && Vector3.Distance(controlAreaPos, transform.position) > wanderingRange) agent.SetDestination(controlAreaPos);
                 else
                 {
@@ -71,11 +75,12 @@ public class NMtestenemy : MonoBehaviour
                 if (target == null) ReturnToRoam();
                 break;
             case State.Attack:
+                if (target != null && Vector3.Distance(target.transform.position, transform.position) > attackDistance + 0.2f) StartChaseState();
                 if (navMeshAgent.enabled == true) navMeshAgent.ResetPath();
                 anim.SetInteger("State", 2);
                 if (target == null && attackScript.targetDead == true)
                 {
-                    Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange * 2, layerMask);
+                    Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, layerMask);
                     if (colliders != null)
                     {
                         foreach (Collider col in colliders)
@@ -124,7 +129,7 @@ public class NMtestenemy : MonoBehaviour
     }
     void ScanArea()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, targetScanningRange * 2, layerMask);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, targetScanningRange, layerMask);
         if (colliders != null)
         {
             foreach (Collider col in colliders)
@@ -141,23 +146,32 @@ public class NMtestenemy : MonoBehaviour
     }
     void ApproachTarget()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange * 2, layerMask);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, layerMask);
         if (colliders != null)
         {
             foreach (Collider col in colliders)
             {
-                if (col.gameObject == target)
-                {
-                    state = State.Attack;
-                }
+                if (col.gameObject == target) StartAttackState();
                 else
                 {
                     target = col.gameObject;
                     attackScript.target = target;
-                    state = State.Attack;
+                    StartAttackState();
                 }
             }
         }
+    }
+    void StartAttackState()
+    {
+        attackDistance = Vector3.Distance(target.transform.position, transform.position);
+        Debug.Log(attackDistance);
+        state = State.Attack;
+        attackScript.targetInRange = true;
+    }
+    void StartChaseState()
+    {
+        attackScript.targetInRange = false;
+        state = State.ChaseTarget;
     }
     IEnumerator RandomMovement()
     {
