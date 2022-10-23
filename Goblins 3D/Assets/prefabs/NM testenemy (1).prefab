@@ -752,7 +752,7 @@ Rigidbody:
   m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
@@ -785,6 +785,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   targetScanningRange: 10
+  timeBeforeScanningRadiusIncreases: 3
   target: {fileID: 0}
   walkCycleTime: 2
   idleTime: 0.5
@@ -793,6 +794,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 384
+  currentState: 
 --- !u!114 &7786545745980416250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -840,11 +842,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0eee518d25cc9d4baf07b05ff5e6fe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackStateOn: 0
-  targetDead: 0
+  attackStateInitiated: 0
+  currentTargetDead: 0
   targetInRange: 0
   attackSpeed: 1
-  attackDamage: 2
+  attackDamage: 1
   target: {fileID: 0}
 --- !u!114 &7786545745980416247
 MonoBehaviour:
@@ -859,8 +861,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 15
+  currentHealth: 0
   hpSprite: {fileID: 7786545745160133809}
   hpBar: {fileID: 7786545746377394792}
+  unitThatSpawns: {fileID: 0}
+  spawnsUnit: 0
+  isBuilding: 0
 --- !u!195 &7786545745980416246
 NavMeshAgent:
   m_ObjectHideFlags: 0

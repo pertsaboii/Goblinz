@@ -7,11 +7,13 @@ public class gamemanager : MonoBehaviour
     public static Camera camera;
 
     public static List<GameObject> buildings;
+    public List<GameObject> talot;
 
     private void Awake()
     {
         camera = Camera.main;
 
         buildings = new List<GameObject>();
+        talot = buildings;
     }
 }

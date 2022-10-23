@@ -13,6 +13,7 @@ public class health : MonoBehaviour
 
     [SerializeField] private GameObject unitThatSpawns;
     [SerializeField] private bool spawnsUnit;
+    [SerializeField] private bool isBuilding;
     void Start()
     {
         currentHealth = maxHealth;
@@ -39,6 +40,7 @@ public class health : MonoBehaviour
     {
         if (gameObject.CompareTag("Building") == true) gamemanager.buildings.Remove(gameObject);
         if (spawnsUnit == true) Instantiate(unitThatSpawns, transform.position, Quaternion.identity);
+        if (isBuilding == true) gamemanager.buildings.Remove(this.gameObject);
         Destroy(gameObject);
     }
 }

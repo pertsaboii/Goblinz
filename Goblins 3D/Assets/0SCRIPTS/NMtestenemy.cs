@@ -10,7 +10,6 @@ public class NMtestenemy : MonoBehaviour
     {
         Roaming, ChaseTarget, Attack, WalkToMiddle
     }
-
     private State state;
 
     private ObstacleAgent agent;
@@ -40,17 +39,22 @@ public class NMtestenemy : MonoBehaviour
 
     private NEWmeleedmg attackScript;
     private float attackDistance;
+
+    [SerializeField] private string currentState;
+
+    private Rigidbody rb;
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
-        anim.SetFloat("WalkSpeed", moveSpeed / 2);        //--- jos run anim on liian hidas/nopea niin t‰t‰ voi s‰‰t‰‰
+        anim.SetFloat("WalkSpeed", moveSpeed / 2);          //--- jos run anim on liian hidas/nopea niin t‰t‰ voi s‰‰t‰‰
         timeBtwWalks = 0;
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = moveSpeed;
         agent = GetComponent<ObstacleAgent>();
         attackScript = GetComponent<NEWmeleedmg>();
         originalTargetScanningRange = targetScanningRange;
-        ApproachTarget();
+        //ApproachTarget();                                 //--- v‰lill‰ spawnaava unitti j‰‰ bugaamaan attack stateen jos t‰m‰ on p‰‰ll‰
         if (target == null && Vector3.Distance(new Vector3(0, transform.position.y, 0), transform.position) > 8) StartWalkToMiddle();
         else if (target == null) ReturnToRoam();
 
@@ -75,7 +79,7 @@ public class NMtestenemy : MonoBehaviour
                 }
                 ScanArea();
                 timeWithOutTarget += Time.deltaTime;
-                if (timeWithOutTarget >= timeBeforeScanningRadiusIncreases) targetScanningRange += Time.deltaTime;
+                if (timeWithOutTarget >= timeBeforeScanningRadiusIncreases) targetScanningRange += Time.deltaTime * 2;
                 break;
             case State.ChaseTarget:
                 anim.SetInteger("State", 1);
@@ -87,7 +91,7 @@ public class NMtestenemy : MonoBehaviour
                 if (target != null && Vector3.Distance(target.transform.position, transform.position) > attackDistance + 0.2f) StartChaseState();
                 if (navMeshAgent.enabled == true) navMeshAgent.ResetPath();
                 anim.SetInteger("State", 2);
-                if (target == null && attackScript.targetDead == true)
+                if (target == null && attackScript.currentTargetDead == true)
                 {
                     Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, layerMask);
                     if (colliders != null)
@@ -98,20 +102,32 @@ public class NMtestenemy : MonoBehaviour
                             {
                                 target = col.gameObject;
                                 attackScript.target = target;
-                                attackScript.targetDead = false;
+                                attackScript.currentTargetDead = false;
                                 attackScript.targetInRange = true;
                             }
                         }
                     }
                     if (target == null)
                     {
-                        attackScript.targetDead = false;
+                        attackScript.currentTargetDead = false;
+                        attackScript.targetInRange = false;
                         if (controlAreaFound == true) ReturnToRoam();
                         else StartWalkToMiddle();
                     }
                 }
-                if (target != null) transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
-                if (attackScript.attackStateInitiated == false && attackScript.targetDead == false) StartCoroutine(attackScript.Attack());
+                if (target != null)
+                {
+                    attackScript.currentTargetDead = false;
+                    transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
+                }
+                if (attackScript.attackStateInitiated == false && attackScript.currentTargetDead == false) StartCoroutine(attackScript.Attack());
+                if (target == null)
+                {
+                    attackScript.currentTargetDead = false;
+                    attackScript.targetInRange = false;
+                    if (controlAreaFound == true) ReturnToRoam();
+                    else StartWalkToMiddle();
+                }
                 break;
             case State.WalkToMiddle:
                 ScanArea();
@@ -128,22 +144,28 @@ public class NMtestenemy : MonoBehaviour
             timeWithOutTarget = 0;
             targetScanningRange = originalTargetScanningRange;
         }
+        currentState = state.ToString();
+
+        if (rb.velocity != Vector3.zero) rb.velocity = Vector3.zero;
     }
     void StartWalkToMiddle()
     {
         state = State.WalkToMiddle;
         anim.SetInteger("State", 1);
         agent.SetDestination(new Vector3(0, transform.position.y, 0));
-        attackScript.targetDead = false;
+        attackScript.currentTargetDead = false;
     }
     void ReturnToRoam()
     {
         timeBtwWalks = 0;
+        attackScript.currentTargetDead = false;
+        target = null;
         state = State.Roaming;
-        attackScript.targetDead = false;
     }
     void ScanArea()
     {
+        target = null;      //
+
         Collider[] colliders = Physics.OverlapSphere(transform.position, targetScanningRange, layerMask);
         if (colliders != null)
         {
@@ -180,14 +202,14 @@ public class NMtestenemy : MonoBehaviour
         attackDistance = Vector3.Distance(target.transform.position, transform.position);
         attackScript.targetInRange = true;
         attackScript.attackStateInitiated = false;
-        attackScript.targetDead = false;
+        attackScript.currentTargetDead = false;
         state = State.Attack;
     }
     void StartChaseState()
     {
         attackScript.attackStateInitiated = false;
         attackScript.targetInRange = false;
-        attackScript.targetDead = false;
+        attackScript.currentTargetDead = false;
         state = State.ChaseTarget;
     }
     IEnumerator RandomMovement()

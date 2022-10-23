@@ -26,8 +26,11 @@ public class testEbuilding : MonoBehaviour
 
     private health healthScript;
 
+    private Rigidbody rb;
+
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         healthScript = GetComponent<health>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = moveSpeed;
@@ -51,6 +54,7 @@ public class testEbuilding : MonoBehaviour
                 }
             }
         }
+        else DeployTroop();
     }
     void Update()
     {
@@ -61,6 +65,7 @@ public class testEbuilding : MonoBehaviour
                 if (currentBuildingAmount != gamemanager.buildings.Count) LockOnTarget();
                 break;
         }
+        if (rb.velocity != Vector3.zero) rb.velocity = Vector3.zero;
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -73,5 +78,9 @@ public class testEbuilding : MonoBehaviour
     {
         target.GetComponent<health>().UpdateHealth(-attackDamage);
         healthScript.UpdateHealth(-healthScript.currentHealth -1);
+    }
+    void DeployTroop()
+    {
+        healthScript.UpdateHealth(-healthScript.currentHealth - 1);
     }
 }

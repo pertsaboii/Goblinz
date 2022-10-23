@@ -37,8 +37,13 @@ public class NMtestgobbo : MonoBehaviour
 
     private NEWmeleedmg attackScript;
     private float attackDistance;
+
+    [SerializeField] private string currentState;
+
+    private Rigidbody rb;
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         anim.SetFloat("WalkSpeed", moveSpeed / 2);        //--- jos run anim on liian hidas/nopea niin tätä voi säätää
         timeBtwWalks = 0;
@@ -80,7 +85,7 @@ public class NMtestgobbo : MonoBehaviour
                 if (target != null && Vector3.Distance(target.transform.position, transform.position) > attackDistance + 0.2f) StartChaseState();
                 if (navMeshAgent.enabled == true) navMeshAgent.ResetPath();
                 anim.SetInteger("State", 2);
-                if (target == null && attackScript.targetDead == true)
+                if (target == null && attackScript.currentTargetDead == true)
                 {
                     Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, layerMask);
                     if (colliders != null)
@@ -91,15 +96,30 @@ public class NMtestgobbo : MonoBehaviour
                             {
                                 target = col.gameObject;
                                 attackScript.target = target;
-                                attackScript.targetDead = false;
+                                attackScript.currentTargetDead = false;
                                 attackScript.targetInRange = true;
                             }
                         }
                     }
-                    if (target == null) ReturnToRoam();
+                    if (target == null)
+                    {
+                        attackScript.currentTargetDead = false;
+                        attackScript.targetInRange = false;
+                        ReturnToRoam();
+                    }
                 }
-                if (target != null) transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
-                if (attackScript.attackStateInitiated == false && attackScript.targetDead == false) StartCoroutine(attackScript.Attack());
+                if (target == null)
+                {
+                    attackScript.currentTargetDead = false;
+                    attackScript.targetInRange = false;
+                    ReturnToRoam();
+                }
+                if (target != null)
+                {
+                    attackScript.currentTargetDead = false;
+                    transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
+                }
+                if (attackScript.attackStateInitiated == false && attackScript.currentTargetDead == false) StartCoroutine(attackScript.Attack());
                 break;
         }
         /*if (target != null)
@@ -107,12 +127,16 @@ public class NMtestgobbo : MonoBehaviour
             timeWithOutTarget = 0;
             targetScanningRange = originalTargetScanningRange;
         }*/
+        currentState = state.ToString();
+
+        if (rb.velocity != Vector3.zero) rb.velocity = Vector3.zero;
     }
     void ReturnToRoam()
     {
         timeBtwWalks = 0;
+        attackScript.currentTargetDead = false;
+        target = null;
         state = State.Roaming;
-        attackScript.targetDead = false;
     }
     void ScanArea()
     {

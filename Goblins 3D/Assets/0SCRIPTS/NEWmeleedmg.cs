@@ -5,7 +5,7 @@ using UnityEngine;
 public class NEWmeleedmg : MonoBehaviour
 {
     public bool attackStateInitiated;
-    public bool targetDead;
+    public bool currentTargetDead;
     public bool targetInRange;
     private Animator anim;
     [SerializeField] private float attackSpeed;
@@ -21,8 +21,7 @@ public class NEWmeleedmg : MonoBehaviour
     {
         if (target != null)
         {
-            if (gameObject.CompareTag("Enemy")) Debug.Log("attak");
-            targetDead = false; 
+            currentTargetDead = false; 
             targetHealth = target.GetComponent<health>();
             anim.SetFloat("AttackSpeed", attackSpeed);
 
@@ -40,21 +39,21 @@ public class NEWmeleedmg : MonoBehaviour
 
                 if (target == null)
                 {
-                    targetDead = true;
+                    currentTargetDead = true;
                     attackStateInitiated = false;
                     targetInRange = false;
                     yield break;
                 }
                 else if (targetInRange == false)
                 {
-                    targetDead = false;
+                    currentTargetDead = false;
                     attackStateInitiated = false;
                     yield break;
                 }
             }
             if (target == null)
             {
-                targetDead = true;
+                currentTargetDead = true;
                 attackStateInitiated = false;
                 targetInRange = false;
             }
