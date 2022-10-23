@@ -18,6 +18,10 @@ public class NMtestenemy : MonoBehaviour
 
     [SerializeField] private float moveSpeed;
     [SerializeField] private float targetScanningRange;
+    private float originalTargetScanningRange;
+    private float timeWithOutTarget;
+    [SerializeField] private float timeBeforeScanningRadiusIncreases;
+
     public GameObject target = null;
 
     private float timeBtwWalks;
@@ -45,8 +49,10 @@ public class NMtestenemy : MonoBehaviour
         navMeshAgent.speed = moveSpeed;
         agent = GetComponent<ObstacleAgent>();
         attackScript = GetComponent<NEWmeleedmg>();
-        if (Vector3.Distance(new Vector3(0, transform.position.y, 0), transform.position) > 8) StartWalkToMiddle();
-        else ReturnToRoam();
+        originalTargetScanningRange = targetScanningRange;
+        ApproachTarget();
+        if (target == null && Vector3.Distance(new Vector3(0, transform.position.y, 0), transform.position) > 8) StartWalkToMiddle();
+        else if (target == null) ReturnToRoam();
 
     }
     
@@ -68,8 +74,11 @@ public class NMtestenemy : MonoBehaviour
                     else timeBtwWalks -= Time.deltaTime;
                 }
                 ScanArea();
+                timeWithOutTarget += Time.deltaTime;
+                if (timeWithOutTarget >= timeBeforeScanningRadiusIncreases) targetScanningRange += Time.deltaTime;
                 break;
             case State.ChaseTarget:
+                anim.SetInteger("State", 1);
                 if (target != null) agent.SetDestination(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
                 ApproachTarget();
                 if (target == null) ReturnToRoam();
@@ -90,6 +99,7 @@ public class NMtestenemy : MonoBehaviour
                                 target = col.gameObject;
                                 attackScript.target = target;
                                 attackScript.targetDead = false;
+                                attackScript.targetInRange = true;
                             }
                         }
                     }
@@ -101,7 +111,7 @@ public class NMtestenemy : MonoBehaviour
                     }
                 }
                 if (target != null) transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
-                if (attackScript.attackStateOn == false && attackScript.targetDead == false) StartCoroutine(attackScript.Attack());
+                if (attackScript.attackStateInitiated == false && attackScript.targetDead == false) StartCoroutine(attackScript.Attack());
                 break;
             case State.WalkToMiddle:
                 ScanArea();
@@ -112,6 +122,11 @@ public class NMtestenemy : MonoBehaviour
                     controlAreaFound = true;
                 }
                 break;
+        }
+        if (target != null)
+        {
+            timeWithOutTarget = 0;
+            targetScanningRange = originalTargetScanningRange;
         }
     }
     void StartWalkToMiddle()
@@ -139,7 +154,6 @@ public class NMtestenemy : MonoBehaviour
                     target = col.gameObject;
                     attackScript.target = target;
                     state = State.ChaseTarget;
-                    anim.SetInteger("State", 1);
                 }
             }
         }
@@ -164,13 +178,16 @@ public class NMtestenemy : MonoBehaviour
     void StartAttackState()
     {
         attackDistance = Vector3.Distance(target.transform.position, transform.position);
-        Debug.Log(attackDistance);
-        state = State.Attack;
         attackScript.targetInRange = true;
+        attackScript.attackStateInitiated = false;
+        attackScript.targetDead = false;
+        state = State.Attack;
     }
     void StartChaseState()
     {
+        attackScript.attackStateInitiated = false;
         attackScript.targetInRange = false;
+        attackScript.targetDead = false;
         state = State.ChaseTarget;
     }
     IEnumerator RandomMovement()

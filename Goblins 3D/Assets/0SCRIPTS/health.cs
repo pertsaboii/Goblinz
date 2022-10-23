@@ -6,10 +6,13 @@ using UnityEngine.UI;
 public class health : MonoBehaviour
 {
     [SerializeField] private float maxHealth;
-    private float currentHealth;
+    [HideInInspector] public float currentHealth;
 
     [SerializeField] private Image hpSprite;
     [SerializeField] private GameObject hpBar;
+
+    [SerializeField] private GameObject unitThatSpawns;
+    [SerializeField] private bool spawnsUnit;
     void Start()
     {
         currentHealth = maxHealth;
@@ -34,7 +37,8 @@ public class health : MonoBehaviour
     }
     void Death()
     {
-        Destroy(gameObject);
         if (gameObject.CompareTag("Building") == true) gamemanager.buildings.Remove(gameObject);
+        if (spawnsUnit == true) Instantiate(unitThatSpawns, transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
 }

@@ -842,10 +842,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackStateOn: 0
   targetDead: 0
-  attackSpeed: 1
-  attackDamage: 1
-  target: {fileID: 0}
   targetInRange: 0
+  attackSpeed: 1
+  attackDamage: 2
+  target: {fileID: 0}
 --- !u!114 &7786545745980416247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -858,7 +858,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e81730ec243fba41b85793c22f6669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
+  maxHealth: 15
   hpSprite: {fileID: 7786545745160133809}
   hpBar: {fileID: 7786545746377394792}
 --- !u!195 &7786545745980416246

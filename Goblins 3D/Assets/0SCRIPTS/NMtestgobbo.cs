@@ -17,6 +17,9 @@ public class NMtestgobbo : MonoBehaviour
     private State state;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float targetScanningRange;
+    //private float originalTargetScanningRange;
+    //private float timeWithOutTarget;
+    //[SerializeField] private float timeBeforeScanningRadiusIncreases;
     public GameObject target = null;
 
     private float timeBtwWalks;
@@ -45,7 +48,7 @@ public class NMtestgobbo : MonoBehaviour
         navMeshAgent.speed = moveSpeed;
         agent = GetComponent<ObstacleAgent>();
         attackScript = GetComponent<NEWmeleedmg>();
-
+        //originalTargetScanningRange = targetScanningRange;
         originalPos = transform.position;
     }
 
@@ -64,6 +67,8 @@ public class NMtestgobbo : MonoBehaviour
                 else timeBtwWalks -= Time.deltaTime;
                 if (Vector3.Distance(transform.position, originalPos) >= wanderingRange) agent.SetDestination(originalPos);
                 ScanArea();
+                /*timeWithOutTarget += Time.deltaTime;
+                if (timeWithOutTarget >= timeBeforeScanningRadiusIncreases) targetScanningRange += Time.deltaTime;*/
                 break;
             case State.ChaseTarget:
                 anim.SetInteger("State", 1);
@@ -87,15 +92,21 @@ public class NMtestgobbo : MonoBehaviour
                                 target = col.gameObject;
                                 attackScript.target = target;
                                 attackScript.targetDead = false;
+                                attackScript.targetInRange = true;
                             }
                         }
                     }
                     if (target == null) ReturnToRoam();
                 }
                 if (target != null) transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
-                if (attackScript.attackStateOn == false && attackScript.targetDead == false) StartCoroutine(attackScript.Attack());
+                if (attackScript.attackStateInitiated == false && attackScript.targetDead == false) StartCoroutine(attackScript.Attack());
                 break;
         }
+        /*if (target != null)
+        {
+            timeWithOutTarget = 0;
+            targetScanningRange = originalTargetScanningRange;
+        }*/
     }
     void ReturnToRoam()
     {
@@ -141,9 +152,11 @@ public class NMtestgobbo : MonoBehaviour
         attackDistance = Vector3.Distance(target.transform.position, transform.position);
         state = State.Attack;
         attackScript.targetInRange = true;
+        attackScript.attackStateInitiated = false;
     }
     void StartChaseState()
     {
+        attackScript.attackStateInitiated = false;
         attackScript.targetInRange = false;
         state = State.ChaseTarget;
     }

@@ -24,8 +24,11 @@ public class testEbuilding : MonoBehaviour
 
     private int currentBuildingAmount;
 
+    private health healthScript;
+
     void Start()
     {
+        healthScript = GetComponent<health>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = moveSpeed;
         agent = GetComponent<ObstacleAgent>();
@@ -69,7 +72,6 @@ public class testEbuilding : MonoBehaviour
     void ImpactToTarget()
     {
         target.GetComponent<health>().UpdateHealth(-attackDamage);
-        Instantiate(spawningEnemy, transform.position, Quaternion.identity);
-        Destroy(gameObject);
+        healthScript.UpdateHealth(-healthScript.currentHealth -1);
     }
 }
