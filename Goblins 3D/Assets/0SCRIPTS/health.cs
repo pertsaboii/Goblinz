@@ -14,6 +14,11 @@ public class health : MonoBehaviour
     [SerializeField] private GameObject unitThatSpawns;
     [SerializeField] private bool spawnsUnit;
     [SerializeField] private bool isBuilding;
+    [SerializeField] private bool dealsDmgOnDeath;
+
+    [HideInInspector] public float deathDmgRadius;
+    [SerializeField] private LayerMask layerMask;
+    [HideInInspector] public float deathDamage;
     void Start()
     {
         currentHealth = maxHealth;
@@ -41,6 +46,11 @@ public class health : MonoBehaviour
         if (gameObject.CompareTag("Building") == true) gamemanager.buildings.Remove(gameObject);
         if (spawnsUnit == true) Instantiate(unitThatSpawns, transform.position, Quaternion.identity);
         if (isBuilding == true) gamemanager.buildings.Remove(this.gameObject);
+        if (dealsDmgOnDeath)
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, deathDmgRadius, layerMask);
+            if (colliders != null) foreach (Collider col in colliders) col.gameObject.GetComponent<health>().UpdateHealth(-deathDamage);
+        }
         Destroy(gameObject);
     }
 }

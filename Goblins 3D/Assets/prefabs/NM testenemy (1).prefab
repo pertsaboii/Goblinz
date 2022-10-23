@@ -860,13 +860,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e81730ec243fba41b85793c22f6669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 15
+  maxHealth: 5
   currentHealth: 0
   hpSprite: {fileID: 7786545745160133809}
   hpBar: {fileID: 7786545746377394792}
   unitThatSpawns: {fileID: 0}
   spawnsUnit: 0
   isBuilding: 0
+  dealsDmgOnDeath: 0
+  deathDmgRadius: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  deathDamage: 0
 --- !u!195 &7786545745980416246
 NavMeshAgent:
   m_ObjectHideFlags: 0

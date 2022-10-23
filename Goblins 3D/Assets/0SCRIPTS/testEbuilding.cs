@@ -50,7 +50,7 @@ public class testEbuilding : MonoBehaviour
                 {
                     target = building;
                     state = State.ApproachTarget;
-                    agent.SetDestination(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
+                    agent.SetDestination(target.transform.position);
                 }
             }
         }
