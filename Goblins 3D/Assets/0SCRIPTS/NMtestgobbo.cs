@@ -64,13 +64,17 @@ public class NMtestgobbo : MonoBehaviour
             default:
             case State.Roaming:
                 if (Vector3.Distance(randomPos, transform.position) < 0.1f && navMeshAgent.enabled == true) navMeshAgent.ResetPath();
-                if (timeBtwWalks <= 0)
+                if (Vector3.Distance(transform.position, originalPos) >= wanderingRange)
+                {
+                    anim.SetInteger("State", 1);
+                    agent.SetDestination(originalPos);
+                }
+                else if (timeBtwWalks <= 0)
                 {
                     StartCoroutine("RandomMovement");
                     timeBtwWalks = walkCycleTime + idleTime;
                 }
-                else timeBtwWalks -= Time.deltaTime;
-                if (Vector3.Distance(transform.position, originalPos) >= wanderingRange) agent.SetDestination(originalPos);
+                else timeBtwWalks -= Time.deltaTime;  
                 ScanArea();
                 /*timeWithOutTarget += Time.deltaTime;
                 if (timeWithOutTarget >= timeBeforeScanningRadiusIncreases) targetScanningRange += Time.deltaTime;*/

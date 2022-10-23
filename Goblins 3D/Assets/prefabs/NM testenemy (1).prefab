@@ -790,7 +790,7 @@ MonoBehaviour:
   walkCycleTime: 2
   idleTime: 0.5
   wanderingRange: 8
-  attackRange: 1.6
+  attackRange: 1.8
   layerMask:
     serializedVersion: 2
     m_Bits: 384

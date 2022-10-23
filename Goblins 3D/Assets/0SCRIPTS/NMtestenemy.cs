@@ -157,6 +157,7 @@ public class NMtestenemy : MonoBehaviour
     }
     void ReturnToRoam()
     {
+        anim.SetInteger("State", 1);
         timeBtwWalks = 0;
         attackScript.currentTargetDead = false;
         target = null;
