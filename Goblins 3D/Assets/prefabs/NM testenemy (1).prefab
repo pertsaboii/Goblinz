@@ -860,7 +860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e81730ec243fba41b85793c22f6669a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5
+  maxHealth: 15
   currentHealth: 0
   hpSprite: {fileID: 7786545745160133809}
   hpBar: {fileID: 7786545746377394792}
@@ -869,7 +869,7 @@ MonoBehaviour:
   isBuilding: 0
   dealsDmgOnDeath: 0
   deathDmgRadius: 0
-  layerMask:
+  deathDmgTargetType:
     serializedVersion: 2
     m_Bits: 0
   deathDamage: 0

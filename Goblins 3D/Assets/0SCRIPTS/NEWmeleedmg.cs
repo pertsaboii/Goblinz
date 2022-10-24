@@ -33,7 +33,7 @@ public class NEWmeleedmg : MonoBehaviour
 
                 yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length * 0.5f);
 
-                if (target != null && targetInRange == true) targetHealth.UpdateHealth(-attackDamage);
+                if (targetInRange == true && target != null) targetHealth.UpdateHealth(-attackDamage);
 
                 yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length * 0.5f);
 

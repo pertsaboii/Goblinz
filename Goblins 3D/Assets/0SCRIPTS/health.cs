@@ -17,7 +17,7 @@ public class health : MonoBehaviour
     [SerializeField] private bool dealsDmgOnDeath;
 
     [HideInInspector] public float deathDmgRadius;
-    [SerializeField] private LayerMask layerMask;
+    [SerializeField] private LayerMask deathDmgTargetType;
     [HideInInspector] public float deathDamage;
     void Start()
     {
@@ -48,7 +48,7 @@ public class health : MonoBehaviour
         if (isBuilding == true) gamemanager.buildings.Remove(this.gameObject);
         if (dealsDmgOnDeath)
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, deathDmgRadius, layerMask);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, deathDmgRadius, deathDmgTargetType);
             if (colliders != null) foreach (Collider col in colliders) col.gameObject.GetComponent<health>().UpdateHealth(-deathDamage);
         }
         Destroy(gameObject);
