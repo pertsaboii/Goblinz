@@ -4,27 +4,31 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(ObstacleAgent), typeof(health), typeof(NNMA))]
-public class MeleeGobbo : MonoBehaviour
+public class E_basicmeleeunit : MonoBehaviour
 {
     private enum State
     {
-        Roaming, ChaseTarget, Attack
+        Roaming, ChaseTarget, Attack, WalkToMiddle
     }
+    private State state;
 
     private ObstacleAgent agent;
     private NavMeshAgent navMeshAgent;
 
-    private State state;
     [SerializeField] private float moveSpeed;
-    [SerializeField] private float walkAnimMult = 2;
     [SerializeField] private float targetScanningRange;
+    private float originalTargetScanningRange;
+    private float timeWithOutTarget;
+    [SerializeField] private float timeBeforeScanningRadiusIncreases;
+
     public GameObject target = null;
 
     private float timeBtwWalks;
     [SerializeField] private float walkCycleTime;
     [SerializeField] private float idleTime;
-    private Vector3 originalPos;
     [SerializeField] private float wanderingRange;
+    private Vector3 controlAreaPos;
+    private bool controlAreaFound;
     private Vector3 randomPos;
 
     [SerializeField] private float attackRange;
@@ -43,15 +47,16 @@ public class MeleeGobbo : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
-        anim.SetFloat("WalkSpeed", moveSpeed / walkAnimMult);
+        anim.SetFloat("WalkSpeed", moveSpeed / 2);          //--- jos run anim on liian hidas/nopea niin t‰t‰ voi s‰‰t‰‰
         timeBtwWalks = 0;
-        anim.SetInteger("State", 0);
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = moveSpeed;
         agent = GetComponent<ObstacleAgent>();
         attackScript = GetComponent<NNMA>();
-        originalPos = transform.position;
-        state = State.Roaming;
+        originalTargetScanningRange = targetScanningRange;
+        if (Vector3.Distance(new Vector3(0, transform.position.y, 0), transform.position) > 8) StartWalkToMiddle();
+        else ReturnToRoam();
+
     }
 
     void Update()
@@ -61,10 +66,10 @@ public class MeleeGobbo : MonoBehaviour
             default:
             case State.Roaming:
                 if (Vector3.Distance(randomPos, transform.position) < 0.1f && navMeshAgent.enabled == true) navMeshAgent.ResetPath();
-                if (Vector3.Distance(transform.position, originalPos) >= wanderingRange)
+                if (controlAreaFound && Vector3.Distance(controlAreaPos, transform.position) >= wanderingRange)
                 {
                     anim.SetInteger("State", 1);
-                    agent.SetDestination(originalPos);
+                    agent.SetDestination(controlAreaPos);
                 }
                 else if (timeBtwWalks <= 0)
                 {
@@ -74,6 +79,8 @@ public class MeleeGobbo : MonoBehaviour
                 else timeBtwWalks -= Time.deltaTime;
                 if (target != null) StartChaseState();
                 ScanArea();
+                timeWithOutTarget += Time.deltaTime;
+                if (timeWithOutTarget >= timeBeforeScanningRadiusIncreases) targetScanningRange += Time.deltaTime * 2;
                 break;
             case State.ChaseTarget:
                 if (target != null) agent.SetDestination(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
@@ -99,16 +106,42 @@ public class MeleeGobbo : MonoBehaviour
                                 attackScript.SwitchToAttackState();
                             }
                         }
-                        if (target == null) ReturnToRoam();
+                        if (target == null)
+                        {
+                            if (controlAreaFound == true) ReturnToRoam();
+                            else StartWalkToMiddle();
+                        }
                     }
                 }
                 if (target != null) transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
                 break;
+            case State.WalkToMiddle:
+                ScanArea();
+                if (Vector3.Distance(new Vector3(0, transform.position.y, 0), transform.position) < 8)
+                {
+                    state = State.Roaming;
+                    controlAreaPos = transform.position;
+                    controlAreaFound = true;
+                }
+                if (target != null) StartChaseState();
+                break;
+        }
+        if (target != null)
+        {
+            timeWithOutTarget = 0;
+            targetScanningRange = originalTargetScanningRange;
         }
         currentState = state.ToString();
 
         if (rb.velocity != Vector3.zero) rb.velocity = Vector3.zero;
     }
+    void StartWalkToMiddle()
+    {
+        anim.SetInteger("State", 1);
+        agent.SetDestination(new Vector3(0, transform.position.y, 0));
+        state = State.WalkToMiddle;
+    }
+
     void ScanArea()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, targetScanningRange, layerMask);
@@ -162,6 +195,7 @@ public class MeleeGobbo : MonoBehaviour
         anim.SetInteger("State", 0);
         state = State.Roaming;
     }
+
     IEnumerator RandomMovement()
     {
         randomPos = transform.position;
@@ -178,7 +212,10 @@ public class MeleeGobbo : MonoBehaviour
     private void CalculateRandomNavMeshPoint()
     {
         Vector3 randomDirection = Random.insideUnitSphere * wanderingRange;
-        randomDirection += originalPos;
+
+        if (controlAreaFound == false) randomDirection += transform.position;
+        else randomDirection += controlAreaPos;
+
         NavMeshHit hit;
         Vector3 finalPosition = Vector3.zero;
         if (NavMesh.SamplePosition(randomDirection, out hit, wanderingRange, 1))

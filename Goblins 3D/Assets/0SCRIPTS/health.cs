@@ -6,12 +6,12 @@ using UnityEngine.UI;
 public class health : MonoBehaviour
 {
     [SerializeField] private float maxHealth;
-    [HideInInspector] public float currentHealth;
+    public float currentHealth;
 
     [SerializeField] private Image hpSprite;
     [SerializeField] private GameObject hpBar;
 
-    [SerializeField] private GameObject unitThatSpawns;
+    public GameObject unitThatSpawns;
     [SerializeField] private bool spawnsUnit;
     [SerializeField] private bool isBuilding;
     [SerializeField] private bool dealsDmgOnDeath;

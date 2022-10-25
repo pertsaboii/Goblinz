@@ -776,7 +776,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   attackDamage: 3
-  spawningEnemy: {fileID: 7786545745980416243, guid: d964edef015708f449d75e7324c9562d,
+  spawningEnemy: {fileID: 2267042777573257862, guid: 7a5d06609294e954aa83050fde47881e,
     type: 3}
 --- !u!114 &7472182455422000256
 MonoBehaviour:
@@ -831,10 +831,16 @@ MonoBehaviour:
   currentHealth: 0
   hpSprite: {fileID: 7472182455712874675}
   hpBar: {fileID: 7472182457029575500}
-  unitThatSpawns: {fileID: 7786545745980416243, guid: d964edef015708f449d75e7324c9562d,
+  unitThatSpawns: {fileID: 2267042777573257862, guid: 7a5d06609294e954aa83050fde47881e,
     type: 3}
   spawnsUnit: 1
   isBuilding: 0
+  dealsDmgOnDeath: 0
+  deathDmgRadius: 0
+  deathDmgTargetType:
+    serializedVersion: 2
+    m_Bits: 0
+  deathDamage: 0
 --- !u!1 &8296382028441609385
 GameObject:
   m_ObjectHideFlags: 0

@@ -39,7 +39,7 @@ public class healingbuilding : MonoBehaviour
     {
         anim.SetTrigger("Heal");
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, healingRange * 2, layerMask);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, healingRange, layerMask);
         if (colliders != null)
         {
             foreach (Collider col in colliders)

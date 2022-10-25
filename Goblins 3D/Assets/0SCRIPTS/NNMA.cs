@@ -17,9 +17,12 @@ public class NNMA : MonoBehaviour
 
     [SerializeField] private int attackDamage;
     [HideInInspector] public GameObject target;
-    health targetHealth;
+    [HideInInspector] public health targetHealth;
 
     [SerializeField] private string currentState;
+
+    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private Transform projectileSpawnPoint;
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -44,17 +47,20 @@ public class NNMA : MonoBehaviour
     }
     public void SwitchToAttackState()
     {
-        if (target != null) targetHealth = target.GetComponent<health>();
         targetInRange = true;
         anim.SetFloat("AttackSpeed", attackSpeed);
         state = State.Attacking;
     }
-    void DealDmg()
+    void SingleTargetMeleeDmg()
     {
         if (target != null && targetInRange == true) targetHealth.UpdateHealth(-attackDamage);
-        else
-        {
-            targetInRange = false;
-        }
+        else targetInRange = false;
+    }
+    void SpawnProjectile()
+    {
+        GameObject spawnedProjectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
+        projectile projectile = spawnedProjectile.GetComponent<projectile>();
+        projectile.target = target;
+        projectile.targetHealth = targetHealth;
     }
 }

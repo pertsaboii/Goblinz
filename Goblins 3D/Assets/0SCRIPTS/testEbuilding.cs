@@ -20,7 +20,7 @@ public class testEbuilding : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private float attackDamage;
 
-    [SerializeField] private GameObject spawningEnemy;
+    private GameObject spawningEnemy;
 
     private int currentBuildingAmount;
 
@@ -35,6 +35,7 @@ public class testEbuilding : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = moveSpeed;
         agent = GetComponent<ObstacleAgent>();
+        spawningEnemy = healthScript.unitThatSpawns;
         LockOnTarget();
     }
 
