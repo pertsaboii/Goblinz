@@ -23,6 +23,11 @@ public class NNMA : MonoBehaviour
 
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform projectileSpawnPoint;
+
+    [SerializeField] private Transform aoeDmgOrigin;
+    [SerializeField] private float aoeRadius;
+    [SerializeField] private LayerMask aoeDmgTargets;
+    [SerializeField] private ParticleSystem ps;
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -53,7 +58,7 @@ public class NNMA : MonoBehaviour
     }
     void SingleTargetMeleeDmg()
     {
-        if (target != null && targetInRange == true) targetHealth.UpdateHealth(-attackDamage);
+        if (target != null && targetInRange == true) targetHealth.UpdateHealth(-attackDamage);      // jos haluaa että dmg välittyy targettiin joka on rangen ulkopuolella tässä vaiheessa niin targetinrangen voi ottaa pois
         else targetInRange = false;
     }
     void SpawnProjectile()
@@ -62,5 +67,16 @@ public class NNMA : MonoBehaviour
         projectile projectile = spawnedProjectile.GetComponent<projectile>();
         projectile.target = target;
         projectile.targetHealth = targetHealth;
+    }
+    void AoeMeleeDmg()
+    {
+        ps.Play();                                // tähän myöhemmin pool
+        Collider[] colliders = Physics.OverlapSphere(aoeDmgOrigin.position, aoeRadius, aoeDmgTargets);
+        {
+            foreach (Collider col in colliders)
+            {
+                col.GetComponent<health>().UpdateHealth(-attackDamage);
+            }
+        }
     }
 }

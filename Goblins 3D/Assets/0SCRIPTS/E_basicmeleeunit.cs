@@ -116,6 +116,7 @@ public class E_basicmeleeunit : MonoBehaviour
                 if (target != null) transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
                 break;
             case State.WalkToMiddle:
+                anim.SetInteger("State", 1);    // v‰lill‰ anim attack state j‰‰ p‰‰lle, t‰m‰ est‰‰ sen
                 ScanArea();
                 if (Vector3.Distance(new Vector3(0, transform.position.y, 0), transform.position) < 8)
                 {

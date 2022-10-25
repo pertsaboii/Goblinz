@@ -301,13 +301,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetInRange: 0
   attackSpeed: 1
-  attackDamage: 1
+  attackDamage: 0
   target: {fileID: 0}
   targetHealth: {fileID: 0}
   currentState: 
   projectilePrefab: {fileID: 8716121212454041972, guid: c09602b7e7578af4a87cce06e2600030,
     type: 3}
   projectileSpawnPoint: {fileID: 5962454052985500523}
+  aoeDmgOrigin: {fileID: 0}
+  aoeRadius: 0
+  aoeDmgTargets:
+    serializedVersion: 2
+    m_Bits: 0
+  ps: {fileID: 0}
 --- !u!114 &4119712937035304701
 MonoBehaviour:
   m_ObjectHideFlags: 0
