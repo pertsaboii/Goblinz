@@ -112,6 +112,7 @@ GameObject:
   - component: {fileID: 2267042777573257857}
   - component: {fileID: 2267042777573257864}
   - component: {fileID: 2267042777573257865}
+  - component: {fileID: 5633460621342410477}
   - component: {fileID: 2267042777573257858}
   - component: {fileID: 2267042777573257917}
   - component: {fileID: 2267042777573257916}
@@ -174,6 +175,18 @@ CapsuleCollider:
   m_Height: 2.49
   m_Direction: 1
   m_Center: {x: 0, y: 1.25, z: 0}
+--- !u!114 &5633460621342410477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2267042777573257862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7e98b9bc2519bb41ac96e5a3054fc2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2267042777573257858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,6 +232,12 @@ MonoBehaviour:
   currentState: 
   projectilePrefab: {fileID: 0}
   projectileSpawnPoint: {fileID: 0}
+  aoeDmgOrigin: {fileID: 0}
+  aoeRadius: 0
+  aoeDmgTargets:
+    serializedVersion: 2
+    m_Bits: 0
+  ps: {fileID: 0}
 --- !u!114 &2267042777573257916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,7 +305,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2267042777573257862}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: -1372625422
   m_Radius: 0.3
   m_Speed: 2
   m_Acceleration: 8
