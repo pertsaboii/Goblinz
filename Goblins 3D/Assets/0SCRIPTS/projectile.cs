@@ -7,7 +7,7 @@ public class projectile : MonoBehaviour
     [SerializeField] private float damage;
     [SerializeField] private float speed;
     [SerializeField] private float turnSpeed;
-    [HideInInspector] public health targetHealth;
+    [HideInInspector] public ALL_Health targetHealth;
     public GameObject target;
     private Rigidbody rb;
     private Vector3 targetDir;
@@ -18,11 +18,14 @@ public class projectile : MonoBehaviour
 
     private Collider ragdollCollider;
     [SerializeField] private Collider triggerCol;
+
+    [HideInInspector] public GameObject whoSpawnedProjectile;
+    private GameObject hitCollider;
     void Start()
     {
         ragdollCollider = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
-        targetCollider = target.GetComponent<Collider>();
+        if (target != null) targetCollider = target.GetComponent<Collider>();
         localTransform = GetComponent<Transform>();
     }
     private void FixedUpdate()
@@ -44,16 +47,32 @@ public class projectile : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == target && ((1 << other.gameObject.layer) & targetLayer) != 0) ProjectileHit();
+        if (other.gameObject == target && ((1 << other.gameObject.layer) & targetLayer) != 0)
+        {
+            hitCollider = other.gameObject;
+            ProjectileHit();
+        }
         else if (((1 << other.gameObject.layer) & targetLayer) != 0)
         {
-            targetHealth = other.gameObject.GetComponent<health>();
+            hitCollider = other.gameObject;
+            targetHealth = other.gameObject.GetComponent<ALL_Health>();
             ProjectileHit();
         }
         else return;
     }
     void ProjectileHit()
     {
+        if (hitCollider.GetComponent<U_AI>() == true)
+        {
+            U_AI meleegobbo = hitCollider.GetComponent<U_AI>();
+            if (meleegobbo.target == null) meleegobbo.target = whoSpawnedProjectile;
+        }
+        else if (hitCollider.GetComponent<E_AI>() == true)
+        {
+            E_AI enemy = hitCollider.GetComponent<E_AI>();
+            if (enemy.target == null) enemy.target = whoSpawnedProjectile;
+        }
+
         targetHealth.UpdateHealth(-damage);
         Destroy(gameObject);
     }

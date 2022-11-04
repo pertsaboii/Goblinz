@@ -6,7 +6,7 @@ public class meleedmg : MonoBehaviour
 {
     [SerializeField] private float dmgAmount;
     private NMtestgobbo targetFindingScript;
-    private health enemyHealth;
+    private ALL_Health enemyHealth;
     private bool targetFound;
     [HideInInspector] public bool dealDmg;
     private bool dmgDealed;
@@ -19,7 +19,7 @@ public class meleedmg : MonoBehaviour
     {
         if (targetFindingScript.target != null && targetFound == false)
         {
-            enemyHealth = targetFindingScript.target.GetComponent<health>();
+            enemyHealth = targetFindingScript.target.GetComponent<ALL_Health>();
             targetFound = true;
         }
         else targetFound = false;

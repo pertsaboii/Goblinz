@@ -31,7 +31,7 @@ public class wanderinggobbo : MonoBehaviour
 
     private Rigidbody rb;
 
-    private health healthScript;
+    private ALL_Health healthScript;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -44,7 +44,7 @@ public class wanderinggobbo : MonoBehaviour
         navMeshAgent.speed = moveSpeed;
         agent = GetComponent<ObstacleAgent>();
         originalPos = transform.position;
-        healthScript = GetComponent<health>();
+        healthScript = GetComponent<ALL_Health>();
         healthScript.deathDmgRadius = explosionRange;
         healthScript.deathDamage = explosionDamage;
     }

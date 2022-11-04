@@ -11,7 +11,7 @@ public class NEWmeleedmg : MonoBehaviour
     [SerializeField] private float attackSpeed;
     [SerializeField] private int attackDamage;
     [HideInInspector] public GameObject target;
-    health targetHealth;
+    ALL_Health targetHealth;
 
     void Start()
     {
@@ -22,7 +22,7 @@ public class NEWmeleedmg : MonoBehaviour
         if (target != null)
         {
             currentTargetDead = false; 
-            targetHealth = target.GetComponent<health>();
+            targetHealth = target.GetComponent<ALL_Health>();
             anim.SetFloat("AttackSpeed", attackSpeed);
 
             while (target != null && targetInRange == true)
