@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class unitcost : MonoBehaviour
+public class Unitcost : MonoBehaviour
 {
     public float unitCost;
 }

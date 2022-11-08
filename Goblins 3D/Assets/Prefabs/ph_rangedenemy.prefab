@@ -912,8 +912,8 @@ MonoBehaviour:
   target: {fileID: 0}
   walkCycleTime: 2
   idleTime: 0.5
-  wanderingRange: 12
-  attackRange: 14
+  wanderingRange: 10
+  attackRange: 12
   layerMask:
     serializedVersion: 2
     m_Bits: 384
@@ -980,10 +980,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8228460915799941162}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b25b5fc87a301d40835f8a7d8d1a0e4, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a74f28841252414fbd3130631b6daa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitCost: 2
+  unitCost: 1.5
 --- !u!95 &8753464096680098451
 Animator:
   serializedVersion: 4

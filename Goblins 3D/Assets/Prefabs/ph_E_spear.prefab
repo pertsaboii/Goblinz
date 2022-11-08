@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7603056824690016348}
   - component: {fileID: 6607719777803784302}
   - component: {fileID: 143932296206317866}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: spear_placeholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 3494896403750734078}
   - component: {fileID: 8819012342283148517}
   - component: {fileID: 1178621246327202908}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ph_E_spear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,6 +169,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 384
   triggerCol: {fileID: 143932296206317866}
+  whoSpawnedProjectile: {fileID: 0}
 --- !u!65 &1178621246327202908
 BoxCollider:
   m_ObjectHideFlags: 0

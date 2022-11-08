@@ -10,20 +10,21 @@ public class enemymanager : MonoBehaviour
 
     private float maxEnemyResources = 10;
     [SerializeField] private float currentEnemyResources;
+    [SerializeField] private float EnemyStartResources;
     [SerializeField] private float resourceGainPerS = 1;
 
     [SerializeField] private float spawnInterval = 1;
     private float timeBtwSpawns;
     void Start()
     {
-        currentEnemyResources = maxEnemyResources;
+        currentEnemyResources = EnemyStartResources;
         timeBtwSpawns = 0;
         PickRandomEnemy();
     }
 
     void Update()
     {
-        if (currentEnemyResources < maxEnemyResources) currentEnemyResources += Time.deltaTime / resourceGainPerS;
+        if (currentEnemyResources < maxEnemyResources) currentEnemyResources += Time.deltaTime * resourceGainPerS;
 
         if (timeBtwSpawns >= spawnInterval)
         {
@@ -34,7 +35,7 @@ public class enemymanager : MonoBehaviour
     }
     void SpawnEnemy()
     {
-        float nextEnemyCost = nextEnemy.GetComponent<unitcost>().unitCost;
+        float nextEnemyCost = nextEnemy.GetComponent<Unitcost>().unitCost;
 
         if (nextEnemyCost <= currentEnemyResources)
         {

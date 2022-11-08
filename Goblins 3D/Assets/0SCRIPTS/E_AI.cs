@@ -66,7 +66,6 @@ public class E_AI : MonoBehaviour
         {
             default:
             case State.OutSideOfScreen:
-                Debug.Log("walktoscreen");
                 break;
             case State.Roaming:
                 if (Vector3.Distance(randomPos, transform.position) < 0.1f && navMeshAgent.enabled == true) navMeshAgent.ResetPath();

@@ -17,6 +17,8 @@ public class gamemanager : MonoBehaviour
     public static List<GameObject> buildings;
     public List<GameObject> talot;
 
+    public static PlayerCards playercards;
+
     private GameObject loseCon;
 
     private void Awake()
@@ -25,6 +27,7 @@ public class gamemanager : MonoBehaviour
 
         camera = Camera.main;
         userInterface = GameObject.Find("UI").GetComponent<uimanager>();
+        playercards = GetComponent<PlayerCards>();
 
         buildings = new List<GameObject>();
         talot = buildings;
