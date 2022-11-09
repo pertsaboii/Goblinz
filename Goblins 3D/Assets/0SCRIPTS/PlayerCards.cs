@@ -19,7 +19,7 @@ public class PlayerCards : MonoBehaviour
     
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && gamemanager.userInterface.resourceBar.value >= selectedCardCost && IsPointerOverUI() == false)
+        if (Input.GetMouseButtonDown(0) && selectedCard != null && gamemanager.userInterface.resourceBar.value >= selectedCardCost && IsPointerOverUI() == false)
         {
             Ray checkObjectsRay = gamemanager.camera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(checkObjectsRay, out RaycastHit checkRaycastHit, layerMask) == true)
@@ -45,5 +45,11 @@ public class PlayerCards : MonoBehaviour
     private bool IsPointerOverUI()
     {
         return EventSystem.current.IsPointerOverGameObject();
+    }
+    public void ResetSelectedCard()
+    {
+        selectedCard = null;
+        selectedCardCost = 0;
+        selectedCardUnit = null;
     }
 }

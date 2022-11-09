@@ -81,6 +81,7 @@ public class uimanager : MonoBehaviour
     }
     public void RefreshOne()
     {
+        if (gamemanager.playercards.selectedCard == card1) gamemanager.playercards.ResetSelectedCard();
         Destroy(card1);
         oneRefreshButton.enabled = false;
         GameObject newCard = Instantiate(cards[Random.Range(0, cards.Length)], oneCardPlace.position, Quaternion.identity);
@@ -90,6 +91,7 @@ public class uimanager : MonoBehaviour
     }
     public void RefreshTwo()
     {
+        if (gamemanager.playercards.selectedCard == card2) gamemanager.playercards.ResetSelectedCard();
         Destroy(card2);
         twoRefreshButton.enabled = false;
         GameObject newCard = Instantiate(cards[Random.Range(0, cards.Length)], twoCardPlace.position, Quaternion.identity);
@@ -99,6 +101,7 @@ public class uimanager : MonoBehaviour
     }
     public void RefreshThree()
     {
+        if (gamemanager.playercards.selectedCard == card3) gamemanager.playercards.ResetSelectedCard();
         Destroy(card3);
         threeRefreshButton.enabled = false;
         GameObject newCard = Instantiate(cards[Random.Range(0, cards.Length)], threeCardPlace.position, Quaternion.identity);
@@ -108,6 +111,7 @@ public class uimanager : MonoBehaviour
     }
     public void RefreshFour()
     {
+        if (gamemanager.playercards.selectedCard == card4) gamemanager.playercards.ResetSelectedCard();
         Destroy(card4);
         fourRefreshButton.enabled = false;
         GameObject newCard = Instantiate(cards[Random.Range(0, cards.Length)], fourCardPlace.position, Quaternion.identity);
