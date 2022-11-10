@@ -43,6 +43,7 @@ public class ALL_Health : MonoBehaviour
     }
     void Death()
     {
+        if (gameObject.CompareTag("Enemy") == true) gamemanager.enemies.Remove(gameObject);
         if (gameObject.CompareTag("Building") == true) gamemanager.buildings.Remove(gameObject);
         if (spawnsUnit == true) Instantiate(unitThatSpawns, transform.position, Quaternion.identity);
         if (isBuilding == true) gamemanager.buildings.Remove(this.gameObject);

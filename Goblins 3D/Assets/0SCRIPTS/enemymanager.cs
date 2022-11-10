@@ -35,7 +35,7 @@ public class enemymanager : MonoBehaviour
     }
     void SpawnEnemy()
     {
-        float nextEnemyCost = nextEnemy.GetComponent<Unitcost>().unitCost;
+        float nextEnemyCost = nextEnemy.GetComponent<EnemyUnit>().unitCost;
 
         if (nextEnemyCost <= currentEnemyResources)
         {

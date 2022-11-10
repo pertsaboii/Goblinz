@@ -51,7 +51,7 @@ public class U_AI : MonoBehaviour
         agent = GetComponent<ObstacleAgent>();
         attackScript = GetComponent<All_AttackScript>();
         originalPos = transform.position;
-        state = State.Roaming;
+        CheckForEnemies();
     }
 
     void Update()
@@ -82,11 +82,25 @@ public class U_AI : MonoBehaviour
                 if (target == null) ReturnToRoam();
                 break;
             case State.Attack:
-                if (target != null && Vector3.Distance(target.transform.position, transform.position) > attackDistance + 0.2f) StartChaseState();
+                if (target != null && Vector3.Distance(target.transform.position, transform.position) > attackDistance + 0.3f) StartChaseState();
                 if (navMeshAgent.enabled == true) navMeshAgent.ResetPath();
                 if (target == null)
                 {
-                    Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, layerMask);
+                    foreach (GameObject enemy in gamemanager.enemies)
+                    {
+                        if (Vector3.Distance(enemy.transform.position, transform.position) < attackRange && (target == null || Vector3.Distance(target.transform.position, transform.position) > Vector3.Distance(enemy.transform.position, transform.position)))
+                        {
+                            target = enemy;
+                            attackDistance = Vector3.Distance(target.transform.position, transform.position);
+                            attackScript.target = target;
+                            attackScript.targetHealth = target.GetComponent<ALL_Health>();
+                            attackScript.targetInRange = true;
+                            attackScript.SwitchToAttackState();
+                        }
+                    }
+                    if (target == null) ReturnToRoam();
+
+                    /*Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, layerMask);
                     if (colliders != null)
                     {
                         foreach (Collider col in colliders)
@@ -101,7 +115,7 @@ public class U_AI : MonoBehaviour
                             }
                         }
                         if (target == null) ReturnToRoam();
-                    }
+                    }*/
                 }
                 if (target != null) transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
                 break;
@@ -110,9 +124,35 @@ public class U_AI : MonoBehaviour
 
         if (rb.velocity != Vector3.zero) rb.velocity = Vector3.zero;
     }
+    void CheckForEnemies()
+    {
+        foreach (GameObject enemy in gamemanager.enemies)
+        {
+            if (Vector3.Distance(enemy.transform.position, transform.position) < attackRange && (target == null || Vector3.Distance(target.transform.position, transform.position) > Vector3.Distance(enemy.transform.position, transform.position)))
+            {
+                target = enemy;
+                attackScript.target = target;
+                attackScript.targetHealth = target.GetComponent<ALL_Health>();
+                attackScript.targetInRange = true;
+                StartAttackState();
+            }
+        }
+        if (target == null) ReturnToRoam();
+    }
     void ScanArea()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, targetScanningRange, layerMask);
+        foreach (GameObject enemy in gamemanager.enemies)
+        {
+            if (Vector3.Distance(enemy.transform.position, transform.position) < targetScanningRange && (target == null || Vector3.Distance(target.transform.position, transform.position) > Vector3.Distance(enemy.transform.position, transform.position)))
+            {
+                target = enemy;
+                attackScript.target = target;
+                attackScript.targetHealth = target.GetComponent<ALL_Health>();
+                StartChaseState();
+            }
+        }
+
+        /*Collider[] colliders = Physics.OverlapSphere(transform.position, targetScanningRange, layerMask);
         if (colliders != null)
         {
             foreach (Collider col in colliders)
@@ -125,7 +165,7 @@ public class U_AI : MonoBehaviour
                     StartChaseState();
                 }
             }
-        }
+        }*/
     }
     void StartChaseState()
     {
@@ -137,7 +177,20 @@ public class U_AI : MonoBehaviour
     }
     void ApproachTarget()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, layerMask);
+        if (Vector3.Distance(target.transform.position, transform.position) < attackRange) StartAttackState();
+
+        foreach (GameObject enemy in gamemanager.enemies)
+        {
+            if (enemy != target && Vector3.Distance(enemy.transform.position, transform.position) < attackRange)
+            {
+                target = enemy;
+                attackScript.target = target;
+                attackScript.targetHealth = target.GetComponent<ALL_Health>();
+                StartAttackState();
+            }
+        }
+
+        /*Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, layerMask);
         if (colliders != null)
         {
             foreach (Collider col in colliders)
@@ -151,7 +204,7 @@ public class U_AI : MonoBehaviour
                     StartAttackState();
                 }
             }
-        }
+        }*/
     }
     void StartAttackState()
     {
