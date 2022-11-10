@@ -6,6 +6,7 @@ public class LoseCon : MonoBehaviour
 {
     void Start()
     {
-        gamemanager.buildings.Add(this.gameObject);
+        gamemanager.buildings.Add(gameObject);
+        gamemanager.buildingsAndUnits.Add(gameObject);
     }
 }

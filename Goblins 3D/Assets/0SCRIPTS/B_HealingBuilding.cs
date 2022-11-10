@@ -16,7 +16,8 @@ public class B_HealingBuilding : MonoBehaviour
     [SerializeField] private GameObject healingCircle;
     void Start()
     {
-        gamemanager.buildings.Add(this.gameObject);
+        gamemanager.buildings.Add(gameObject);
+        gamemanager.buildingsAndUnits.Add(gameObject);
         healingBarSprite.fillAmount = 0;
         anim = GetComponent<Animator>();
 

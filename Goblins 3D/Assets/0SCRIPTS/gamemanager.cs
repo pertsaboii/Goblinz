@@ -14,6 +14,7 @@ public class gamemanager : MonoBehaviour
     public static uimanager userInterface;
 
     public static List<GameObject> buildings;
+    public static List<GameObject> buildingsAndUnits;
     public static List<GameObject> enemies;
 
     public static PlayerCards playercards;
@@ -30,6 +31,7 @@ public class gamemanager : MonoBehaviour
 
         buildings = new List<GameObject>();
         enemies = new List<GameObject>();
+        buildingsAndUnits = new List<GameObject>();
         loseCon = GameObject.Find("LoseCon");
 
         state = State.RunTime;
