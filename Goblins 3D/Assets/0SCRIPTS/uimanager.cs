@@ -3,9 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class uimanager : MonoBehaviour
 {
+    private enum State
+    {
+        MainMenu, Play
+    }
+
+    private State state;
+
     [SerializeField] private GameObject gameOverMenu;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject runTimeUi;
@@ -47,22 +55,36 @@ public class uimanager : MonoBehaviour
 
     private void Start()
     {
-        resourceBar.maxValue = 10;
-        pauseMenu.SetActive(false);
-        gameOverMenu.SetActive(false);
-        resourceBar.value = startResources;
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            state = State.Play;
 
-        StartCards();
+            resourceBar.maxValue = 10;
+            pauseMenu.SetActive(false);
+            gameOverMenu.SetActive(false);
+            resourceBar.value = startResources;
+
+            StartCards();
+        }
+        else state = State.MainMenu;
     }
     void Update()
     {
-        if (resourceBar.value <= 10)
+        switch (state)
         {
-            resourceBar.value += Time.deltaTime * resourcesPerS;
-        }
-        resourceNumber.text = resourceBar.value.ToString("0");
+            default:
+            case State.Play:
+                if (resourceBar.value <= 10)
+                {
+                    resourceBar.value += Time.deltaTime * resourcesPerS;
+                }
+                resourceNumber.text = resourceBar.value.ToString("0");
 
-        Timers();
+                Timers();
+                break;
+            case State.MainMenu:
+                break;
+        }
     }
 
     public void PauseMenuOnOff()

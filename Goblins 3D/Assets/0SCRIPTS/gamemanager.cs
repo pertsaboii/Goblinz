@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class gamemanager : MonoBehaviour
 {
@@ -71,10 +70,6 @@ public class gamemanager : MonoBehaviour
         Time.timeScale = 1;
         state = State.RunTime;
         userInterface.PauseMenuOnOff();
-    }
-    public void RestartLevel()
-    {
-        SceneManager.LoadScene(0);
     }
     public void ResumeEarlierState()
     {
