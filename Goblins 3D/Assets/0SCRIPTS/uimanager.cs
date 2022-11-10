@@ -17,6 +17,10 @@ public class uimanager : MonoBehaviour
     [SerializeField] private GameObject gameOverMenu;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject runTimeUi;
+    [SerializeField] private TMP_Text currentRunScore;
+    [SerializeField] private TMP_Text newHighScoreText;
+
+    [SerializeField] private TMP_Text mainMenuHighScoreText;
 
     public Slider resourceBar;
     [SerializeField] private float resourcesPerS;
@@ -52,12 +56,17 @@ public class uimanager : MonoBehaviour
     private GameObject card3;
     private GameObject card4;
 
-
+    public TMP_Text timerText;
+    [HideInInspector] public float currentTime;
+    [HideInInspector] public bool isTiming;
     private void Start()
     {
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             state = State.Play;
+
+            isTiming = true;
+            currentTime = 0;
 
             resourceBar.maxValue = 10;
             pauseMenu.SetActive(false);
@@ -66,7 +75,7 @@ public class uimanager : MonoBehaviour
 
             StartCards();
         }
-        else state = State.MainMenu;
+        else MainMenuState();
     }
     void Update()
     {
@@ -81,12 +90,26 @@ public class uimanager : MonoBehaviour
                 resourceNumber.text = resourceBar.value.ToString("0");
 
                 Timers();
+
+                if (isTiming == true)
+                {
+                    currentTime += Time.deltaTime;
+                    SetTimerText();
+                }
                 break;
             case State.MainMenu:
                 break;
         }
     }
-
+    void MainMenuState()
+    {
+        state = State.MainMenu;
+        mainMenuHighScoreText.text = "High Score: " + MultiScene.multiScene.highScore.ToString("00:00.00");
+    }
+    void SetTimerText()
+    {
+        timerText.text = currentTime.ToString("0:00.00");
+    }
     public void PauseMenuOnOff()
     {
         if (pauseMenu.activeSelf == false) pauseMenu.SetActive(true);
@@ -95,6 +118,10 @@ public class uimanager : MonoBehaviour
     }
     public void GameOverMenu()
     {
+        isTiming = false;
+        currentRunScore.text = "Your time: " + currentTime.ToString("00:00.00");
+        if (MultiScene.multiScene.highScore < gamemanager.userInterface.currentTime) MultiScene.multiScene.highScore = gamemanager.userInterface.currentTime;
+        if (currentTime == MultiScene.multiScene.highScore) newHighScoreText.enabled = true;
         gameOverMenu.SetActive(true);
     }
     public void DisableRunTimeUI()
@@ -172,7 +199,6 @@ public class uimanager : MonoBehaviour
         newCard4.transform.SetParent(fourCardPlace.gameObject.transform);
         card4 = newCard4;
     }
-
     void Timers()
     {
         if (timer1 >= 0)
