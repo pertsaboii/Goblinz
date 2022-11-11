@@ -56,6 +56,8 @@ public class uimanager : MonoBehaviour
     private GameObject card3;
     private GameObject card4;
 
+    private int prevCard1, prevCard2, prevCard3, prevCard4;
+
     public TMP_Text timerText;
     [HideInInspector] public float currentTime;
     [HideInInspector] public bool isTiming;
@@ -133,9 +135,12 @@ public class uimanager : MonoBehaviour
         if (gamemanager.playercards.selectedCard == card1) gamemanager.playercards.ResetSelectedCard();
         Destroy(card1);
         oneRefreshButton.enabled = false;
-        GameObject newCard = Instantiate(cards[Random.Range(0, cards.Length)], oneCardPlace.position, Quaternion.identity);
+        int randomCard = Random.Range(0, cards.Length);
+        while (randomCard == prevCard1) randomCard = Random.Range(0, cards.Length);
+        GameObject newCard = Instantiate(cards[randomCard], oneCardPlace.position, Quaternion.identity);
         newCard.transform.SetParent(oneCardPlace.gameObject.transform);
         card1 = newCard;
+        prevCard1 = randomCard;
         timer1 = refreshCoolDown;
     }
     public void RefreshTwo()
@@ -143,9 +148,12 @@ public class uimanager : MonoBehaviour
         if (gamemanager.playercards.selectedCard == card2) gamemanager.playercards.ResetSelectedCard();
         Destroy(card2);
         twoRefreshButton.enabled = false;
-        GameObject newCard = Instantiate(cards[Random.Range(0, cards.Length)], twoCardPlace.position, Quaternion.identity);
+        int randomCard = Random.Range(0, cards.Length);
+        while (randomCard == prevCard2) randomCard = Random.Range(0, cards.Length);
+        GameObject newCard = Instantiate(cards[randomCard], twoCardPlace.position, Quaternion.identity);
         newCard.transform.SetParent(twoCardPlace.gameObject.transform);
         card2 = newCard;
+        prevCard2 = randomCard;
         timer2 = refreshCoolDown;
     }
     public void RefreshThree()
@@ -153,9 +161,12 @@ public class uimanager : MonoBehaviour
         if (gamemanager.playercards.selectedCard == card3) gamemanager.playercards.ResetSelectedCard();
         Destroy(card3);
         threeRefreshButton.enabled = false;
-        GameObject newCard = Instantiate(cards[Random.Range(0, cards.Length)], threeCardPlace.position, Quaternion.identity);
+        int randomCard = Random.Range(0, cards.Length);
+        while (randomCard == prevCard3) randomCard = Random.Range(0, cards.Length);
+        GameObject newCard = Instantiate(cards[randomCard], threeCardPlace.position, Quaternion.identity);
         newCard.transform.SetParent(threeCardPlace.gameObject.transform);
         card3 = newCard;
+        prevCard3 = randomCard;
         timer3 = refreshCoolDown;
     }
     public void RefreshFour()
@@ -163,9 +174,12 @@ public class uimanager : MonoBehaviour
         if (gamemanager.playercards.selectedCard == card4) gamemanager.playercards.ResetSelectedCard();
         Destroy(card4);
         fourRefreshButton.enabled = false;
-        GameObject newCard = Instantiate(cards[Random.Range(0, cards.Length)], fourCardPlace.position, Quaternion.identity);
+        int randomCard = Random.Range(0, cards.Length);
+        while (randomCard == prevCard4) randomCard = Random.Range(0, cards.Length);
+        GameObject newCard = Instantiate(cards[randomCard], fourCardPlace.position, Quaternion.identity);
         newCard.transform.SetParent(fourCardPlace.gameObject.transform);
         card4 = newCard;
+        prevCard4 = randomCard;
         timer4 = refreshCoolDown;
     }
     void StartCards()
@@ -177,27 +191,35 @@ public class uimanager : MonoBehaviour
     }
     public void SpawnCardOne()
     {
-        GameObject newCard1 = Instantiate(cards[Random.Range(0, cards.Length)], oneCardPlace.position, Quaternion.identity);
+        int randomCard = Random.Range(0, cards.Length);
+        GameObject newCard1 = Instantiate(cards[randomCard], oneCardPlace.position, Quaternion.identity);
         newCard1.transform.SetParent(oneCardPlace.gameObject.transform);
         card1 = newCard1;
+        prevCard1 = randomCard;
     }
     public void SpawnCardTwo()
     {
-        GameObject newCard2 = Instantiate(cards[Random.Range(0, cards.Length)], twoCardPlace.position, Quaternion.identity);
+        int randomCard = Random.Range(0, cards.Length);
+        GameObject newCard2 = Instantiate(cards[randomCard], twoCardPlace.position, Quaternion.identity);
         newCard2.transform.SetParent(twoCardPlace.gameObject.transform);
         card2 = newCard2;
+        prevCard2 = randomCard;
     }
     public void SpawnCardThree()
     {
-        GameObject newCard3 = Instantiate(cards[Random.Range(0, cards.Length)], threeCardPlace.position, Quaternion.identity);
+        int randomCard = Random.Range(0, cards.Length);
+        GameObject newCard3 = Instantiate(cards[randomCard], threeCardPlace.position, Quaternion.identity);
         newCard3.transform.SetParent(threeCardPlace.gameObject.transform);
         card3 = newCard3;
+        prevCard3 = randomCard;
     }
     public void SpawnCardFour()
     {
-        GameObject newCard4 = Instantiate(cards[Random.Range(0, cards.Length)], fourCardPlace.position, Quaternion.identity);
+        int randomCard = Random.Range(0, cards.Length);
+        GameObject newCard4 = Instantiate(cards[randomCard], fourCardPlace.position, Quaternion.identity);
         newCard4.transform.SetParent(fourCardPlace.gameObject.transform);
         card4 = newCard4;
+        prevCard4 = randomCard;
     }
     void Timers()
     {

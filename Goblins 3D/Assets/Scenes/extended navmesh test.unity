@@ -2574,7 +2574,7 @@ MonoBehaviour:
   - {fileID: 5627627272792343555, guid: 0a4e5085270b69a4f8f2cc214f464eb4, type: 3}
   - {fileID: 5627627272792343555, guid: fe355b85cbc4ba74ab747266314be8d7, type: 3}
   - {fileID: 5627627272792343555, guid: e3f25a6d0c1f3a74aba4051ede1abefa, type: 3}
-  refreshCoolDown: 5
+  refreshCoolDown: 4
   oneRefreshButton: {fileID: 1894572085}
   oneRefButtonCD: {fileID: 2064712583}
   oneCardPlace: {fileID: 1475468777}
