@@ -2943,7 +2943,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0:00,00
+  m_text: 0.00,00
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7095,6 +7095,7 @@ MonoBehaviour:
   - {fileID: 1194400871}
   - {fileID: 351594925}
   - {fileID: 2058843580}
+  previousSpawnPoint: 0
   enemies:
   - {fileID: 2267042777573257862, guid: 7a5d06609294e954aa83050fde47881e, type: 3}
   - {fileID: 8228460915799941162, guid: 944c9a40123795145852a7c12a285d7f, type: 3}

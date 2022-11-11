@@ -104,11 +104,11 @@ public class uimanager : MonoBehaviour
     void MainMenuState()
     {
         state = State.MainMenu;
-        mainMenuHighScoreText.text = "High Score: " + MultiScene.multiScene.highScore.ToString("00:00.00");
+        mainMenuHighScoreText.text = "High Score: " + System.TimeSpan.FromSeconds(MultiScene.multiScene.highScore).ToString("mm\\:ss\\.f");
     }
     void SetTimerText()
     {
-        timerText.text = currentTime.ToString("0:00.00");
+        timerText.text = System.TimeSpan.FromSeconds(currentTime).ToString("mm\\:ss\\.f");
     }
     public void PauseMenuOnOff()
     {
@@ -119,7 +119,7 @@ public class uimanager : MonoBehaviour
     public void GameOverMenu()
     {
         isTiming = false;
-        currentRunScore.text = "Your time: " + currentTime.ToString("00:00.00");
+        currentRunScore.text = "Your time: " + System.TimeSpan.FromSeconds(currentTime).ToString("mm\\:ss\\.f");
         if (MultiScene.multiScene.highScore < gamemanager.userInterface.currentTime) MultiScene.multiScene.highScore = gamemanager.userInterface.currentTime;
         if (currentTime == MultiScene.multiScene.highScore) newHighScoreText.enabled = true;
         gameOverMenu.SetActive(true);

@@ -5,6 +5,7 @@ using UnityEngine;
 public class enemymanager : MonoBehaviour
 {
     [SerializeField] private Transform[] enemySpawnPoints;
+    [SerializeField] private int previousSpawnPoint;
     [SerializeField] private GameObject[] enemies;
     private GameObject nextEnemy;
 
@@ -17,6 +18,7 @@ public class enemymanager : MonoBehaviour
     private float timeBtwSpawns;
     void Start()
     {
+        previousSpawnPoint = Random.Range(0, enemies.Length);
         currentEnemyResources = EnemyStartResources;
         timeBtwSpawns = 0;
         PickRandomEnemy();
@@ -40,6 +42,8 @@ public class enemymanager : MonoBehaviour
         if (nextEnemyCost <= currentEnemyResources)
         {
             int randomSpawnPoint = Random.Range(0, enemySpawnPoints.Length);
+            while (randomSpawnPoint == previousSpawnPoint) randomSpawnPoint = Random.Range(0, enemySpawnPoints.Length);
+            previousSpawnPoint = randomSpawnPoint;
             Instantiate(nextEnemy, enemySpawnPoints[randomSpawnPoint].position, Quaternion.identity);
             currentEnemyResources -= nextEnemyCost;
             PickRandomEnemy();
