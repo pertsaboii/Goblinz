@@ -16,6 +16,7 @@ public class gamemanager : MonoBehaviour
     public static List<GameObject> buildings;
     public static List<GameObject> buildingsAndUnits;
     public static List<GameObject> enemies;
+    public List<GameObject> viholliset;
 
     public static PlayerCards playercards;
 
@@ -31,6 +32,7 @@ public class gamemanager : MonoBehaviour
 
         buildings = new List<GameObject>();
         enemies = new List<GameObject>();
+        viholliset = enemies;
         buildingsAndUnits = new List<GameObject>();
         loseCon = GameObject.Find("LoseCon");
 
@@ -53,6 +55,7 @@ public class gamemanager : MonoBehaviour
             case State.DoubleTime:  // jos tehd‰‰n mahdollisuus nopeuttaa aikaa
                 break;
         }
+        if (Input.GetKeyDown(KeyCode.Space)) Debug.Log(buildingsAndUnits.Count);
     }
     void GameOver()
     {

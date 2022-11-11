@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(ObstacleAgent), typeof(ALL_Health), typeof(All_AttackScript))]
-public class U_AI : MonoBehaviour
+public class oldunitai : MonoBehaviour
 {
     private enum State
     {
@@ -123,6 +123,24 @@ public class U_AI : MonoBehaviour
                             if (target == null) ReturnToRoam();
                         }
                     }
+
+
+                    /*Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, layerMask);
+                    if (colliders != null)
+                    {
+                        foreach (Collider col in colliders)
+                        {
+                            if (target == null)
+                            {
+                                target = col.gameObject;
+                                attackScript.target = target;
+                                attackScript.targetHealth = target.GetComponent<ALL_Health>();
+                                attackScript.targetInRange = true;
+                                attackScript.SwitchToAttackState();
+                            }
+                        }
+                        if (target == null) ReturnToRoam();
+                    }*/
                 }
                 if (target != null) transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
                 break;
@@ -186,6 +204,21 @@ public class U_AI : MonoBehaviour
                 StartChaseState();
             }
         }
+
+        /*Collider[] colliders = Physics.OverlapSphere(transform.position, targetScanningRange, layerMask);
+        if (colliders != null)
+        {
+            foreach (Collider col in colliders)
+            {
+                if (target == null)
+                {
+                    target = col.gameObject;
+                    attackScript.target = target;
+                    attackScript.targetHealth = target.GetComponent<ALL_Health>();
+                    StartChaseState();
+                }
+            }
+        }*/
     }
     void StartChaseState()
     {
@@ -197,39 +230,34 @@ public class U_AI : MonoBehaviour
     }
     void ApproachTarget()
     {
-        if (isRanged == true)
-        {
-            if (Vector3.Distance(target.transform.position, transform.position) < attackRange) StartAttackState();
+        if (Vector3.Distance(target.transform.position, transform.position) < attackRange) StartAttackState();
 
-            foreach (GameObject enemy in gamemanager.enemies)
+        foreach (GameObject enemy in gamemanager.enemies)
+        {
+            if (enemy != target && Vector3.Distance(enemy.transform.position, transform.position) < attackRange)
             {
-                if (enemy != target && Vector3.Distance(enemy.transform.position, transform.position) < attackRange)
+                target = enemy;
+                attackScript.target = target;
+                attackScript.targetHealth = target.GetComponent<ALL_Health>();
+                StartAttackState();
+            }
+        }
+
+        /*Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, layerMask);
+        if (colliders != null)
+        {
+            foreach (Collider col in colliders)
+            {
+                if (col.gameObject == target) StartAttackState();
+                else
                 {
-                    target = enemy;
+                    target = col.gameObject;
                     attackScript.target = target;
                     attackScript.targetHealth = target.GetComponent<ALL_Health>();
                     StartAttackState();
                 }
             }
-        }
-        else
-        {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, layerMask);
-            if (colliders != null)
-            {
-                foreach (Collider col in colliders)
-                {
-                    if (col.gameObject == target) StartAttackState();
-                    else
-                    {
-                        target = col.gameObject;
-                        attackScript.target = target;
-                        attackScript.targetHealth = target.GetComponent<ALL_Health>();
-                        StartAttackState();
-                    }
-                }
-            }
-        }
+        }*/
     }
     void StartAttackState()
     {

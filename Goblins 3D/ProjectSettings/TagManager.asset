@@ -8,6 +8,7 @@ TagManager:
   - Unit
   - Building
   - Enemy Tag Activator
+  - EnemyOutsideScreen
   layers:
   - Default
   - TransparentFX

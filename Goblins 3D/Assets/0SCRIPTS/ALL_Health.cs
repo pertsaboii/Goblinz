@@ -19,6 +19,8 @@ public class ALL_Health : MonoBehaviour
     [HideInInspector] public float deathDmgRadius;
     [SerializeField] private LayerMask deathDmgTargetType;
     [HideInInspector] public float deathDamage;
+
+    [HideInInspector] public bool isDead;
     void Start()
     {
         currentHealth = maxHealth;
@@ -53,6 +55,11 @@ public class ALL_Health : MonoBehaviour
             Collider[] colliders = Physics.OverlapSphere(transform.position, deathDmgRadius, deathDmgTargetType);
             if (colliders != null) foreach (Collider col in colliders) col.gameObject.GetComponent<ALL_Health>().UpdateHealth(-deathDamage);
         }
+        isDead = true;
+        Invoke("DestroyGO", .1f);   // tähän myöhemmin: jokaiselle tuhoutuvalle asialle oma scripti joka määrittää mitä tapahtuu kuollessa
+    }
+    void DestroyGO()
+    {
         Destroy(gameObject);
     }
 }

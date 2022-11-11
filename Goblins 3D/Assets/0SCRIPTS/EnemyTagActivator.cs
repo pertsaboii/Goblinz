@@ -11,6 +11,9 @@ public class EnemyTagActivator : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy Tag Activator")) gameObject.layer = 6;
+        if (other.CompareTag("Enemy Tag Activator"))
+        {
+            gameObject.layer = 6;
+        }
     }
 }
