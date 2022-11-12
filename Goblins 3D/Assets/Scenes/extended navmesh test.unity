@@ -1803,6 +1803,7 @@ Transform:
   - {fileID: 623403119}
   - {fileID: 2100143010}
   - {fileID: 444339332}
+  - {fileID: 1686827676}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2653,6 +2654,7 @@ MonoBehaviour:
   - {fileID: 5627627272792343555, guid: fe355b85cbc4ba74ab747266314be8d7, type: 3}
   - {fileID: 5627627272792343555, guid: e3f25a6d0c1f3a74aba4051ede1abefa, type: 3}
   - {fileID: 5627627272792343555, guid: 7c4b6922c1fda3b4ca8f6687a81a811b, type: 3}
+  - {fileID: 5627627272792343555, guid: 8aa46fb0a0195004893bf90944e0370c, type: 3}
   refreshCoolDown: 4
   oneRefreshButton: {fileID: 1894572085}
   oneRefButtonCD: {fileID: 2064712583}
@@ -6904,6 +6906,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1686827675
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1686827676}
+  m_Layer: 0
+  m_Name: Traps
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1686827676
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686827675}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 299221853}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1719091582 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9081151230834610786, guid: 9787778ab09e458439acb2c675aa0be2,
@@ -7189,6 +7222,7 @@ MonoBehaviour:
   spawnInterval: 1
   l2ResourceGainPerS: 0.7
   l2SpawnInterval: 0.8
+  stage: 1
   stageChangeInterval: 30
   stageAmount: 2
 --- !u!1 &1816960998

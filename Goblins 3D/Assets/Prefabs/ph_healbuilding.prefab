@@ -1048,7 +1048,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healingInterval: 3
-  healAmount: 2
+  healAmount: 3
   healingRange: 12
   healingBarSprite: {fileID: 2891771907687147065}
   healingBar: {fileID: 2891771908366521387}

@@ -9,6 +9,7 @@ TagManager:
   - Building
   - Enemy Tag Activator
   - EnemyOutsideScreen
+  - Trap
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - Wall
   - Enemy Walkable
   - Unit Walkable
-  - 
+  - Trap
   - 
   - 
   - 
