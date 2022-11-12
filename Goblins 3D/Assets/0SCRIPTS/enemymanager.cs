@@ -12,10 +12,17 @@ public class enemymanager : MonoBehaviour
     private float maxEnemyResources = 10;
     [SerializeField] private float currentEnemyResources;
     [SerializeField] private float EnemyStartResources;
-    [SerializeField] private float resourceGainPerS = 1;
-
+    [SerializeField] private float resourceGainPerS;
     [SerializeField] private float spawnInterval = 1;
+    [SerializeField] private float l2ResourceGainPerS;
+    [SerializeField] private float l2SpawnInterval = 0.8f;
     private float timeBtwSpawns;
+
+    [SerializeField] private int stage = 1;
+    [SerializeField] private float stageChangeInterval;
+    private float timeBtwStageChanges;
+    [SerializeField] private int stageAmount;
+
     void Start()
     {
         previousSpawnPoint = Random.Range(0, enemies.Length);
@@ -34,6 +41,13 @@ public class enemymanager : MonoBehaviour
             timeBtwSpawns = 0;
         }
         else timeBtwSpawns += Time.deltaTime;
+
+        if (timeBtwStageChanges >= stageChangeInterval && stage <= stageAmount)
+        {
+            timeBtwStageChanges = 0;
+            NextStage();
+        }
+        else timeBtwStageChanges += Time.deltaTime;
     }
     void SpawnEnemy()
     {
@@ -53,5 +67,15 @@ public class enemymanager : MonoBehaviour
     {
         int randomEnemy = Random.Range(0, enemies.Length);
         nextEnemy = enemies[randomEnemy];
+    }
+    void NextStage()
+    {
+        stage += 1;
+
+        if (stage == 2)
+        {
+            resourceGainPerS = l2ResourceGainPerS;
+            spawnInterval = l2SpawnInterval;
+        }
     }
 }

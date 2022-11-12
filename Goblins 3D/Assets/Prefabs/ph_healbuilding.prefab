@@ -1047,9 +1047,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ad4cbe42618f684390990c7538fd7ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healingInterval: 4
-  healAmount: 1
-  healingRange: 10
+  healingInterval: 3
+  healAmount: 2
+  healingRange: 12
   healingBarSprite: {fileID: 2891771907687147065}
   healingBar: {fileID: 2891771908366521387}
   layerMask:
@@ -1081,6 +1081,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   deathDamage: 0
+  isDead: 0
 --- !u!95 &2891771909211904058
 Animator:
   serializedVersion: 4
