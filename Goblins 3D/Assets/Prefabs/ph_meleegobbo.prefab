@@ -466,7 +466,6 @@ GameObject:
   - component: {fileID: 377916681812214927}
   - component: {fileID: 377916681812214928}
   - component: {fileID: 377916681812214929}
-  - component: {fileID: 4423718378528913184}
   m_Layer: 7
   m_Name: ph_meleegobbo
   m_TagString: Unit
@@ -572,6 +571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b8403e1304b6ba4aa689c221ce72fb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRanged: 0
   moveSpeed: 2
   walkAnimMult: 2
   targetScanningRange: 10
@@ -609,6 +609,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   deathDamage: 0
+  isDead: 0
 --- !u!114 &377916681812214926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -682,31 +683,6 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 0
   m_Center: {x: 0, y: 0.99, z: 0}
   m_TimeToStationary: 0.5
---- !u!114 &4423718378528913184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 377916681812214931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62daf9a693e29b745ad723a2ad23f146, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 0
-  currentHealth: 0
-  hpSprite: {fileID: 0}
-  hpBar: {fileID: 0}
-  unitThatSpawns: {fileID: 0}
-  spawnsUnit: 0
-  isBuilding: 0
-  dealsDmgOnDeath: 0
-  deathDmgRadius: 0
-  deathDmgTargetType:
-    serializedVersion: 2
-    m_Bits: 0
-  deathDamage: 0
 --- !u!1 &377916681852945593
 GameObject:
   m_ObjectHideFlags: 0

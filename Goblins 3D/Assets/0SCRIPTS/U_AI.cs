@@ -16,7 +16,7 @@ public class U_AI : MonoBehaviour
 
     [SerializeField] private bool isRanged;
 
-    private State state;
+    [SerializeField] private State state;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float walkAnimMult = 2;
     [SerializeField] private float targetScanningRange;
@@ -37,8 +37,6 @@ public class U_AI : MonoBehaviour
 
     private All_AttackScript attackScript;
     private float attackDistance;
-
-    [SerializeField] private string currentState;
 
     private Rigidbody rb;
     void Start()
@@ -127,7 +125,6 @@ public class U_AI : MonoBehaviour
                 if (target != null) transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
                 break;
         }
-        currentState = state.ToString();
 
         if (rb.velocity != Vector3.zero) rb.velocity = Vector3.zero;
 

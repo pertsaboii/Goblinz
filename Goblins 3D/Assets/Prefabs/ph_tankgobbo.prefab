@@ -20,7 +20,6 @@ GameObject:
   - component: {fileID: 842682456209440857}
   - component: {fileID: 842682456209440862}
   - component: {fileID: 842682456209440801}
-  - component: {fileID: 5079569052465328063}
   m_Layer: 7
   m_Name: ph_tankgobbo
   m_TagString: Unit
@@ -120,6 +119,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   deathDamage: 0
+  isDead: 0
 --- !u!114 &842682456209440805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,6 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b8403e1304b6ba4aa689c221ce72fb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRanged: 0
   moveSpeed: 1
   walkAnimMult: 2
   targetScanningRange: 8
@@ -251,31 +252,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 2
   gizmoOrigin: {fileID: 4682864110185347411}
---- !u!114 &5079569052465328063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 70403474195552997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62daf9a693e29b745ad723a2ad23f146, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 0
-  currentHealth: 0
-  hpSprite: {fileID: 0}
-  hpBar: {fileID: 0}
-  unitThatSpawns: {fileID: 0}
-  spawnsUnit: 0
-  isBuilding: 0
-  dealsDmgOnDeath: 0
-  deathDmgRadius: 0
-  deathDmgTargetType:
-    serializedVersion: 2
-    m_Bits: 0
-  deathDamage: 0
 --- !u!1 &323306678236992857
 GameObject:
   m_ObjectHideFlags: 0

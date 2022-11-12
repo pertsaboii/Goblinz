@@ -10,7 +10,7 @@ public class E_AI : MonoBehaviour
     {
         ChaseTarget, Attack, WalkToMiddle, OutSideOfScreen
     }
-    private State state;
+    [SerializeField] private State state;
 
     [SerializeField] private bool isRanged;
 
@@ -31,9 +31,9 @@ public class E_AI : MonoBehaviour
     private All_AttackScript attackScript;
     private float attackDistance;
 
-    [SerializeField] private string currentState;
-
     private Rigidbody rb;
+
+    private EnemyUnit baseScript;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -43,6 +43,7 @@ public class E_AI : MonoBehaviour
         navMeshAgent.speed = moveSpeed;
         agent = GetComponent<ObstacleAgent>();
         attackScript = GetComponent<All_AttackScript>();
+        baseScript = GetComponent<EnemyUnit>();
     }
 
     void Update()
@@ -107,7 +108,6 @@ public class E_AI : MonoBehaviour
                 if (target != null) StartChaseState();
                 break;
         }
-        currentState = state.ToString();
 
         if (rb.velocity != Vector3.zero) rb.velocity = Vector3.zero;
 
@@ -116,6 +116,9 @@ public class E_AI : MonoBehaviour
             attackScript.target = null;
             target = null;
         }
+        if (target != null) baseScript.target = target;                                 // jos on suorituskykyongelmia niin t‰m‰n voi siirt‰‰ voideihin
+        else baseScript.target = null;
+        
     }
     void StartWalkToScreen()
     {

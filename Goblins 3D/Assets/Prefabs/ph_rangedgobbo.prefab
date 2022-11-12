@@ -208,7 +208,6 @@ GameObject:
   - component: {fileID: 4119712937035304703}
   - component: {fileID: 4119712937035304696}
   - component: {fileID: 4119712937035304697}
-  - component: {fileID: 4680731670048413614}
   m_Layer: 7
   m_Name: ph_rangedgobbo
   m_TagString: Unit
@@ -427,32 +426,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &4680731670048413614
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3632146203201918016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62daf9a693e29b745ad723a2ad23f146, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 0
-  currentHealth: 0
-  hpSprite: {fileID: 0}
-  hpBar: {fileID: 0}
-  unitThatSpawns: {fileID: 0}
-  spawnsUnit: 0
-  isBuilding: 0
-  dealsDmgOnDeath: 0
-  deathDmgRadius: 0
-  deathDmgTargetType:
-    serializedVersion: 2
-    m_Bits: 0
-  deathDamage: 0
-  isDead: 0
 --- !u!1 &3690808754097815496
 GameObject:
   m_ObjectHideFlags: 0

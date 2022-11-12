@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class rigidram : MonoBehaviour
 {
-    private enum State
+    [SerializeField] private enum State
     {
         ApproachTarget
     }
@@ -14,8 +14,6 @@ public class rigidram : MonoBehaviour
 
     [SerializeField] private float buildingDamage;
     [SerializeField] private float unitColDamage;
-
-    private GameObject spawningEnemy;
 
     private int currentBuildingAmount;
 
@@ -32,13 +30,15 @@ public class rigidram : MonoBehaviour
     private Collider targetCollider;
     private Transform localTransform;
 
+    private EnemyUnit baseScript;
+
     void Start()
     {
         speed = startSpeed;
         rb = GetComponent<Rigidbody>();
         healthScript = GetComponent<ALL_Health>();
-        spawningEnemy = healthScript.unitThatSpawns;
         localTransform = GetComponent<Transform>();
+        baseScript = GetComponent<EnemyUnit>();
         LockOnTarget();
     }
 
@@ -64,6 +64,9 @@ public class rigidram : MonoBehaviour
                 break;
         }
         if (speed <= maxSpeed) speed += Time.deltaTime * accelerationPerS;
+
+        if (target != null) baseScript.target = target;                                 // jos on suorituskykyongelmia niin tämän voi siirtää voideihin
+        else baseScript.target = null;
     }
     private void FixedUpdate()
     {
