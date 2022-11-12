@@ -8,7 +8,7 @@ public class E_AI : MonoBehaviour
 {
     private enum State
     {
-        ChaseTarget, Attack, WalkToMiddle, OutSideOfScreen
+        Null, ChaseTarget, Attack, WalkToMiddle, OutSideOfScreen
     }
     [SerializeField] private State state;
 
@@ -136,7 +136,6 @@ public class E_AI : MonoBehaviour
                 attackScript.target = target;
                 attackScript.targetHealth = target.GetComponent<ALL_Health>();
                 attackScript.targetInRange = true;
-                //StartAttackState();
             }
         }
         if (target == null) StartWalkToMiddle();

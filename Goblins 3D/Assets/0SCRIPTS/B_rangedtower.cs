@@ -8,7 +8,7 @@ public class B_rangedtower : MonoBehaviour
 {
     private enum State
     {
-        ScanForEnemies, Attack
+        Null, ScanForEnemies, Attack
     }
 
     [SerializeField] private State state;

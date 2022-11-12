@@ -6,9 +6,9 @@ public class All_AttackScript : MonoBehaviour
 {
     private enum State
     {
-        NotAttacking, Attacking
+        Null, NotAttacking, Attacking
     }
-    private State state;
+    [SerializeField] private State state;
 
     public bool targetInRange;
     private Animator anim;
@@ -18,8 +18,6 @@ public class All_AttackScript : MonoBehaviour
     [SerializeField] private int attackDamage;
     [HideInInspector] public GameObject target;
     [HideInInspector] public ALL_Health targetHealth;
-
-    [SerializeField] private string currentState;
 
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform projectileSpawnPoint;
@@ -48,7 +46,6 @@ public class All_AttackScript : MonoBehaviour
                 if (target == null) targetInRange = false;
                 break;
         }
-        currentState = state.ToString();
     }
     public void SwitchToAttackState()
     {

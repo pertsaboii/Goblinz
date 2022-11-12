@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class rigidram : MonoBehaviour
 {
-    [SerializeField] private enum State
+    private enum State
     {
-        ApproachTarget
+        Null, ApproachTarget
     }
 
-    private State state;
+    [SerializeField] private State state;
     private GameObject target;
 
     [SerializeField] private float buildingDamage;
@@ -31,6 +31,8 @@ public class rigidram : MonoBehaviour
     private Transform localTransform;
 
     private EnemyUnit baseScript;
+
+    private bool impactDone;
 
     void Start()
     {
@@ -85,7 +87,7 @@ public class rigidram : MonoBehaviour
     {
         if (state == State.ApproachTarget && collision.gameObject == target)
         {
-            ImpactToTarget();
+            if (impactDone == false) ImpactToTarget();
         }
         // unitin dmg testi
         else if (collision.collider.CompareTag("Unit"))
@@ -96,6 +98,7 @@ public class rigidram : MonoBehaviour
     }
     void ImpactToTarget()
     {
+        impactDone = true;
         target.GetComponent<ALL_Health>().UpdateHealth(-buildingDamage);
         healthScript.UpdateHealth(-healthScript.currentHealth - 1);
     }

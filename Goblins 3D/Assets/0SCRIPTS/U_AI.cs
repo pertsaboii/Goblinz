@@ -8,7 +8,7 @@ public class U_AI : MonoBehaviour
 {
     private enum State
     {
-        Roaming, ChaseTarget, Attack
+        Null, Roaming, ChaseTarget, Attack
     }
 
     private ObstacleAgent agent;

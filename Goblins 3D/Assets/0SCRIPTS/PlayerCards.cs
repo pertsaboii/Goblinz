@@ -12,11 +12,6 @@ public class PlayerCards : MonoBehaviour
 
     [SerializeField] private LayerMask layerMask;
 
-    void Start()
-    {
-        
-    }
-    
     void Update()
     {
         if (Input.GetMouseButtonDown(0) && selectedCard != null && gamemanager.userInterface.resourceBar.value >= selectedCardCost && IsPointerOverUI() == false)
