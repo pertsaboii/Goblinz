@@ -888,7 +888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62daf9a693e29b745ad723a2ad23f146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  maxHealth: 14
   currentHealth: 0
   hpSprite: {fileID: 1185957135302741469}
   hpBar: {fileID: 1185957134710993707}
@@ -922,7 +922,7 @@ MonoBehaviour:
   - {fileID: 1185957136684871020}
   - {fileID: 1185957136751036382}
   - {fileID: 1185957136444524716}
-  attackSpeed: 0.7
+  attackSpeed: 0.8
   attackRange: 15
   target: {fileID: 0}
   targets: []

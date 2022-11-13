@@ -63,6 +63,8 @@ public class uimanager : MonoBehaviour
 
     [HideInInspector] public float currentTime;
     [HideInInspector] public bool isTiming;
+
+    [HideInInspector] public Animator anim;
     private void Start()
     {
         if (SceneManager.GetActiveScene().buildIndex == 1)
@@ -80,6 +82,8 @@ public class uimanager : MonoBehaviour
             resourceNumber.text = resourceSlider.value.ToString("0");
 
             StartCoroutine("StartCards");
+
+            anim = GetComponent<Animator>();
         }
         else MainMenuState();
     }
@@ -207,11 +211,11 @@ public class uimanager : MonoBehaviour
     IEnumerator StartCards()
     {
         SpawnCardOne();
-        yield return new WaitForSeconds(.2f);
+        yield return new WaitForSeconds(.3f);
         SpawnCardTwo();
-        yield return new WaitForSeconds(.2f);
+        yield return new WaitForSeconds(.3f);
         SpawnCardThree();
-        yield return new WaitForSeconds(.2f);
+        yield return new WaitForSeconds(.3f);
         SpawnCardFour();
     }
     public void SpawnCardOne()

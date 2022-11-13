@@ -19,5 +19,9 @@ public class Card : MonoBehaviour
         gamemanager.playercards.selectedCard = gameObject;
         gamemanager.playercards.selectedCardCost = cost;
         gamemanager.playercards.cardPlace = cardPlace;
+        if (cardPlace == "1") gamemanager.userInterface.anim.SetInteger("CardSelected", 1);
+        else if (cardPlace == "2") gamemanager.userInterface.anim.SetInteger("CardSelected", 2);
+        else if (cardPlace == "3") gamemanager.userInterface.anim.SetInteger("CardSelected", 3);
+        else if (cardPlace == "4") gamemanager.userInterface.anim.SetInteger("CardSelected", 4);
     }
 }

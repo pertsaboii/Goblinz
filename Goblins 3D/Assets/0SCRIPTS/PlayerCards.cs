@@ -30,6 +30,7 @@ public class PlayerCards : MonoBehaviour
                             gamemanager.userInterface.resourceSlider.value -= selectedCardCost;
 
                             Destroy(selectedCard);
+                            gamemanager.userInterface.anim.SetInteger("CardSelected", 0);
 
                             if (cardPlace == "1") gamemanager.userInterface.SpawnCardOne();
                             else if (cardPlace == "2") gamemanager.userInterface.SpawnCardTwo();

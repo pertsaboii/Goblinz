@@ -5,23 +5,30 @@ using UnityEngine;
 public class enemymanager : MonoBehaviour
 {
     [SerializeField] private Transform[] enemySpawnPoints;
-    [SerializeField] private int previousSpawnPoint;
+    private int previousSpawnPoint;
+
     [SerializeField] private GameObject[] enemies;
     private GameObject nextEnemy;
 
     private float maxEnemyResources = 10;
+    [Header("Enemy Resources")]
     [SerializeField] private float currentEnemyResources;
     [SerializeField] private float EnemyStartResources;
-    [SerializeField] private float resourceGainPerS;
-    [SerializeField] private float spawnInterval = 1;
-    [SerializeField] private float l2ResourceGainPerS;
-    [SerializeField] private float l2SpawnInterval = 0.8f;
+
+    [Header("Stages")]
+    [SerializeField] private float stageChangeInterval;
+    [SerializeField] private int stageAmount;
+    [SerializeField] private float s1ResourcesPerS;
+    [SerializeField] private float s1SpawnInterval;
+    [SerializeField] private float s2ResourcesPerS;
+    [SerializeField] private float s2SpawnInterval;
+    [SerializeField] private float s3ResourcesPerS;
+    [SerializeField] private float s3SpawnInterval;
     private float timeBtwSpawns;
 
-    [SerializeField] private int stage = 1;
-    [SerializeField] private float stageChangeInterval;
+    private int stage = 1;
+
     private float timeBtwStageChanges;
-    [SerializeField] private int stageAmount;
 
     void Start()
     {
@@ -33,9 +40,9 @@ public class enemymanager : MonoBehaviour
 
     void Update()
     {
-        if (currentEnemyResources < maxEnemyResources) currentEnemyResources += Time.deltaTime * resourceGainPerS;
+        if (currentEnemyResources < maxEnemyResources) currentEnemyResources += Time.deltaTime * s1ResourcesPerS;
 
-        if (timeBtwSpawns >= spawnInterval)
+        if (timeBtwSpawns >= s1SpawnInterval)
         {
             SpawnEnemy();
             timeBtwSpawns = 0;
@@ -74,8 +81,13 @@ public class enemymanager : MonoBehaviour
 
         if (stage == 2)
         {
-            resourceGainPerS = l2ResourceGainPerS;
-            spawnInterval = l2SpawnInterval;
+            s1ResourcesPerS = s2ResourcesPerS;
+            s1SpawnInterval = s2SpawnInterval;
+        }
+        if (stage == 3)
+        {
+            s1ResourcesPerS = s3ResourcesPerS;
+            s1SpawnInterval = s3SpawnInterval;
         }
     }
 }
