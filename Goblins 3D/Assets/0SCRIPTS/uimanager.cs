@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class uimanager : MonoBehaviour
 {
@@ -14,22 +15,28 @@ public class uimanager : MonoBehaviour
 
     private State state;
 
+    [Header("Menus")]
     [SerializeField] private GameObject gameOverMenu;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject runTimeUi;
+
+    [Header("Score")]
+    public TMP_Text timerText;
     [SerializeField] private TMP_Text currentRunScore;
     [SerializeField] private TMP_Text newHighScoreText;
-
     [SerializeField] private TMP_Text mainMenuHighScoreText;
 
-    public Slider resourceBar;
+    [Header("Resources")]
+    public Slider resourceSlider;
+    [SerializeField] private float refreshCooldown;
     [SerializeField] private float resourcesPerS;
     [SerializeField] private int startResources;
     [SerializeField] private TMP_Text resourceNumber;
+    [SerializeField] private GameObject resourceCircle;
+    [SerializeField] private GameObject resourceBar;
+    private float currentResources;
 
-    [SerializeField] private GameObject[] cards;
-    [SerializeField] private float refreshCoolDown;
-
+    [Header("Card places")]
     [SerializeField] private Button oneRefreshButton;
     [SerializeField] private Image oneRefButtonCD;
     [SerializeField] private Transform oneCardPlace;
@@ -46,19 +53,14 @@ public class uimanager : MonoBehaviour
     [SerializeField] private Image fourRefButtonCD;
     [SerializeField] private Transform fourCardPlace;
 
-    private float timer1;
-    private float timer2;
-    private float timer3;
-    private float timer4;
+    [SerializeField] private GameObject[] cards;
 
-    private GameObject card1;
-    private GameObject card2;
-    private GameObject card3;
-    private GameObject card4;
+    private float timer1, timer2, timer3, timer4;
+
+    private GameObject card1, card2, card3, card4;
 
     private int prevCard1, prevCard2, prevCard3, prevCard4;
 
-    public TMP_Text timerText;
     [HideInInspector] public float currentTime;
     [HideInInspector] public bool isTiming;
     private void Start()
@@ -70,12 +72,14 @@ public class uimanager : MonoBehaviour
             isTiming = true;
             currentTime = 0;
 
-            resourceBar.maxValue = 10;
+            resourceSlider.maxValue = 10;
             pauseMenu.SetActive(false);
             gameOverMenu.SetActive(false);
-            resourceBar.value = startResources;
+            resourceSlider.value = startResources;
+            currentResources = resourceSlider.value;
+            resourceNumber.text = resourceSlider.value.ToString("0");
 
-            StartCards();
+            StartCoroutine("StartCards");
         }
         else MainMenuState();
     }
@@ -85,11 +89,10 @@ public class uimanager : MonoBehaviour
         {
             default:
             case State.Play:
-                if (resourceBar.value <= 10)
+                if (resourceSlider.value <= 10)
                 {
-                    resourceBar.value += Time.deltaTime * resourcesPerS;
+                    resourceSlider.value += Time.deltaTime * resourcesPerS;
                 }
-                resourceNumber.text = resourceBar.value.ToString("0");
 
                 Timers();
 
@@ -97,6 +100,17 @@ public class uimanager : MonoBehaviour
                 {
                     currentTime += Time.deltaTime;
                     SetTimerText();
+                }
+                if (resourceSlider.value >= currentResources + 1)
+                {
+                    currentResources = Mathf.Floor(resourceSlider.value);
+                    resourceNumber.text = currentResources.ToString("0");
+                    ResourceCirclePop();
+                }
+                else if (resourceSlider.value <= currentResources)
+                {
+                    currentResources = Mathf.Floor(resourceSlider.value);
+                    resourceNumber.text = currentResources.ToString("0");
                 }
                 break;
             case State.MainMenu:
@@ -139,9 +153,11 @@ public class uimanager : MonoBehaviour
         while (randomCard == prevCard1) randomCard = Random.Range(0, cards.Length);
         GameObject newCard = Instantiate(cards[randomCard], oneCardPlace.position, Quaternion.identity);
         newCard.transform.SetParent(oneCardPlace.gameObject.transform);
+        oneCardPlace.transform.localScale = Vector3.zero;
+        oneCardPlace.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBounce);
         card1 = newCard;
         prevCard1 = randomCard;
-        timer1 = refreshCoolDown;
+        timer1 = refreshCooldown;
     }
     public void RefreshTwo()
     {
@@ -152,9 +168,11 @@ public class uimanager : MonoBehaviour
         while (randomCard == prevCard2) randomCard = Random.Range(0, cards.Length);
         GameObject newCard = Instantiate(cards[randomCard], twoCardPlace.position, Quaternion.identity);
         newCard.transform.SetParent(twoCardPlace.gameObject.transform);
+        twoCardPlace.transform.localScale = Vector3.zero;
+        twoCardPlace.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBounce);
         card2 = newCard;
         prevCard2 = randomCard;
-        timer2 = refreshCoolDown;
+        timer2 = refreshCooldown;
     }
     public void RefreshThree()
     {
@@ -165,9 +183,11 @@ public class uimanager : MonoBehaviour
         while (randomCard == prevCard3) randomCard = Random.Range(0, cards.Length);
         GameObject newCard = Instantiate(cards[randomCard], threeCardPlace.position, Quaternion.identity);
         newCard.transform.SetParent(threeCardPlace.gameObject.transform);
+        threeCardPlace.transform.localScale = Vector3.zero;
+        threeCardPlace.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBounce);
         card3 = newCard;
         prevCard3 = randomCard;
-        timer3 = refreshCoolDown;
+        timer3 = refreshCooldown;
     }
     public void RefreshFour()
     {
@@ -178,15 +198,20 @@ public class uimanager : MonoBehaviour
         while (randomCard == prevCard4) randomCard = Random.Range(0, cards.Length);
         GameObject newCard = Instantiate(cards[randomCard], fourCardPlace.position, Quaternion.identity);
         newCard.transform.SetParent(fourCardPlace.gameObject.transform);
+        fourCardPlace.transform.localScale = Vector3.zero;
+        fourCardPlace.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBounce);
         card4 = newCard;
         prevCard4 = randomCard;
-        timer4 = refreshCoolDown;
+        timer4 = refreshCooldown;
     }
-    void StartCards()
+    IEnumerator StartCards()
     {
         SpawnCardOne();
+        yield return new WaitForSeconds(.2f);
         SpawnCardTwo();
+        yield return new WaitForSeconds(.2f);
         SpawnCardThree();
+        yield return new WaitForSeconds(.2f);
         SpawnCardFour();
     }
     public void SpawnCardOne()
@@ -194,6 +219,8 @@ public class uimanager : MonoBehaviour
         int randomCard = Random.Range(0, cards.Length);
         GameObject newCard1 = Instantiate(cards[randomCard], oneCardPlace.position, Quaternion.identity);
         newCard1.transform.SetParent(oneCardPlace.gameObject.transform);
+        oneCardPlace.transform.localScale = Vector3.zero;
+        oneCardPlace.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBounce);
         card1 = newCard1;
         prevCard1 = randomCard;
     }
@@ -202,6 +229,8 @@ public class uimanager : MonoBehaviour
         int randomCard = Random.Range(0, cards.Length);
         GameObject newCard2 = Instantiate(cards[randomCard], twoCardPlace.position, Quaternion.identity);
         newCard2.transform.SetParent(twoCardPlace.gameObject.transform);
+        twoCardPlace.transform.localScale = Vector3.zero;
+        twoCardPlace.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBounce);
         card2 = newCard2;
         prevCard2 = randomCard;
     }
@@ -210,6 +239,8 @@ public class uimanager : MonoBehaviour
         int randomCard = Random.Range(0, cards.Length);
         GameObject newCard3 = Instantiate(cards[randomCard], threeCardPlace.position, Quaternion.identity);
         newCard3.transform.SetParent(threeCardPlace.gameObject.transform);
+        threeCardPlace.transform.localScale = Vector3.zero;
+        threeCardPlace.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBounce);
         card3 = newCard3;
         prevCard3 = randomCard;
     }
@@ -218,6 +249,8 @@ public class uimanager : MonoBehaviour
         int randomCard = Random.Range(0, cards.Length);
         GameObject newCard4 = Instantiate(cards[randomCard], fourCardPlace.position, Quaternion.identity);
         newCard4.transform.SetParent(fourCardPlace.gameObject.transform);
+        fourCardPlace.transform.localScale = Vector3.zero;
+        fourCardPlace.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBounce);
         card4 = newCard4;
         prevCard4 = randomCard;
     }
@@ -226,29 +259,37 @@ public class uimanager : MonoBehaviour
         if (timer1 >= 0)
         {
             timer1 -= Time.deltaTime;
-            oneRefButtonCD.fillAmount = timer1 / refreshCoolDown;
+            oneRefButtonCD.fillAmount = timer1 / refreshCooldown;
         }
         if (timer1 <= 0) oneRefreshButton.enabled = true;
 
         if (timer2 >= 0)
         {
             timer2 -= Time.deltaTime;
-            twoRefButtonCD.fillAmount = timer2 / refreshCoolDown;
+            twoRefButtonCD.fillAmount = timer2 / refreshCooldown;
         }
         if (timer2 <= 0) twoRefreshButton.enabled = true;
 
         if (timer3 >= 0)
         {
             timer3 -= Time.deltaTime;
-            threeRefButtonCD.fillAmount = timer3 / refreshCoolDown;
+            threeRefButtonCD.fillAmount = timer3 / refreshCooldown;
         }
         if (timer3 <= 0) threeRefreshButton.enabled = true;
 
         if (timer4 >= 0)
         {
             timer4 -= Time.deltaTime;
-            fourRefButtonCD.fillAmount = timer4 / refreshCoolDown;
+            fourRefButtonCD.fillAmount = timer4 / refreshCooldown;
         }
         if (timer4 <= 0) fourRefreshButton.enabled = true;
+    }
+    void ResourceCirclePop()
+    {
+        resourceCircle.transform.DOPunchScale(Vector3.one * 0.4f, 0.35f, 5, 1f);
+    }
+    public void InsufficientResourcesShake()
+    {
+        resourceBar.transform.DOShakePosition(.3f, Vector3.right * 15, 10, 0, false, false);
     }
 }

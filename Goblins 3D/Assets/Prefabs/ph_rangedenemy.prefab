@@ -698,14 +698,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6366706376376304274}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.46055502, z: 0}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2210458252214887970}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &6936115889897115727
 GameObject:
   m_ObjectHideFlags: 0
@@ -977,12 +977,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7686a0588fb39854ca6ad1c9ed7a8bba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
   targetInRange: 0
   attackSpeed: 0.7
   attackDamage: 0
   target: {fileID: 0}
   targetHealth: {fileID: 0}
-  currentState: 
   projectilePrefab: {fileID: 8716121212454041972, guid: 44f26eb9e2fdc1547819eb81acd62375,
     type: 3}
   projectileSpawnPoint: {fileID: 1362409805538084609}
@@ -1004,6 +1004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7311d0b114852e4bb4a0722080039e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
   isRanged: 1
   moveSpeed: 3
   targetScanningRange: 16

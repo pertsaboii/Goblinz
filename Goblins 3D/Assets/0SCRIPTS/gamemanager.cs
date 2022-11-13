@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class gamemanager : MonoBehaviour
 {
-    private enum State
+    [HideInInspector] public enum State
     {
         RunTime, Pause, GameOver, HalfTime, DoubleTime
     }
-    private State state;
+    public static State state;
 
     public static Camera camera;
     public static uimanager userInterface;
