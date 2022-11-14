@@ -7,7 +7,7 @@ public class enemymanager : MonoBehaviour
     [SerializeField] private Transform[] enemySpawnPoints;
     private int previousSpawnPoint;
 
-    [SerializeField] private GameObject[] enemies;
+    [SerializeField] private List<GameObject> enemies;
     private GameObject nextEnemy;
 
     private float maxEnemyResources = 10;
@@ -22,8 +22,10 @@ public class enemymanager : MonoBehaviour
     [SerializeField] private float s1SpawnInterval;
     [SerializeField] private float s2ResourcesPerS;
     [SerializeField] private float s2SpawnInterval;
+    [SerializeField] private GameObject[] s2NewEnemies;
     [SerializeField] private float s3ResourcesPerS;
     [SerializeField] private float s3SpawnInterval;
+    [SerializeField] private GameObject[] s3NewEnemies;
     private float timeBtwSpawns;
 
     private int stage = 1;
@@ -32,7 +34,7 @@ public class enemymanager : MonoBehaviour
 
     void Start()
     {
-        previousSpawnPoint = Random.Range(0, enemies.Length);
+        previousSpawnPoint = Random.Range(0, enemySpawnPoints.Length);
         currentEnemyResources = EnemyStartResources;
         timeBtwSpawns = 0;
         PickRandomEnemy();
@@ -72,7 +74,7 @@ public class enemymanager : MonoBehaviour
     }
     void PickRandomEnemy()
     {
-        int randomEnemy = Random.Range(0, enemies.Length);
+        int randomEnemy = Random.Range(0, enemies.Count);
         nextEnemy = enemies[randomEnemy];
     }
     void NextStage()
@@ -83,11 +85,21 @@ public class enemymanager : MonoBehaviour
         {
             s1ResourcesPerS = s2ResourcesPerS;
             s1SpawnInterval = s2SpawnInterval;
+
+            foreach (GameObject newEnemy in s2NewEnemies)
+            {
+                enemies.Add(newEnemy);
+            }
         }
         if (stage == 3)
         {
             s1ResourcesPerS = s3ResourcesPerS;
             s1SpawnInterval = s3SpawnInterval;
+
+            foreach (GameObject newEnemy in s3NewEnemies)
+            {
+                enemies.Add(newEnemy);
+            }
         }
     }
 }

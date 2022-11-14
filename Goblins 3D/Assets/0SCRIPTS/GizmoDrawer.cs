@@ -10,6 +10,6 @@ public class GizmoDrawer : MonoBehaviour
     private void OnDrawGizmos()     // aoe radius debug
     {
         Gizmos.color = Color.yellow;
-        if (gameObject.name == "troll_placeholder") Gizmos.DrawWireSphere(gizmoOrigin.position, radius);
+        if (gameObject.name == "U_tankgobbo") Gizmos.DrawWireSphere(gizmoOrigin.position, radius);
     }
 }

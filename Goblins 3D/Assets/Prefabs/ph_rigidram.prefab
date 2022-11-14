@@ -599,6 +599,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf51ba77fa458a4eabbf8ed4c604eb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
   buildingDamage: 5
   unitColDamage: 4
   startSpeed: 3
@@ -621,7 +622,7 @@ MonoBehaviour:
   currentHealth: 0
   hpSprite: {fileID: 2784124850773511373}
   hpBar: {fileID: 2784124852124651314}
-  unitThatSpawns: {fileID: 2267042777573257862, guid: 7a5d06609294e954aa83050fde47881e,
+  unitThatSpawns: {fileID: 4235148133687976138, guid: acd1c982552ea524e8cc4f7f0f81e13d,
     type: 3}
   spawnsUnit: 1
   isBuilding: 0

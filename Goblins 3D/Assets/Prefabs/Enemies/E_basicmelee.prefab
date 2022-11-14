@@ -994,7 +994,7 @@ MonoBehaviour:
   aoeDmgTargets:
     serializedVersion: 2
     m_Bits: 0
-  ps: {fileID: 0}
+  aoeFX: {fileID: 0}
   currentState: 
 --- !u!114 &4235148133687976176
 MonoBehaviour:
@@ -1010,7 +1010,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isRanged: 0
   moveSpeed: 2
-  walkAnimMult: 2.2
+  walkAnimMult: 1.8
   targetScanningRange: 10
   target: {fileID: 0}
   attackRange: 1.8

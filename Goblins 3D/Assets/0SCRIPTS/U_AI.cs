@@ -247,7 +247,6 @@ public class U_AI : MonoBehaviour
     }
     void ReturnToRoam()
     {
-        Debug.Log(gameObject.name + "roaming");
         timeBtwWalks = 0;
         anim.SetInteger("State", 0);
         state = State.Roaming;
@@ -256,7 +255,6 @@ public class U_AI : MonoBehaviour
     {
         if (state == State.Roaming)
         {
-            Debug.Log(gameObject.name + (" randommovement"));
             randomPos = transform.position;
             if (navMeshAgent.enabled == true) navMeshAgent.ResetPath();
             anim.SetInteger("State", 0);

@@ -25,7 +25,7 @@ public class All_AttackScript : MonoBehaviour
     [SerializeField] private Transform aoeDmgOrigin;
     [SerializeField] private float aoeRadius;
     [SerializeField] private LayerMask aoeDmgTargets;
-    [SerializeField] private ParticleSystem ps;
+    [SerializeField] private GameObject aoeFX;
 
     [SerializeField] private string currentState;
     void Start()
@@ -72,7 +72,7 @@ public class All_AttackScript : MonoBehaviour
     }
     void AoeMeleeDmg()
     {
-        ps.Play();                                // tähän myöhemmin pool
+        Instantiate(aoeFX, aoeDmgOrigin.transform.position, Quaternion.identity);                                // tähän myöhemmin pool
         Collider[] colliders = Physics.OverlapSphere(aoeDmgOrigin.position, aoeRadius, aoeDmgTargets);
         {
             foreach (Collider col in colliders)
