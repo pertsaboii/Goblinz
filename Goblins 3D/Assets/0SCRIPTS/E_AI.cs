@@ -18,6 +18,7 @@ public class E_AI : MonoBehaviour
     private NavMeshAgent navMeshAgent;
 
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float walkAnimMult = 2;
     [SerializeField] private float targetScanningRange;
 
     public GameObject target = null;
@@ -38,7 +39,7 @@ public class E_AI : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
-        anim.SetFloat("WalkSpeed", moveSpeed / 2);          //--- jos run anim on liian hidas/nopea niin t‰t‰ voi s‰‰t‰‰
+        anim.SetFloat("WalkSpeed", moveSpeed / walkAnimMult);          //--- jos run anim on liian hidas/nopea niin t‰t‰ voi s‰‰t‰‰
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = moveSpeed;
         agent = GetComponent<ObstacleAgent>();

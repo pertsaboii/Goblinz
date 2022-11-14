@@ -8,7 +8,7 @@ public class U_AI : MonoBehaviour
 {
     private enum State
     {
-        Null, Roaming, ChaseTarget, Attack
+        CheckForEnemies, Attack, Roaming, ChaseTarget
     }
 
     private ObstacleAgent agent;
@@ -16,7 +16,7 @@ public class U_AI : MonoBehaviour
 
     [SerializeField] private bool isRanged;
 
-    [SerializeField] private State state;
+    private State state;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float walkAnimMult = 2;
     [SerializeField] private float targetScanningRange;
@@ -39,6 +39,9 @@ public class U_AI : MonoBehaviour
     private float attackDistance;
 
     private Rigidbody rb;
+
+    [SerializeField] private string currentState;
+    private bool spawnCheckDone;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -51,7 +54,7 @@ public class U_AI : MonoBehaviour
         agent = GetComponent<ObstacleAgent>();
         attackScript = GetComponent<All_AttackScript>();
         originalPos = transform.position;
-        CheckForEnemies();
+        state = State.CheckForEnemies;
     }
 
     void Update()
@@ -59,7 +62,15 @@ public class U_AI : MonoBehaviour
         switch (state)
         {
             default:
+            case State.CheckForEnemies:
+                if (spawnCheckDone == false)
+                {
+                    CheckForEnemies();
+                    spawnCheckDone = true;
+                }
+                break;
             case State.Roaming:
+                ScanArea();
                 if (Vector3.Distance(randomPos, transform.position) < 0.1f && navMeshAgent.enabled == true) navMeshAgent.ResetPath();
                 if (Vector3.Distance(transform.position, originalPos) >= wanderingRange)
                 {
@@ -72,17 +83,15 @@ public class U_AI : MonoBehaviour
                     timeBtwWalks = walkCycleTime + idleTime;
                 }
                 else timeBtwWalks -= Time.deltaTime;
-                if (target != null) StartChaseState();
-                ScanArea();
                 break;
             case State.ChaseTarget:
                 anim.SetInteger("State", 1); // joskus jää attack animation päälle, tämä estää sen
+                ApproachTarget();
                 if (target != null) agent.SetDestination(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
                 if (target == null) ReturnToRoam();
-                ApproachTarget();
                 break;
             case State.Attack:
-                if (target != null && Vector3.Distance(target.transform.position, transform.position) > attackDistance + 0.3f) StartChaseState();
+                if (target != null && Vector3.Distance(target.transform.position, transform.position) > attackDistance + 0.5f) StartChaseState();
                 if (navMeshAgent.enabled == true) navMeshAgent.ResetPath();
                 if (target == null)
                 {
@@ -93,14 +102,10 @@ public class U_AI : MonoBehaviour
                             if (enemy.gameObject.layer == 6 && Vector3.Distance(enemy.transform.position, transform.position) < attackRange && (target == null || Vector3.Distance(target.transform.position, transform.position) > Vector3.Distance(enemy.transform.position, transform.position)))
                             {
                                 target = enemy;
-                                attackDistance = Vector3.Distance(target.transform.position, transform.position);
-                                attackScript.target = target;
-                                attackScript.targetHealth = target.GetComponent<ALL_Health>();
-                                attackScript.targetInRange = true;
                             }
                         }
                         if (target == null) ReturnToRoam();
-                        else attackScript.SwitchToAttackState();
+                        else StartAttackState();
                     }
                     else
                     {
@@ -112,10 +117,8 @@ public class U_AI : MonoBehaviour
                                 if (target == null)
                                 {
                                     target = col.gameObject;
-                                    attackScript.target = target;
-                                    attackScript.targetHealth = target.GetComponent<ALL_Health>();
-                                    attackScript.targetInRange = true;
-                                    attackScript.SwitchToAttackState();
+                                    StartAttackState();
+                                    return;
                                 }
                             }
                             if (target == null) ReturnToRoam();
@@ -133,9 +136,11 @@ public class U_AI : MonoBehaviour
             attackScript.target = null;
             target = null;
         }
+        currentState = state.ToString();
     }
     void CheckForEnemies()
     {
+        Debug.Log("checkforenemies");
         if (isRanged == true)
         {
             foreach (GameObject enemy in gamemanager.enemies)
@@ -143,11 +148,12 @@ public class U_AI : MonoBehaviour
                 if (enemy.gameObject.layer == 6 && Vector3.Distance(enemy.transform.position, transform.position) < attackRange && (target == null || Vector3.Distance(target.transform.position, transform.position) > Vector3.Distance(enemy.transform.position, transform.position)))
                 {
                     target = enemy;
-                    attackScript.target = target;
-                    attackScript.targetHealth = target.GetComponent<ALL_Health>();
-                    attackScript.targetInRange = true;
-                    StartAttackState();
                 }
+            }
+            if (target != null)
+            {
+                StartAttackState();
+                return;
             }
         }
         else
@@ -160,16 +166,13 @@ public class U_AI : MonoBehaviour
                     if (target == null)
                     {
                         target = col.gameObject;
-                        attackScript.target = target;
-                        attackScript.targetHealth = target.GetComponent<ALL_Health>();
-                        attackScript.targetInRange = true;
                         StartAttackState();
+                        return;
                     }
                 }
             }
-        }
-
         if (target == null) ReturnToRoam();
+        }
     }
     void ScanArea()
     {
@@ -180,32 +183,36 @@ public class U_AI : MonoBehaviour
                 target = enemy;
                 attackScript.target = target;
                 attackScript.targetHealth = target.GetComponent<ALL_Health>();
-                StartChaseState();
             }
         }
+        if (target != null) StartChaseState();
     }
     void StartChaseState()
     {
+        Debug.Log("start chase state");
+        anim.SetInteger("State", 1);
         attackScript.targetInRange = false;
         attackScript.target = target;
         attackScript.targetHealth = target.GetComponent<ALL_Health>();
-        anim.SetInteger("State", 1);
         state = State.ChaseTarget;
     }
     void ApproachTarget()
     {
         if (isRanged == true)
         {
-            if (Vector3.Distance(target.transform.position, transform.position) < attackRange) StartAttackState();
+            if (Vector3.Distance(target.transform.position, transform.position) < attackRange)
+            {
+                StartAttackState();
+                return;
+            }
 
             foreach (GameObject enemy in gamemanager.enemies)
             {
                 if (enemy != target && Vector3.Distance(enemy.transform.position, transform.position) < attackRange)
                 {
                     target = enemy;
-                    attackScript.target = target;
-                    attackScript.targetHealth = target.GetComponent<ALL_Health>();
                     StartAttackState();
+                    return;
                 }
             }
         }
@@ -216,13 +223,16 @@ public class U_AI : MonoBehaviour
             {
                 foreach (Collider col in colliders)
                 {
-                    if (col.gameObject == target) StartAttackState();
+                    if (col.gameObject == target)
+                    {
+                        StartAttackState();
+                        return;
+                    }
                     else
                     {
                         target = col.gameObject;
-                        attackScript.target = target;
-                        attackScript.targetHealth = target.GetComponent<ALL_Health>();
                         StartAttackState();
+                        return;
                     }
                 }
             }
@@ -231,27 +241,35 @@ public class U_AI : MonoBehaviour
     void StartAttackState()
     {
         attackDistance = Vector3.Distance(target.transform.position, transform.position);
+        attackScript.target = target;
+        attackScript.targetHealth = target.GetComponent<ALL_Health>();
+        attackScript.targetInRange = true;
         state = State.Attack;
+        Debug.Log("start attack state");
         attackScript.SwitchToAttackState();
     }
     void ReturnToRoam()
     {
         timeBtwWalks = 0;
         anim.SetInteger("State", 0);
+        Debug.Log("start roam state");
         state = State.Roaming;
     }
     IEnumerator RandomMovement()
     {
-        randomPos = transform.position;
-        if (navMeshAgent.enabled == true) navMeshAgent.ResetPath();
-        anim.SetInteger("State", 0);
+        while (state == State.Roaming)
+        {
+            randomPos = transform.position;
+            if (navMeshAgent.enabled == true) navMeshAgent.ResetPath();
+            anim.SetInteger("State", 0);
 
-        yield return new WaitForSeconds(idleTime);
+            yield return new WaitForSeconds(idleTime);
 
-        anim.SetInteger("State", 1);
+            anim.SetInteger("State", 1);
 
-        while (Vector3.Distance(randomPos, transform.position) < 4) CalculateRandomNavMeshPoint();
-        agent.SetDestination(randomPos);
+            while (Vector3.Distance(randomPos, transform.position) < 4) CalculateRandomNavMeshPoint();
+            agent.SetDestination(randomPos);
+        }
     }
     private void CalculateRandomNavMeshPoint()
     {

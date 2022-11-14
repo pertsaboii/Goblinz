@@ -2665,14 +2665,8 @@ MonoBehaviour:
   fourRefButtonCD: {fileID: 1534513219}
   fourCardPlace: {fileID: 1537400654}
   cards:
-  - {fileID: 5627627272792343555, guid: eee091b57fe08df4482acbfe7ca55362, type: 3}
   - {fileID: 5627627272792343555, guid: 3463d7ebe0c102743874878342867b93, type: 3}
-  - {fileID: 5627627272792343555, guid: e212a476e27813546bb18855299e030d, type: 3}
-  - {fileID: 5627627272792343555, guid: 0a4e5085270b69a4f8f2cc214f464eb4, type: 3}
   - {fileID: 5627627272792343555, guid: fe355b85cbc4ba74ab747266314be8d7, type: 3}
-  - {fileID: 5627627272792343555, guid: e3f25a6d0c1f3a74aba4051ede1abefa, type: 3}
-  - {fileID: 5627627272792343555, guid: 7c4b6922c1fda3b4ca8f6687a81a811b, type: 3}
-  - {fileID: 5627627272792343555, guid: 8aa46fb0a0195004893bf90944e0370c, type: 3}
   currentTime: 0
   isTiming: 0
   anim: {fileID: 0}
@@ -3390,7 +3384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62daf9a693e29b745ad723a2ad23f146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
+  maxHealth: 1000
   currentHealth: 0
   hpSprite: {fileID: 753247956}
   hpBar: {fileID: 1993769015}
@@ -7187,7 +7181,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1772397011
 Transform:
   m_ObjectHideFlags: 0
@@ -7237,8 +7231,7 @@ MonoBehaviour:
   - {fileID: 351594925}
   - {fileID: 2058843580}
   enemies:
-  - {fileID: 2267042777573257862, guid: 7a5d06609294e954aa83050fde47881e, type: 3}
-  - {fileID: 8228460915799941162, guid: 944c9a40123795145852a7c12a285d7f, type: 3}
+  - {fileID: 4235148133687976138, guid: acd1c982552ea524e8cc4f7f0f81e13d, type: 3}
   - {fileID: 3054103676638850485, guid: 051af6fd27f95b1458308e543ce20f49, type: 3}
   currentEnemyResources: 0
   EnemyStartResources: 5

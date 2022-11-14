@@ -8,7 +8,7 @@ public class oldunitai : MonoBehaviour
 {
     private enum State
     {
-        Roaming, ChaseTarget, Attack
+        Null, Roaming, ChaseTarget, Attack
     }
 
     private ObstacleAgent agent;
@@ -16,7 +16,7 @@ public class oldunitai : MonoBehaviour
 
     [SerializeField] private bool isRanged;
 
-    private State state;
+    [SerializeField] private State state;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float walkAnimMult = 2;
     [SerializeField] private float targetScanningRange;
@@ -37,8 +37,6 @@ public class oldunitai : MonoBehaviour
 
     private All_AttackScript attackScript;
     private float attackDistance;
-
-    [SerializeField] private string currentState;
 
     private Rigidbody rb;
     void Start()
@@ -114,6 +112,7 @@ public class oldunitai : MonoBehaviour
                                 if (target == null)
                                 {
                                     target = col.gameObject;
+                                    attackDistance = Vector3.Distance(target.transform.position, transform.position);
                                     attackScript.target = target;
                                     attackScript.targetHealth = target.GetComponent<ALL_Health>();
                                     attackScript.targetInRange = true;
@@ -123,29 +122,10 @@ public class oldunitai : MonoBehaviour
                             if (target == null) ReturnToRoam();
                         }
                     }
-
-
-                    /*Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, layerMask);
-                    if (colliders != null)
-                    {
-                        foreach (Collider col in colliders)
-                        {
-                            if (target == null)
-                            {
-                                target = col.gameObject;
-                                attackScript.target = target;
-                                attackScript.targetHealth = target.GetComponent<ALL_Health>();
-                                attackScript.targetInRange = true;
-                                attackScript.SwitchToAttackState();
-                            }
-                        }
-                        if (target == null) ReturnToRoam();
-                    }*/
                 }
                 if (target != null) transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
                 break;
         }
-        currentState = state.ToString();
 
         if (rb.velocity != Vector3.zero) rb.velocity = Vector3.zero;
 
@@ -164,6 +144,7 @@ public class oldunitai : MonoBehaviour
                 if (enemy.gameObject.layer == 6 && Vector3.Distance(enemy.transform.position, transform.position) < attackRange && (target == null || Vector3.Distance(target.transform.position, transform.position) > Vector3.Distance(enemy.transform.position, transform.position)))
                 {
                     target = enemy;
+                    //attackDistance = Vector3.Distance(target.transform.position, transform.position);
                     attackScript.target = target;
                     attackScript.targetHealth = target.GetComponent<ALL_Health>();
                     attackScript.targetInRange = true;
@@ -181,6 +162,7 @@ public class oldunitai : MonoBehaviour
                     if (target == null)
                     {
                         target = col.gameObject;
+                        //attackDistance = Vector3.Distance(target.transform.position, transform.position);
                         attackScript.target = target;
                         attackScript.targetHealth = target.GetComponent<ALL_Health>();
                         attackScript.targetInRange = true;
@@ -204,24 +186,10 @@ public class oldunitai : MonoBehaviour
                 StartChaseState();
             }
         }
-
-        /*Collider[] colliders = Physics.OverlapSphere(transform.position, targetScanningRange, layerMask);
-        if (colliders != null)
-        {
-            foreach (Collider col in colliders)
-            {
-                if (target == null)
-                {
-                    target = col.gameObject;
-                    attackScript.target = target;
-                    attackScript.targetHealth = target.GetComponent<ALL_Health>();
-                    StartChaseState();
-                }
-            }
-        }*/
     }
     void StartChaseState()
     {
+        Debug.Log("start chase state");
         attackScript.targetInRange = false;
         attackScript.target = target;
         attackScript.targetHealth = target.GetComponent<ALL_Health>();
@@ -230,34 +198,45 @@ public class oldunitai : MonoBehaviour
     }
     void ApproachTarget()
     {
-        if (Vector3.Distance(target.transform.position, transform.position) < attackRange) StartAttackState();
-
-        foreach (GameObject enemy in gamemanager.enemies)
+        if (isRanged == true)
         {
-            if (enemy != target && Vector3.Distance(enemy.transform.position, transform.position) < attackRange)
-            {
-                target = enemy;
-                attackScript.target = target;
-                attackScript.targetHealth = target.GetComponent<ALL_Health>();
-                StartAttackState();
-            }
-        }
+            if (Vector3.Distance(target.transform.position, transform.position) < attackRange) StartAttackState();
 
-        /*Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, layerMask);
-        if (colliders != null)
-        {
-            foreach (Collider col in colliders)
+            foreach (GameObject enemy in gamemanager.enemies)
             {
-                if (col.gameObject == target) StartAttackState();
-                else
+                if (enemy != target && Vector3.Distance(enemy.transform.position, transform.position) < attackRange)
                 {
-                    target = col.gameObject;
+                    target = enemy;
+                    //attackDistance = Vector3.Distance(target.transform.position, transform.position);
                     attackScript.target = target;
                     attackScript.targetHealth = target.GetComponent<ALL_Health>();
                     StartAttackState();
                 }
             }
-        }*/
+        }
+        else
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, layerMask);
+            if (colliders != null)
+            {
+                foreach (Collider col in colliders)
+                {
+                    if (col.gameObject == target)
+                    {
+                        //attackDistance = Vector3.Distance(target.transform.position, transform.position);
+                        StartAttackState();
+                    }
+                    else
+                    {
+                        target = col.gameObject;
+                        //attackDistance = Vector3.Distance(target.transform.position, transform.position);
+                        attackScript.target = target;
+                        attackScript.targetHealth = target.GetComponent<ALL_Health>();
+                        StartAttackState();
+                    }
+                }
+            }
+        }
     }
     void StartAttackState()
     {
