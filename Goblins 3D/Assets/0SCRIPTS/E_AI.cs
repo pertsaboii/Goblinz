@@ -8,9 +8,9 @@ public class E_AI : MonoBehaviour
 {
     private enum State
     {
-        Null, ChaseTarget, Attack, WalkToMiddle, OutSideOfScreen
+        OutSideOfScreen, ChaseTarget, Attack, WalkToMiddle 
     }
-    [SerializeField] private State state;
+    private State state;
 
     [SerializeField] private bool isRanged;
 
@@ -35,6 +35,8 @@ public class E_AI : MonoBehaviour
     private Rigidbody rb;
 
     private EnemyUnit baseScript;
+
+    [SerializeField] private string currentState;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -56,9 +58,9 @@ public class E_AI : MonoBehaviour
                 break;
             case State.ChaseTarget:
                 anim.SetInteger("State", 1); // joskus j‰‰ attack animation p‰‰lle, t‰m‰ est‰‰ sen
+                ApproachTarget();
                 if (target != null) agent.SetDestination(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
                 if (target == null) StartWalkToMiddle();
-                ApproachTarget();
                 break;
             case State.Attack:
                 if (target != null && Vector3.Distance(target.transform.position, transform.position) > attackDistance + 0.3f) StartChaseState();
@@ -72,14 +74,10 @@ public class E_AI : MonoBehaviour
                             if (Vector3.Distance(unitOrBuilding.transform.position, transform.position) < attackRange && (target == null || Vector3.Distance(target.transform.position, transform.position) > Vector3.Distance(unitOrBuilding.transform.position, transform.position)))
                             {
                                 target = unitOrBuilding;
-                                attackDistance = Vector3.Distance(target.transform.position, transform.position);
-                                attackScript.target = target;
-                                attackScript.targetHealth = target.GetComponent<ALL_Health>();
-                                attackScript.targetInRange = true;
                             }
                         }
                         if (target == null) StartWalkToMiddle();
-                        else attackScript.SwitchToAttackState();
+                        else StartAttackState();
                     }
                     else
                     {
@@ -91,10 +89,8 @@ public class E_AI : MonoBehaviour
                                 if (target == null)
                                 {
                                     target = col.gameObject;
-                                    attackScript.target = target;
-                                    attackScript.targetHealth = target.GetComponent<ALL_Health>();
-                                    attackScript.targetInRange = true;
-                                    attackScript.SwitchToAttackState();
+                                    StartAttackState();
+                                    return;
                                 }
                             }
                             if (target == null) StartWalkToMiddle();
@@ -119,7 +115,8 @@ public class E_AI : MonoBehaviour
         }
         if (target != null) baseScript.target = target;                                 // jos on suorituskykyongelmia niin t‰m‰n voi siirt‰‰ voideihin
         else baseScript.target = null;
-        
+
+        currentState = state.ToString();
     }
     void StartWalkToScreen()
     {
@@ -129,18 +126,38 @@ public class E_AI : MonoBehaviour
     }
     void CheckForEnemies()
     {
-        foreach (GameObject unitOrBuilding in gamemanager.buildingsAndUnits)
+        if (isRanged == true)
         {
-            if (Vector3.Distance(unitOrBuilding.transform.position, transform.position) < attackRange && (target == null || Vector3.Distance(target.transform.position, transform.position) > Vector3.Distance(unitOrBuilding.transform.position, transform.position)))
+            foreach (GameObject unitOrBuilding in gamemanager.buildingsAndUnits)
             {
-                target = unitOrBuilding;
-                attackScript.target = target;
-                attackScript.targetHealth = target.GetComponent<ALL_Health>();
-                attackScript.targetInRange = true;
+                if (Vector3.Distance(unitOrBuilding.transform.position, transform.position) < attackRange && (target == null || Vector3.Distance(target.transform.position, transform.position) > Vector3.Distance(unitOrBuilding.transform.position, transform.position)))
+                {
+                    target = unitOrBuilding;
+                }
+            }
+            if (target != null)
+            {
+                StartAttackState();
+                return;
+            }
+        }
+        else
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, layerMask);
+            if (colliders != null)
+            {
+                foreach (Collider col in colliders)
+                {
+                    if (target == null)
+                    {
+                        target = col.gameObject;
+                        StartAttackState();
+                        return;
+                    }
+                }
             }
         }
         if (target == null) StartWalkToMiddle();
-        else StartAttackState();
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -163,51 +180,66 @@ public class E_AI : MonoBehaviour
                 target = unitOrBuilding;
                 attackScript.target = target;
                 attackScript.targetHealth = target.GetComponent<ALL_Health>();
-                StartChaseState();
             }
         }
+        if (target != null) StartChaseState();
     }
     void StartChaseState()
     {
+        anim.SetInteger("State", 1);
         attackScript.targetInRange = false;
         attackScript.target = target;
         attackScript.targetHealth = target.GetComponent<ALL_Health>();
-        anim.SetInteger("State", 1);
         state = State.ChaseTarget;
     }
     void ApproachTarget()
     {
-        if (Vector3.Distance(target.transform.position, transform.position) < attackRange) StartAttackState();
-
-        foreach (GameObject unitOrBuilding in gamemanager.buildingsAndUnits)
+        if (isRanged == true)
         {
-            if (unitOrBuilding != target && Vector3.Distance(unitOrBuilding.transform.position, transform.position) < attackRange)
+            if (Vector3.Distance(target.transform.position, transform.position) < attackRange)
             {
-                target = unitOrBuilding;
-                attackScript.target = target;
-                attackScript.targetHealth = target.GetComponent<ALL_Health>();
                 StartAttackState();
+                return;
             }
-        }
-        /*Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, layerMask);
-        if (colliders != null)
-        {
-            foreach (Collider col in colliders)
+
+            foreach (GameObject unitOrBuilding in gamemanager.buildingsAndUnits)
             {
-                if (col.gameObject == target) StartAttackState();
-                else
+                if (unitOrBuilding != target && Vector3.Distance(unitOrBuilding.transform.position, transform.position) < attackRange)
                 {
-                    target = col.gameObject;
-                    attackScript.target = target;
-                    attackScript.targetHealth = target.GetComponent<ALL_Health>();
+                    target = unitOrBuilding;
                     StartAttackState();
+                    return;
                 }
             }
-        }*/
+        }
+        else
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, layerMask);
+            if (colliders != null)
+            {
+                foreach (Collider col in colliders)
+                {
+                    if (col.gameObject == target)
+                    {
+                        StartAttackState();
+                        return;
+                    }
+                    else
+                    {
+                        target = col.gameObject;
+                        StartAttackState();
+                        return;
+                    }
+                }
+            }
+        }
     }
     void StartAttackState()
     {
         attackDistance = Vector3.Distance(target.transform.position, transform.position);
+        attackScript.target = target;
+        attackScript.targetHealth = target.GetComponent<ALL_Health>();
+        attackScript.targetInRange = true;
         state = State.Attack;
         attackScript.SwitchToAttackState();
     }

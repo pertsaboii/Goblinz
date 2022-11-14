@@ -8,10 +8,10 @@ public class B_rangedtower : MonoBehaviour
 {
     private enum State
     {
-        Null, ScanForEnemies, Attack
+        ScanForEnemies, Attack
     }
 
-    [SerializeField] private State state;
+    private State state;
 
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform[] projectileSpawnPoints;

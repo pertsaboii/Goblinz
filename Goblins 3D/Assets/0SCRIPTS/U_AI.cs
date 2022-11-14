@@ -91,7 +91,7 @@ public class U_AI : MonoBehaviour
                 if (target == null) ReturnToRoam();
                 break;
             case State.Attack:
-                if (target != null && Vector3.Distance(target.transform.position, transform.position) > attackDistance + 0.5f) StartChaseState();
+                if (target != null && Vector3.Distance(target.transform.position, transform.position) > attackDistance + 0.3f) StartChaseState();
                 if (navMeshAgent.enabled == true) navMeshAgent.ResetPath();
                 if (target == null)
                 {
@@ -140,7 +140,6 @@ public class U_AI : MonoBehaviour
     }
     void CheckForEnemies()
     {
-        Debug.Log("checkforenemies");
         if (isRanged == true)
         {
             foreach (GameObject enemy in gamemanager.enemies)
@@ -171,8 +170,8 @@ public class U_AI : MonoBehaviour
                     }
                 }
             }
-        if (target == null) ReturnToRoam();
         }
+        if (target == null) ReturnToRoam();
     }
     void ScanArea()
     {
@@ -189,7 +188,6 @@ public class U_AI : MonoBehaviour
     }
     void StartChaseState()
     {
-        Debug.Log("start chase state");
         anim.SetInteger("State", 1);
         attackScript.targetInRange = false;
         attackScript.target = target;
@@ -245,20 +243,20 @@ public class U_AI : MonoBehaviour
         attackScript.targetHealth = target.GetComponent<ALL_Health>();
         attackScript.targetInRange = true;
         state = State.Attack;
-        Debug.Log("start attack state");
         attackScript.SwitchToAttackState();
     }
     void ReturnToRoam()
     {
+        Debug.Log(gameObject.name + "roaming");
         timeBtwWalks = 0;
         anim.SetInteger("State", 0);
-        Debug.Log("start roam state");
         state = State.Roaming;
     }
     IEnumerator RandomMovement()
     {
-        while (state == State.Roaming)
+        if (state == State.Roaming)
         {
+            Debug.Log(gameObject.name + (" randommovement"));
             randomPos = transform.position;
             if (navMeshAgent.enabled == true) navMeshAgent.ResetPath();
             anim.SetInteger("State", 0);
@@ -270,6 +268,7 @@ public class U_AI : MonoBehaviour
             while (Vector3.Distance(randomPos, transform.position) < 4) CalculateRandomNavMeshPoint();
             agent.SetDestination(randomPos);
         }
+        else StopCoroutine(RandomMovement());
     }
     private void CalculateRandomNavMeshPoint()
     {

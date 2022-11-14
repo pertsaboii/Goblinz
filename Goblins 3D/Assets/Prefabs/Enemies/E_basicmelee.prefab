@@ -982,7 +982,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7686a0588fb39854ca6ad1c9ed7a8bba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
   targetInRange: 0
   attackSpeed: 1
   attackDamage: 2
@@ -996,6 +995,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   ps: {fileID: 0}
+  currentState: 
 --- !u!114 &4235148133687976176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1008,16 +1008,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7311d0b114852e4bb4a0722080039e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
   isRanged: 0
   moveSpeed: 2
   walkAnimMult: 2.2
   targetScanningRange: 10
   target: {fileID: 0}
-  attackRange: 2
+  attackRange: 1.8
   layerMask:
     serializedVersion: 2
     m_Bits: 384
+  currentState: 
 --- !u!114 &4235148133687976131
 MonoBehaviour:
   m_ObjectHideFlags: 0
