@@ -26,6 +26,8 @@ public class enemymanager : MonoBehaviour
     [SerializeField] private float s3ResourcesPerS;
     [SerializeField] private float s3SpawnInterval;
     [SerializeField] private GameObject[] s3NewEnemies;
+    [SerializeField] private float s4ResourcesPerS;
+    [SerializeField] private float s4SpawnInterval;
     private float timeBtwSpawns;
 
     private int stage = 1;
@@ -95,6 +97,16 @@ public class enemymanager : MonoBehaviour
         {
             s1ResourcesPerS = s3ResourcesPerS;
             s1SpawnInterval = s3SpawnInterval;
+
+            foreach (GameObject newEnemy in s3NewEnemies)
+            {
+                enemies.Add(newEnemy);
+            }
+        }
+        if (stage == 4)
+        {
+            s1ResourcesPerS = s4ResourcesPerS;
+            s1SpawnInterval = s4SpawnInterval;
 
             foreach (GameObject newEnemy in s3NewEnemies)
             {

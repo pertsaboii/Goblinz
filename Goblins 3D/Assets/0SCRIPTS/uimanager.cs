@@ -36,6 +36,9 @@ public class uimanager : MonoBehaviour
     [SerializeField] private GameObject resourceBar;
     private float currentResources;
 
+    [Header("Other")]
+    [SerializeField] private RectTransform startText;
+
     [Header("Card places")]
     [SerializeField] private Button oneRefreshButton;
     [SerializeField] private Image oneRefButtonCD;
@@ -82,6 +85,7 @@ public class uimanager : MonoBehaviour
             resourceNumber.text = resourceSlider.value.ToString("0");
 
             StartCoroutine("StartCards");
+            StartCoroutine("StartText");
 
             anim = GetComponent<Animator>();
         }
@@ -299,5 +303,15 @@ public class uimanager : MonoBehaviour
     public void InsufficientResourcesShake()
     {
         resourceBar.transform.DOShakePosition(.3f, Vector3.right * 15, 10, 0, false, false);
+    }
+
+    IEnumerator StartText()
+    {
+        startText.transform.localPosition = new Vector3(-900f, startText.transform.localPosition.y, startText.transform.localPosition.z);
+        startText.DOAnchorPosX(-45, .5f, false).SetEase(Ease.OutSine);
+        yield return new WaitForSeconds(.5f);
+        startText.DOAnchorPosX(5, 1.5f);
+        yield return new WaitForSeconds(1.4f);
+        startText.DOAnchorPosX(900, .5f, false).SetEase(Ease.InCubic);
     }
 }
