@@ -868,7 +868,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2891771908707138126}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: shape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1048,13 +1048,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healingInterval: 3
-  healAmount: 3
+  healAmount: 4
   healingRange: 12
   healingBarSprite: {fileID: 2891771907687147065}
   healingBar: {fileID: 2891771908366521387}
   layerMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 384
   healingCircle: {fileID: 2891771908615914093}
 --- !u!114 &2891771909211904060
 MonoBehaviour:

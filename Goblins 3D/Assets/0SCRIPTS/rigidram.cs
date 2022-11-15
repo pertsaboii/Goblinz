@@ -76,7 +76,7 @@ public class rigidram : MonoBehaviour
         {
             rb.velocity = localTransform.forward * speed;
 
-            targetDir = targetCollider.bounds.center - localTransform.position;                   // jotta ei osuisi jalkoihin
+            targetDir = target.transform.position - localTransform.position;                   // jos k‰‰ntyy vituiksi niin t‰t‰ muokkaamalla voi korjata
 
             var projectileTargetRotation = Quaternion.LookRotation(targetDir);
 

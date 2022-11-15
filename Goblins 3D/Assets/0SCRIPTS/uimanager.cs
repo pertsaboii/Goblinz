@@ -152,6 +152,7 @@ public class uimanager : MonoBehaviour
     {
         if (gamemanager.playercards.selectedCard == card1) gamemanager.playercards.ResetSelectedCard();
         Destroy(card1);
+        anim.SetInteger("CardSelected", 0);
         oneRefreshButton.enabled = false;
         int randomCard = Random.Range(0, cards.Length);
         while (randomCard == prevCard1) randomCard = Random.Range(0, cards.Length);
@@ -167,6 +168,7 @@ public class uimanager : MonoBehaviour
     {
         if (gamemanager.playercards.selectedCard == card2) gamemanager.playercards.ResetSelectedCard();
         Destroy(card2);
+        anim.SetInteger("CardSelected", 0);
         twoRefreshButton.enabled = false;
         int randomCard = Random.Range(0, cards.Length);
         while (randomCard == prevCard2) randomCard = Random.Range(0, cards.Length);
@@ -182,6 +184,7 @@ public class uimanager : MonoBehaviour
     {
         if (gamemanager.playercards.selectedCard == card3) gamemanager.playercards.ResetSelectedCard();
         Destroy(card3);
+        anim.SetInteger("CardSelected", 0);
         threeRefreshButton.enabled = false;
         int randomCard = Random.Range(0, cards.Length);
         while (randomCard == prevCard3) randomCard = Random.Range(0, cards.Length);
@@ -197,6 +200,7 @@ public class uimanager : MonoBehaviour
     {
         if (gamemanager.playercards.selectedCard == card4) gamemanager.playercards.ResetSelectedCard();
         Destroy(card4);
+        anim.SetInteger("CardSelected", 0);
         fourRefreshButton.enabled = false;
         int randomCard = Random.Range(0, cards.Length);
         while (randomCard == prevCard4) randomCard = Random.Range(0, cards.Length);

@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 1185957134805064784}
   - component: {fileID: 1185957134805064790}
   - component: {fileID: 1185957134805064785}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 1185957135112329066}
   - component: {fileID: 1185957135112329064}
   - component: {fileID: 1185957135112329067}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -296,7 +296,7 @@ GameObject:
   - component: {fileID: 1185957135425875505}
   - component: {fileID: 1185957135425875511}
   - component: {fileID: 1185957135425875510}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -377,7 +377,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1185957135564322683}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: shape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -411,7 +411,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1185957135780454143}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: spawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
@@ -444,7 +444,7 @@ GameObject:
   - component: {fileID: 1185957136031462907}
   - component: {fileID: 1185957136031462905}
   - component: {fileID: 1185957136031462904}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -604,7 +604,7 @@ GameObject:
   - component: {fileID: 1185957136320976730}
   - component: {fileID: 1185957136320976728}
   - component: {fileID: 1185957136320976731}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -685,7 +685,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1185957136444524716}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: spawnpoint (3)
   m_TagString: Untagged
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
@@ -817,7 +817,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1185957136684871020}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: spawnpoint (1)
   m_TagString: Untagged
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
@@ -914,7 +914,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fb61a9b965f7564faf3054d56a6c140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
   projectilePrefab: {fileID: 8716121212454041972, guid: d1618f90410dd0f44a8f96b20027de7e,
     type: 3}
   projectileSpawnPoints:
@@ -965,7 +964,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1185957136751036382}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: spawnpoint (2)
   m_TagString: Untagged
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}

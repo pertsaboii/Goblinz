@@ -2909,7 +2909,7 @@ MonoBehaviour:
   mainMenuHighScoreText: {fileID: 0}
   resourceSlider: {fileID: 66242304}
   refreshCooldown: 4
-  resourcesPerS: 0.6
+  resourcesPerS: 0.45
   startResources: 5
   resourceNumber: {fileID: 257962729}
   resourceCircle: {fileID: 134745958}
@@ -9387,7 +9387,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2328181595138019238}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: swort_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9453,7 +9453,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1721463918869417722}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9500,7 +9500,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7067444515866167774}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: leg.l_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9516,7 +9516,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6208395285182000057}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9532,7 +9532,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6693971942843519376}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: arm.r_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9548,7 +9548,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8389593110141536713}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: leg.r_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9581,7 +9581,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7584704762289864894}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: arm.l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9597,7 +9597,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3923020221322405261}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: old gobbo
   m_TagString: Building
   m_Icon: {fileID: 0}
@@ -9613,7 +9613,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7213331884077179930}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: head_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9690,7 +9690,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2249266632983336826}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: leg.r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9707,7 +9707,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7825714752712318868}
   - component: {fileID: 4799409504364811137}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: gobbioo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9739,7 +9739,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5386739778252403987}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9755,7 +9755,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7703232397467586125}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: swort
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9834,7 +9834,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1539676814526788571}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: leg.l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9928,7 +9928,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 154314295373792846}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10018,7 +10018,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7815623831009945373}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: arm.r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
