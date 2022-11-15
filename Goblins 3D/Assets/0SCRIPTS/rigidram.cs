@@ -34,6 +34,8 @@ public class rigidram : MonoBehaviour
 
     private bool impactDone;
 
+    [SerializeField] private Transform hitFXSpawnPoint;
+
     void Start()
     {
         speed = startSpeed;
@@ -98,6 +100,7 @@ public class rigidram : MonoBehaviour
     }
     void ImpactToTarget()
     {
+        Instantiate(gamemanager.assetBank.FindFX(AssetBank.FXType.BatteringRamHit), hitFXSpawnPoint.position, Quaternion.identity);
         impactDone = true;
         target.GetComponent<ALL_Health>().UpdateHealth(-buildingDamage);
         healthScript.UpdateHealth(-healthScript.currentHealth - 1);

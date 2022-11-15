@@ -69,7 +69,7 @@ public class All_AttackScript : MonoBehaviour
     }
     void AoeMeleeDmg()
     {
-        Instantiate(aoeFX, aoeDmgOrigin.transform.position, Quaternion.identity);                                // tähän myöhemmin pool
+        Instantiate(aoeFX, aoeDmgOrigin.transform.position, Quaternion.identity);
         Collider[] colliders = Physics.OverlapSphere(aoeDmgOrigin.position, aoeRadius, aoeDmgTargets);
         {
             foreach (Collider col in colliders)

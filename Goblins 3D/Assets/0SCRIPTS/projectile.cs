@@ -21,12 +21,16 @@ public class projectile : MonoBehaviour
 
     [HideInInspector] public GameObject whoSpawnedProjectile;
     private GameObject hitCollider;
+
+    public MeshRenderer mr;
     void Start()
     {
+        mr.enabled = false;
         ragdollCollider = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
         if (target != null) targetCollider = target.GetComponent<Collider>();
         localTransform = GetComponent<Transform>();
+        Invoke("ActivateMesh", .04f); // koska keih‰‰t aluksi v‰‰r‰ss‰ asennossa
     }
     private void FixedUpdate()
     {
@@ -85,5 +89,9 @@ public class projectile : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         Destroy(gameObject);
+    }
+    void ActivateMesh()
+    {
+        mr.enabled = true;
     }
 }

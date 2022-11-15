@@ -170,6 +170,7 @@ MonoBehaviour:
     m_Bits: 64
   triggerCol: {fileID: 143932296206317866}
   whoSpawnedProjectile: {fileID: 0}
+  mr: {fileID: 6607719777803784302}
 --- !u!65 &1178621246327202908
 BoxCollider:
   m_ObjectHideFlags: 0
