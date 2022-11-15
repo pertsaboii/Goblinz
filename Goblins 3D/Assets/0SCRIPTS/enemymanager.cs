@@ -64,7 +64,7 @@ public class enemymanager : MonoBehaviour
     {
         float nextEnemyCost = nextEnemy.GetComponent<EnemyUnit>().unitCost;
 
-        if (nextEnemyCost <= currentEnemyResources)
+        if (nextEnemyCost <= currentEnemyResources && gamemanager.state == gamemanager.State.RunTime)
         {
             int randomSpawnPoint = Random.Range(0, enemySpawnPoints.Length);
             while (randomSpawnPoint == previousSpawnPoint) randomSpawnPoint = Random.Range(0, enemySpawnPoints.Length);

@@ -12,9 +12,10 @@ public class gamemanager : MonoBehaviour
 
     public static Camera camera;
     public static uimanager userInterface;
+    public static GameObject loseCon;
     [SerializeField] private uimanager UIScript;
     [SerializeField] private Camera mainCam;
-    [SerializeField] private GameObject loseCon;
+    [SerializeField] private GameObject oldGobbo;
 
     public static List<GameObject> buildings;
     public static List<GameObject> buildingsAndUnits;
@@ -29,7 +30,8 @@ public class gamemanager : MonoBehaviour
         Time.timeScale = 1;
 
         camera = mainCam;
-        userInterface = UIScript; //GameObject.Find("UI").GetComponent<uimanager>();
+        userInterface = UIScript;
+        loseCon = oldGobbo;
         playercards = GetComponent<PlayerCards>();
         assetBank = GetComponent<AssetBank>();
 

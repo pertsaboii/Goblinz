@@ -12,7 +12,7 @@ public class AssetBank : MonoBehaviour
         BuildingDeath,
         BasicEnemyDeath,
         WanderingDeath,
-        TrollUnitDeath
+        TrollUnitDeath,
     }
     public FX[] FXArray;
 

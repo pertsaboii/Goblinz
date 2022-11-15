@@ -11,17 +11,17 @@ public class B_HealingBuilding : MonoBehaviour
     [SerializeField] private Image healingBarSprite;
     [SerializeField] private GameObject healingBar;
     [SerializeField] private LayerMask layerMask;
-    private Animator anim;
+    [SerializeField] private ParticleSystem ps;
+    private ALL_Health healthScript;
 
-    [SerializeField] private GameObject healingCircle;
     void Start()
     {
         gamemanager.buildings.Add(gameObject);
         gamemanager.buildingsAndUnits.Add(gameObject);
         healingBarSprite.fillAmount = 0;
-        anim = GetComponent<Animator>();
-
-        healingCircle.transform.localScale = new Vector3(healingRange * 2, 0.2f, healingRange * 2);
+        healthScript = GetComponent<ALL_Health>();
+        ParticleSystem.ShapeModule psShape = ps.shape;
+        psShape.radius = healingRange;
     }
 
     void Update()
@@ -35,10 +35,12 @@ public class B_HealingBuilding : MonoBehaviour
         }
 
         healingBar.transform.LookAt(new Vector3(1, gamemanager.camera.transform.position.y * 10, gamemanager.camera.transform.position.z * 10));
+
+        if (healthScript.isDead == true) healingBar.SetActive(false);   // jos suorituskykyongelmia niin tämä johkin voidiin
     }
     void Heal()
     {
-        anim.SetTrigger("Heal");
+        ps.Play();
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, healingRange, layerMask);
         if (colliders != null)

@@ -8,7 +8,7 @@ public class FXdestroy : MonoBehaviour
     void Start()
     {
         ps = GetComponent<ParticleSystem>();
-        Invoke("Destroy", ps.startLifetime);
+        Invoke("Destroy", ps.main.startLifetimeMultiplier + 0.5f);
     }
     private void Destroy()
     {

@@ -96,7 +96,7 @@ public class U_AI : MonoBehaviour
                 break;
             case State.Attack:
                 if (isRanged == true && target != null && Vector3.Distance(target.transform.position, transform.position) > attackRange) StartChaseState();
-                else if (target != null && Vector3.Distance(target.transform.position, transform.position) > attackDistance + 0.3f) StartChaseState();
+                else if (isRanged == false && target != null && Vector3.Distance(target.transform.position, transform.position) > attackDistance + 0.3f) StartChaseState();
                 if (navMeshAgent.enabled == true) navMeshAgent.ResetPath();
                 if (target == null)
                 {

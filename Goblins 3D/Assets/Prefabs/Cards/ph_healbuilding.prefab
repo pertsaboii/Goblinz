@@ -383,7 +383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce3b2eb8ab898bc49a4be7e1502a246e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unit: {fileID: 2891771909211904062, guid: 6d726ad4a6118e34895eef940df43e27, type: 3}
+  unit: {fileID: 8481251566081368037, guid: 6d726ad4a6118e34895eef940df43e27, type: 3}
   cost: 2
   insufFundsImage: {fileID: 8605618068385336597}
   costCircle: {fileID: 5627627272756841169}

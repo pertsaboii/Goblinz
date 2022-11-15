@@ -64,7 +64,7 @@ public class E_AI : MonoBehaviour
                 break;
             case State.Attack:
                 if (isRanged == true && target != null && Vector3.Distance(target.transform.position, transform.position) > attackRange) StartChaseState();
-                else if (target != null && Vector3.Distance(target.transform.position, transform.position) > attackDistance + 0.3f) StartChaseState();
+                else if (isRanged == false && target != null && Vector3.Distance(target.transform.position, transform.position) > attackDistance + 0.3f) StartChaseState();
                 if (navMeshAgent.enabled == true) navMeshAgent.ResetPath();
                 if (target == null)
                 {
@@ -122,7 +122,7 @@ public class E_AI : MonoBehaviour
     void StartWalkToScreen()
     {
         anim.SetInteger("State", 1);
-        agent.SetDestination(new Vector3(0, transform.position.y, 0));
+        agent.SetDestination(gamemanager.loseCon.transform.position);
         state = State.OutSideOfScreen;
     }
     void CheckForEnemies()
@@ -168,7 +168,7 @@ public class E_AI : MonoBehaviour
     void StartWalkToMiddle()
     {
         anim.SetInteger("State", 1);
-        agent.SetDestination(new Vector3(0, transform.position.y, 0));
+        agent.SetDestination(gamemanager.loseCon.transform.position);
         state = State.WalkToMiddle;
     }
 
