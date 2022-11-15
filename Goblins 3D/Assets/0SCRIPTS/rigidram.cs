@@ -6,10 +6,10 @@ public class rigidram : MonoBehaviour
 {
     private enum State
     {
-        Null, ApproachTarget
+        ApproachTarget
     }
 
-    [SerializeField] private State state;
+    private State state;
     private GameObject target;
 
     [SerializeField] private float buildingDamage;
@@ -85,7 +85,7 @@ public class rigidram : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (state == State.ApproachTarget && collision.gameObject == target)
+        if (state == State.ApproachTarget && collision.gameObject.CompareTag("Building"))
         {
             if (impactDone == false) ImpactToTarget();
         }

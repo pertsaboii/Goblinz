@@ -40,10 +40,8 @@ public class All_AttackScript : MonoBehaviour
         {
             default:
             case State.NotAttacking:
-                //if (target != null && targetInRange == true) SwitchToAttackState();
                 break;
             case State.Attacking:
-                //anim.SetInteger("State", 2);
                 if (target == null || targetInRange == false) state = State.NotAttacking;
                 if (target == null) targetInRange = false;
                 break;
@@ -54,7 +52,6 @@ public class All_AttackScript : MonoBehaviour
     {
         anim.SetInteger("State", 2);
         state = State.Attacking;
-        //targetInRange = true;
         anim.SetFloat("AttackSpeed", attackSpeed);
     }
     void SingleTargetMeleeDmg()
