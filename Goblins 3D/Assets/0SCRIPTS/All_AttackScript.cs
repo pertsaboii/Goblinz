@@ -42,6 +42,7 @@ public class All_AttackScript : MonoBehaviour
             case State.NotAttacking:
                 break;
             case State.Attacking:
+                if (anim.GetInteger("State") != 2) anim.SetInteger("State", 2);
                 if (target == null || targetInRange == false) state = State.NotAttacking;
                 if (target == null) targetInRange = false;
                 break;

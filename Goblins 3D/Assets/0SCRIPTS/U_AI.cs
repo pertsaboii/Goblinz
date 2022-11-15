@@ -71,7 +71,11 @@ public class U_AI : MonoBehaviour
                 break;
             case State.Roaming:
                 ScanArea();
-                if (Vector3.Distance(randomPos, transform.position) < 0.1f && navMeshAgent.enabled == true) navMeshAgent.ResetPath();
+                if (Vector3.Distance(randomPos, transform.position) < 0.1f && navMeshAgent.enabled == true)
+                {
+                    anim.SetInteger("State", 0);
+                    navMeshAgent.ResetPath();
+                }
                 if (Vector3.Distance(transform.position, originalPos) >= wanderingRange)
                 {
                     anim.SetInteger("State", 1);
@@ -85,7 +89,7 @@ public class U_AI : MonoBehaviour
                 else timeBtwWalks -= Time.deltaTime;
                 break;
             case State.ChaseTarget:
-                anim.SetInteger("State", 1); // joskus j‰‰ attack animation p‰‰lle, t‰m‰ est‰‰ sen               
+                if (anim.GetInteger("State") != 1) anim.SetInteger("State", 1); // joskus j‰‰ attack animation p‰‰lle, t‰m‰ est‰‰ sen               
                 if (target != null) agent.SetDestination(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
                 if (target == null) ReturnToRoam();
                 else ApproachTarget();

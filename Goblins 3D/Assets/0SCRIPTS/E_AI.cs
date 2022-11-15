@@ -57,7 +57,7 @@ public class E_AI : MonoBehaviour
             case State.OutSideOfScreen:
                 break;
             case State.ChaseTarget:
-                anim.SetInteger("State", 1); // joskus j‰‰ attack animation p‰‰lle, t‰m‰ est‰‰ sen
+                if (anim.GetInteger("State") != 1) anim.SetInteger("State", 1); // joskus j‰‰ attack animation p‰‰lle, t‰m‰ est‰‰ sen
                 if (target != null) agent.SetDestination(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
                 if (target == null) StartWalkToMiddle();
                 else ApproachTarget();

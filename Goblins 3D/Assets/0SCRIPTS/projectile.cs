@@ -30,7 +30,7 @@ public class projectile : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         if (target != null) targetCollider = target.GetComponent<Collider>();
         localTransform = GetComponent<Transform>();
-        Invoke("ActivateMesh", .04f); // koska keih‰‰t aluksi v‰‰r‰ss‰ asennossa
+        Invoke("ActivateMesh", .08f); // koska keih‰‰t aluksi v‰‰r‰ss‰ asennossa
     }
     private void FixedUpdate()
     {
