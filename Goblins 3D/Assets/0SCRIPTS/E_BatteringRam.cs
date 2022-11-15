@@ -35,7 +35,7 @@ public class E_BatteringRam : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = moveSpeed;
         agent = GetComponent<ObstacleAgent>();
-        spawningEnemy = healthScript.unitThatSpawns;
+        //spawningEnemy = healthScript.unitThatSpawns;
         LockOnTarget();
     }
 

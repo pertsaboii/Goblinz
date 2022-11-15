@@ -11,5 +11,6 @@ public class GizmoDrawer : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         if (gameObject.name == "U_tankgobbo") Gizmos.DrawWireSphere(gizmoOrigin.position, radius);
+        else if (gameObject.name == "ph_wanderinggobbo") Gizmos.DrawWireSphere(transform.position, radius);
     }
 }

@@ -58,9 +58,9 @@ public class E_AI : MonoBehaviour
                 break;
             case State.ChaseTarget:
                 anim.SetInteger("State", 1); // joskus jää attack animation päälle, tämä estää sen
-                ApproachTarget();
                 if (target != null) agent.SetDestination(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
                 if (target == null) StartWalkToMiddle();
+                else ApproachTarget();
                 break;
             case State.Attack:
                 if (target != null && Vector3.Distance(target.transform.position, transform.position) > attackDistance + 0.3f) StartChaseState();

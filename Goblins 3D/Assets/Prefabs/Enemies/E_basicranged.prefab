@@ -1246,6 +1246,7 @@ GameObject:
   - component: {fileID: -5929863468510189123}
   - component: {fileID: 8753464096680098451}
   - component: {fileID: 8753464096680098469}
+  - component: {fileID: 9034006072899518568}
   m_Layer: 6
   m_Name: E_basicranged
   m_TagString: Enemy
@@ -1317,15 +1318,6 @@ MonoBehaviour:
   currentHealth: 0
   hpSprite: {fileID: 3804115669777986054}
   hpBar: {fileID: 3804115669402292668}
-  unitThatSpawns: {fileID: 0}
-  spawnsUnit: 0
-  isBuilding: 0
-  dealsDmgOnDeath: 0
-  deathDmgRadius: 0
-  deathDmgTargetType:
-    serializedVersion: 2
-    m_Bits: 0
-  deathDamage: 0
   isDead: 0
 --- !u!114 &8753464096680098454
 MonoBehaviour:
@@ -1477,6 +1469,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7e98b9bc2519bb41ac96e5a3054fc2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &9034006072899518568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8228460915799941162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a2efdd681a8a04f81f56c653089e64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathFX: {fileID: 0}
+  deathFXType: 1
+  spawnsUnitOnDeath: 0
+  spawningUnit: {fileID: 0}
+  spawnPoint: {fileID: 0}
+  dealsAoeDmgOnDeath: 0
+  deathDmgAmount: 0
+  deathDmgRadius: 0
+  deathDmgLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &8532993082821517858
 GameObject:
   m_ObjectHideFlags: 0

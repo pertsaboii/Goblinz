@@ -1010,6 +1010,7 @@ GameObject:
   - component: {fileID: 2891771909211904060}
   - component: {fileID: 2891771909211904058}
   - component: {fileID: 2891771909211904057}
+  - component: {fileID: 1970643427649910858}
   m_Layer: 8
   m_Name: ph_healbuilding
   m_TagString: Building
@@ -1072,15 +1073,6 @@ MonoBehaviour:
   currentHealth: 0
   hpSprite: {fileID: 2891771908532014296}
   hpBar: {fileID: 2891771907893109040}
-  unitThatSpawns: {fileID: 0}
-  spawnsUnit: 0
-  isBuilding: 1
-  dealsDmgOnDeath: 0
-  deathDmgRadius: 0
-  deathDmgTargetType:
-    serializedVersion: 2
-    m_Bits: 0
-  deathDamage: 0
   isDead: 0
 --- !u!95 &2891771909211904058
 Animator:
@@ -1116,6 +1108,28 @@ CapsuleCollider:
   m_Height: 4.2
   m_Direction: 1
   m_Center: {x: 0, y: 0.98, z: 0}
+--- !u!114 &1970643427649910858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2891771909211904062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a2efdd681a8a04f81f56c653089e64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathFXType: 4
+  spawnsUnitOnDeath: 0
+  spawningUnit: {fileID: 0}
+  spawnPoint: {fileID: 0}
+  dealsAoeDmgOnDeath: 0
+  deathDmgAmount: 0
+  deathDmgRadius: 0
+  deathDmgLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &2891771909301963918
 GameObject:
   m_ObjectHideFlags: 0

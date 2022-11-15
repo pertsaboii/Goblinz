@@ -45,7 +45,7 @@ public class B_HealingBuilding : MonoBehaviour
         {
             foreach (Collider col in colliders)
             {
-                /*if (col.gameObject.CompareTag("Unit"))*/ col.gameObject.GetComponent<ALL_Health>().UpdateHealth(healAmount);
+                if (col.gameObject != gameObject) col.gameObject.GetComponent<ALL_Health>().UpdateHealth(healAmount);
             }
         }
     }

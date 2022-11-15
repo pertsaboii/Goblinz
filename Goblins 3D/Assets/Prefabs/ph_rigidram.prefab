@@ -504,6 +504,7 @@ GameObject:
   - component: {fileID: 254097477245055390}
   - component: {fileID: 3054103676638850486}
   - component: {fileID: 2784124851588747507}
+  - component: {fileID: 6000699273459989625}
   m_Layer: 6
   m_Name: ph_rigidram
   m_TagString: Enemy
@@ -599,7 +600,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf51ba77fa458a4eabbf8ed4c604eb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
   buildingDamage: 5
   unitColDamage: 4
   startSpeed: 3
@@ -622,17 +622,30 @@ MonoBehaviour:
   currentHealth: 0
   hpSprite: {fileID: 2784124850773511373}
   hpBar: {fileID: 2784124852124651314}
-  unitThatSpawns: {fileID: 4235148133687976138, guid: acd1c982552ea524e8cc4f7f0f81e13d,
+  isDead: 0
+--- !u!114 &6000699273459989625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3054103676638850485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a2efdd681a8a04f81f56c653089e64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathFXType: 4
+  spawnsUnitOnDeath: 1
+  spawningUnit: {fileID: 4235148133687976138, guid: acd1c982552ea524e8cc4f7f0f81e13d,
     type: 3}
-  spawnsUnit: 1
-  isBuilding: 0
-  dealsDmgOnDeath: 0
+  spawnPoint: {fileID: 0}
+  dealsAoeDmgOnDeath: 0
+  deathDmgAmount: 0
   deathDmgRadius: 0
-  deathDmgTargetType:
+  deathDmgLayerMask:
     serializedVersion: 2
     m_Bits: 0
-  deathDamage: 0
-  isDead: 0
 --- !u!1 &3617270007054936279
 GameObject:
   m_ObjectHideFlags: 0

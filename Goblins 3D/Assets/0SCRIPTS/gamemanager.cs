@@ -12,6 +12,9 @@ public class gamemanager : MonoBehaviour
 
     public static Camera camera;
     public static uimanager userInterface;
+    [SerializeField] private uimanager UIScript;
+    [SerializeField] private Camera mainCam;
+    [SerializeField] private GameObject loseCon;
 
     public static List<GameObject> buildings;
     public static List<GameObject> buildingsAndUnits;
@@ -20,21 +23,20 @@ public class gamemanager : MonoBehaviour
 
     public static PlayerCards playercards;
 
-    private GameObject loseCon;
-
+    public static AssetBank assetBank;
     private void Awake()
     {
         Time.timeScale = 1;
 
-        camera = Camera.main;
-        userInterface = GameObject.Find("UI").GetComponent<uimanager>();
+        camera = mainCam;
+        userInterface = UIScript; //GameObject.Find("UI").GetComponent<uimanager>();
         playercards = GetComponent<PlayerCards>();
+        assetBank = GetComponent<AssetBank>();
 
         buildings = new List<GameObject>();
         enemies = new List<GameObject>();
         viholliset = enemies;
         buildingsAndUnits = new List<GameObject>();
-        loseCon = GameObject.Find("LoseCon");
 
         state = State.RunTime;
     }

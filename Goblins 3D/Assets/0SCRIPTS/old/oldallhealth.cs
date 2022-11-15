@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(ALL_Death))]
-public class ALL_Health : MonoBehaviour
+public class oldallhealth : MonoBehaviour
 {
     [SerializeField] private float maxHealth;
     public float currentHealth;
@@ -12,11 +11,18 @@ public class ALL_Health : MonoBehaviour
     [SerializeField] private Image hpSprite;
     [SerializeField] private GameObject hpBar;
 
+    public GameObject unitThatSpawns;
+    [SerializeField] private bool spawnsUnit;
+    [SerializeField] private bool isBuilding;
+    [SerializeField] private bool dealsDmgOnDeath;
+
+    [HideInInspector] public float deathDmgRadius;
+    [SerializeField] private LayerMask deathDmgTargetType;
+    [HideInInspector] public float deathDamage;
+
     [HideInInspector] public bool isDead;
-    private ALL_Death deathScript;
     void Start()
     {
-        deathScript = GetComponent<ALL_Death>();
         currentHealth = maxHealth;
         hpSprite.fillAmount = currentHealth / maxHealth;
         hpBar.SetActive(false);
@@ -26,7 +32,7 @@ public class ALL_Health : MonoBehaviour
         if (currentHealth <= maxHealth) hpBar.SetActive(true);
         currentHealth += healthChange;
         hpSprite.fillAmount = currentHealth / maxHealth;
-        if (currentHealth <= 0 && isDead == false) ZeroHealthPoints();
+        if (currentHealth <= 0) Death();
         if (currentHealth >= maxHealth)
         {
             currentHealth = maxHealth;
@@ -37,13 +43,23 @@ public class ALL_Health : MonoBehaviour
     {
         hpBar.transform.LookAt(new Vector3(1, gamemanager.camera.transform.position.y * 10, gamemanager.camera.transform.position.z * 10));
     }
-    void ZeroHealthPoints()
+    void Death()
     {
-        isDead = true;
         if (gameObject.layer == 7 || gameObject.layer == 8) gamemanager.buildingsAndUnits.Remove(gameObject);
         if (gameObject.CompareTag("Enemy") == true) gamemanager.enemies.Remove(gameObject);
         if (gameObject.CompareTag("Building") == true) gamemanager.buildings.Remove(gameObject);
-        hpBar.SetActive(false);
-        StartCoroutine(deathScript.Death());
+        if (spawnsUnit == true) Instantiate(unitThatSpawns, transform.position, Quaternion.identity);
+        if (isBuilding == true) gamemanager.buildings.Remove(this.gameObject);
+        if (dealsDmgOnDeath)
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, deathDmgRadius, deathDmgTargetType);
+            if (colliders != null) foreach (Collider col in colliders) col.gameObject.GetComponent<ALL_Health>().UpdateHealth(-deathDamage);
+        }
+        isDead = true;
+        Invoke("DestroyGO", .1f);   // tähän myöhemmin: jokaiselle tuhoutuvalle asialle oma scripti joka määrittää mitä tapahtuu kuollessa
+    }
+    void DestroyGO()
+    {
+        Destroy(gameObject);
     }
 }

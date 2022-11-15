@@ -24,9 +24,6 @@ public class wanderinggobbo : MonoBehaviour
     [SerializeField] private float wanderingRange;
     private Vector3 randomPos;
 
-    [SerializeField] private float explosionRange;
-    [SerializeField] private float explosionDamage;
-
     private Animator anim;
 
     private Rigidbody rb;
@@ -45,8 +42,6 @@ public class wanderinggobbo : MonoBehaviour
         agent = GetComponent<ObstacleAgent>();
         originalPos = transform.position;
         healthScript = GetComponent<ALL_Health>();
-        healthScript.deathDmgRadius = explosionRange;
-        healthScript.deathDamage = explosionDamage;
     }
 
     void Update()

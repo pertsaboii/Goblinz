@@ -85,10 +85,10 @@ public class U_AI : MonoBehaviour
                 else timeBtwWalks -= Time.deltaTime;
                 break;
             case State.ChaseTarget:
-                anim.SetInteger("State", 1); // joskus jää attack animation päälle, tämä estää sen
-                ApproachTarget();
+                anim.SetInteger("State", 1); // joskus jää attack animation päälle, tämä estää sen               
                 if (target != null) agent.SetDestination(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
                 if (target == null) ReturnToRoam();
+                else ApproachTarget();
                 break;
             case State.Attack:
                 if (target != null && Vector3.Distance(target.transform.position, transform.position) > attackDistance + 0.3f) StartChaseState();

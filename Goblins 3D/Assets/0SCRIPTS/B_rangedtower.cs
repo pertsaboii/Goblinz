@@ -38,7 +38,7 @@ public class B_rangedtower : MonoBehaviour
                 ScanArea();
                 break;
             case State.Attack:
-                if (target == null) StartScanState();
+                if (target == null || targetHealth.isDead == true) StartScanState();
                 else if (timeBtwAttacks >= attackSpeed)
                 {
                     timeBtwAttacks = 0;

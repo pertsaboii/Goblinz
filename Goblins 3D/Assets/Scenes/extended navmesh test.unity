@@ -3350,6 +3350,7 @@ GameObject:
   - component: {fileID: 623403120}
   - component: {fileID: 623403124}
   - component: {fileID: 623403125}
+  - component: {fileID: 623403126}
   m_Layer: 8
   m_Name: LoseCon
   m_TagString: Building
@@ -3470,15 +3471,6 @@ MonoBehaviour:
   currentHealth: 0
   hpSprite: {fileID: 753247956}
   hpBar: {fileID: 1993769015}
-  unitThatSpawns: {fileID: 0}
-  spawnsUnit: 0
-  isBuilding: 1
-  dealsDmgOnDeath: 0
-  deathDmgRadius: 0
-  deathDmgTargetType:
-    serializedVersion: 2
-    m_Bits: 0
-  deathDamage: 0
   isDead: 0
 --- !u!114 &623403125
 MonoBehaviour:
@@ -3492,6 +3484,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec3185906ff0f5a4980d99f47927902f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &623403126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623403118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a2efdd681a8a04f81f56c653089e64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathFXType: 0
+  spawnsUnitOnDeath: 0
+  spawningUnit: {fileID: 0}
+  spawnPoint: {fileID: 0}
+  dealsAoeDmgOnDeath: 0
+  deathDmgAmount: 0
+  deathDmgRadius: 0
+  deathDmgLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &630563721
 GameObject:
   m_ObjectHideFlags: 0
@@ -5857,6 +5871,7 @@ GameObject:
   - component: {fileID: 1232587676}
   - component: {fileID: 1232587677}
   - component: {fileID: 1232587678}
+  - component: {fileID: 1232587680}
   - component: {fileID: 1232587679}
   m_Layer: 0
   m_Name: GAMEMANAGER
@@ -5894,6 +5909,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2005eb7d00eef14e857eac07cff45c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UIScript: {fileID: 513856045}
+  mainCam: {fileID: 963194227}
+  loseCon: {fileID: 623403118}
   viholliset: []
 --- !u!114 &1232587678
 MonoBehaviour:
@@ -5926,6 +5944,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 819775609ddf879438e2bf7a21dd8226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1232587680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232587675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4976b180686b2544998f69271e42704a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FXArray:
+  - particleSystem: {fileID: 9067544875522874818, guid: b3ae2827ec1f47e46a0f228ecacfff62,
+      type: 3}
+    fXType: 1
+  - particleSystem: {fileID: 9067544875522874818, guid: b3ae2827ec1f47e46a0f228ecacfff62,
+      type: 3}
+    fXType: 0
+  - particleSystem: {fileID: 2701917674838983725, guid: dfb92c9d36d602742ab9484d8653c02c,
+      type: 3}
+    fXType: 2
+  - particleSystem: {fileID: 2562456843818020777, guid: 36adb4a91b84f644091e4fbdb9a2aeba,
+      type: 3}
+    fXType: 5
+  - particleSystem: {fileID: 2701917674838983725, guid: 3a4acd482935edb4f9f2e1c1a44b0ed6,
+      type: 3}
+    fXType: 4
+  - particleSystem: {fileID: 1398924956239182075, guid: 68bdcf2a86d07ac458c4361d517933e1,
+      type: 3}
+    fXType: 6
 --- !u!1 &1234130200
 GameObject:
   m_ObjectHideFlags: 0

@@ -121,6 +121,7 @@ GameObject:
   - component: {fileID: 7125585800872126441}
   - component: {fileID: 7125585800872126442}
   - component: {fileID: 7125585800872126449}
+  - component: {fileID: 2117778308509028776}
   m_Layer: 7
   m_Name: ph_wanderinggobbo
   m_TagString: Unit
@@ -235,15 +236,7 @@ MonoBehaviour:
   currentHealth: 0
   hpSprite: {fileID: 7125585801075089411}
   hpBar: {fileID: 7125585800956755508}
-  unitThatSpawns: {fileID: 0}
-  spawnsUnit: 0
-  isBuilding: 0
-  dealsDmgOnDeath: 1
-  deathDmgRadius: 0
-  deathDmgTargetType:
-    serializedVersion: 2
-    m_Bits: 64
-  deathDamage: 0
+  isDead: 0
 --- !u!95 &7125585800872126454
 Animator:
   serializedVersion: 4
@@ -333,8 +326,6 @@ MonoBehaviour:
   walkCycleTime: 4
   idleTime: 1
   wanderingRange: 15
-  explosionRange: 5
-  explosionDamage: 4
 --- !u!54 &7125585800872126449
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -351,6 +342,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!114 &2117778308509028776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7125585800872126444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a2efdd681a8a04f81f56c653089e64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathFXType: 2
+  spawnsUnitOnDeath: 0
+  spawningUnit: {fileID: 0}
+  spawnPoint: {fileID: 0}
+  dealsAoeDmgOnDeath: 1
+  deathDmgAmount: 4
+  deathDmgRadius: 5
+  deathDmgLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &7125585800886333017
 GameObject:
   m_ObjectHideFlags: 0

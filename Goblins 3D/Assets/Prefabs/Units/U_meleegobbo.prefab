@@ -1206,6 +1206,7 @@ GameObject:
   - component: {fileID: 8109951086228174992}
   - component: {fileID: 8109951086228174991}
   - component: {fileID: 8109951086228174990}
+  - component: {fileID: 5993406691054649451}
   m_Layer: 7
   m_Name: U_meleegobbo
   m_TagString: Unit
@@ -1424,6 +1425,29 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 0
   m_Center: {x: 0, y: 0.99, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &5993406691054649451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8109951086228174988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a2efdd681a8a04f81f56c653089e64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathAnimTime: 0.2
+  deathFX: {fileID: 9067544875522874818, guid: b3ae2827ec1f47e46a0f228ecacfff62, type: 3}
+  spawnsUnitOnDeath: 0
+  spawningUnit: {fileID: 0}
+  spawnPoint: {fileID: 0}
+  dealsAoeDmgOnDeath: 0
+  deathDmgAmount: 0
+  deathDmgRadius: 0
+  deathDmgLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &8109951086472563775
 GameObject:
   m_ObjectHideFlags: 0
