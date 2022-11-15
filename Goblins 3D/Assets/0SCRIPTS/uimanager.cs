@@ -34,7 +34,7 @@ public class uimanager : MonoBehaviour
     [SerializeField] private TMP_Text resourceNumber;
     [SerializeField] private GameObject resourceCircle;
     [SerializeField] private GameObject resourceBar;
-    private float currentResources;
+    [HideInInspector] public float currentResources;
 
     [Header("Other")]
     [SerializeField] private RectTransform startText;

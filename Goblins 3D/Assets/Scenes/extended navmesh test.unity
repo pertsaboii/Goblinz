@@ -2726,6 +2726,7 @@ MonoBehaviour:
   resourceNumber: {fileID: 257962729}
   resourceCircle: {fileID: 134745958}
   resourceBar: {fileID: 351004296}
+  currentResources: 0
   startText: {fileID: 834242358}
   oneRefreshButton: {fileID: 1894572085}
   oneRefButtonCD: {fileID: 2064712583}
