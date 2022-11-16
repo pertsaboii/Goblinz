@@ -6,7 +6,6 @@ public class AssetBank : MonoBehaviour
 {
     public enum FXType
     {
-        TankTrollAttack,
         BatteringRamHit,
         GobboUnitDeath,
         BuildingDeath,

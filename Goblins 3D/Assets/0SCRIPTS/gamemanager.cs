@@ -67,6 +67,8 @@ public class gamemanager : MonoBehaviour
         state = State.GameOver;
         userInterface.DisableRunTimeUI();
         userInterface.GameOverMenu();
+
+        // tänne myöhemmin void joka aktivoi cheering animaatiot vihollisilla
     }
     public void PauseGame()
     {

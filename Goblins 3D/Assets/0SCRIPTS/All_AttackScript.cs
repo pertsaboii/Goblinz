@@ -28,10 +28,13 @@ public class All_AttackScript : MonoBehaviour
     [SerializeField] private GameObject aoeFX;
 
     [SerializeField] private string currentState;
+
+    private CameraShake cameraShake;
     void Start()
     {
         anim = GetComponent<Animator>();
         state = State.NotAttacking;
+        if (gameObject.name == "U_tankgobbo(Clone)") cameraShake = gamemanager.camera.GetComponent<CameraShake>();         // tähän myöhemmin typet enumeilla
     }
 
     void Update()
@@ -71,6 +74,7 @@ public class All_AttackScript : MonoBehaviour
     void AoeMeleeDmg()
     {
         Instantiate(aoeFX, aoeDmgOrigin.transform.position, Quaternion.identity);
+        cameraShake.StartShakeCamera();
         Collider[] colliders = Physics.OverlapSphere(aoeDmgOrigin.position, aoeRadius, aoeDmgTargets);
         {
             foreach (Collider col in colliders)

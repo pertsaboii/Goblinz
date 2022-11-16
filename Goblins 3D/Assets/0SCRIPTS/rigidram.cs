@@ -36,6 +36,8 @@ public class rigidram : MonoBehaviour
 
     [SerializeField] private Transform hitFXSpawnPoint;
 
+    private CameraShake cameraShake;
+
     void Start()
     {
         speed = startSpeed;
@@ -43,6 +45,7 @@ public class rigidram : MonoBehaviour
         healthScript = GetComponent<ALL_Health>();
         localTransform = GetComponent<Transform>();
         baseScript = GetComponent<EnemyUnit>();
+        cameraShake = gamemanager.camera.GetComponent<CameraShake>();
         LockOnTarget();
     }
 
@@ -101,6 +104,7 @@ public class rigidram : MonoBehaviour
     void ImpactToTarget()
     {
         Instantiate(gamemanager.assetBank.FindFX(AssetBank.FXType.BatteringRamHit), hitFXSpawnPoint.position, Quaternion.identity);
+        cameraShake.StartShakeCamera();
         impactDone = true;
         target.GetComponent<ALL_Health>().UpdateHealth(-buildingDamage);
         healthScript.UpdateHealth(-healthScript.currentHealth - 1);

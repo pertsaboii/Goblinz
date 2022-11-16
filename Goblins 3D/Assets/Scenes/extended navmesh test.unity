@@ -4667,6 +4667,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4773,6 +4774,19 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea474a46b21052d42bead44120818d9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeTime: 0.4
 --- !u!1 &964922814
 GameObject:
   m_ObjectHideFlags: 0
@@ -6058,22 +6072,19 @@ MonoBehaviour:
   FXArray:
   - particleSystem: {fileID: 7364931880301944439, guid: bc5423004d9413346a03b6350b3064d0,
       type: 3}
-    fXType: 1
-  - particleSystem: {fileID: 9067544875522874818, guid: b3ae2827ec1f47e46a0f228ecacfff62,
-      type: 3}
     fXType: 0
-  - particleSystem: {fileID: 2701917674838983725, guid: dfb92c9d36d602742ab9484d8653c02c,
-      type: 3}
-    fXType: 2
-  - particleSystem: {fileID: 2562456843818020777, guid: 36adb4a91b84f644091e4fbdb9a2aeba,
-      type: 3}
-    fXType: 5
-  - particleSystem: {fileID: 2701917674838983725, guid: 3a4acd482935edb4f9f2e1c1a44b0ed6,
-      type: 3}
-    fXType: 4
   - particleSystem: {fileID: 1398924956239182075, guid: 68bdcf2a86d07ac458c4361d517933e1,
       type: 3}
-    fXType: 6
+    fXType: 5
+  - particleSystem: {fileID: 2701917674838983725, guid: dfb92c9d36d602742ab9484d8653c02c,
+      type: 3}
+    fXType: 1
+  - particleSystem: {fileID: 2562456843818020777, guid: 36adb4a91b84f644091e4fbdb9a2aeba,
+      type: 3}
+    fXType: 4
+  - particleSystem: {fileID: 2701917674838983725, guid: 3a4acd482935edb4f9f2e1c1a44b0ed6,
+      type: 3}
+    fXType: 3
 --- !u!1 &1234130200
 GameObject:
   m_ObjectHideFlags: 0
