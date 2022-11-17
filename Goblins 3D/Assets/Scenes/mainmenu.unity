@@ -549,6 +549,7 @@ MonoBehaviour:
   timerText: {fileID: 0}
   currentRunScore: {fileID: 0}
   newHighScoreText: {fileID: 0}
+  moneyText: {fileID: 0}
   resourceSlider: {fileID: 0}
   refreshCooldown: 0
   resourcesPerS: 0.6
@@ -2474,8 +2475,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a03243f3d9f5f3a49a7d9c7e4d67d124, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficulty: 0
+  difficulty: 1
   highScore: 0
+  money: 0
+  easyModeMoneyMult: 0.8
+  hardModeMoneyMult: 1.2
+  moneyMult: 0
 --- !u!4 &2144452221
 Transform:
   m_ObjectHideFlags: 0

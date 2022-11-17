@@ -6,7 +6,7 @@ public class MultiScene : MonoBehaviour
 {
     public static MultiScene multiScene;
 
-    public int difficulty = 1;
+    [HideInInspector] public int difficulty;
 
     [HideInInspector] public float highScore;
     [HideInInspector] public float money;
@@ -25,10 +25,10 @@ public class MultiScene : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    private void Start()
+    public void UpdateDifficulty(int difficultyLevel)
     {
-        if (difficulty == 0) moneyMult = easyModeMoneyMult;
-        else if (difficulty == 2) moneyMult = hardModeMoneyMult;
+        if (difficultyLevel == 0) moneyMult = easyModeMoneyMult;
+        else if (difficultyLevel == 2) moneyMult = hardModeMoneyMult;
         else moneyMult = 1;
     }
 }
