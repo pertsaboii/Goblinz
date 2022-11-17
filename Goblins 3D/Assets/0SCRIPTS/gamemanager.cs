@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class gamemanager : MonoBehaviour
 {
-    [HideInInspector] public enum State
+    public enum State
     {
         RunTime, Pause, GameOver, HalfTime, DoubleTime
     }

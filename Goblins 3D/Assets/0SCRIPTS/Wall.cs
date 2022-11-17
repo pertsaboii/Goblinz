@@ -8,6 +8,6 @@ public class Wall : MonoBehaviour
     void Start()
     {
         gamemanager.buildings.Add(this.gameObject);
-        if (lookAtMiddle == true) gameObject.transform.LookAt(new Vector3(0, transform.position.y, 0));
+        if (lookAtMiddle == true) gameObject.transform.LookAt(gamemanager.loseCon.transform.position);
     }
 }

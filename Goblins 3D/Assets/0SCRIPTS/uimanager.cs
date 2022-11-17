@@ -20,11 +20,16 @@ public class uimanager : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject runTimeUi;
 
+    [Header("Main Menu")]
+    [SerializeField] private Button sleepyButton;
+    [SerializeField] private Button mightyButton;
+    [SerializeField] private Button legendaryButton;
+    [SerializeField] private TMP_Text mainMenuHighScoreText;
+
     [Header("Score")]
     public TMP_Text timerText;
     [SerializeField] private TMP_Text currentRunScore;
     [SerializeField] private TMP_Text newHighScoreText;
-    [SerializeField] private TMP_Text mainMenuHighScoreText;
 
     [Header("Resources")]
     public Slider resourceSlider;
@@ -38,6 +43,8 @@ public class uimanager : MonoBehaviour
 
     [Header("Other")]
     [SerializeField] private RectTransform startText;
+    [SerializeField] private TMP_Text difficultyText;
+    [SerializeField] private Image difficultyPanel;
 
     [Header("Card places")]
     [SerializeField] private Button oneRefreshButton;
@@ -84,6 +91,21 @@ public class uimanager : MonoBehaviour
             currentResources = resourceSlider.value;
             resourceNumber.text = resourceSlider.value.ToString("0");
 
+            if (MultiScene.multiScene.difficulty == 0)
+            {
+                difficultyText.text = "Sleepy Goblin";
+                difficultyPanel.color = Color.green;
+            }
+            else if (MultiScene.multiScene.difficulty == 1)
+            {
+                difficultyText.text = "Mighty Goblin";
+                difficultyPanel.color = Color.yellow;
+            }
+            else if (MultiScene.multiScene.difficulty == 2)
+            {
+                difficultyText.text = "Legendary Goblin";
+                difficultyPanel.color = Color.red;
+            }
             StartCoroutine("StartCards");
             StartCoroutine("StartText");
 
@@ -129,6 +151,9 @@ public class uimanager : MonoBehaviour
     {
         state = State.MainMenu;
         mainMenuHighScoreText.text = "High Score: " + System.TimeSpan.FromSeconds(MultiScene.multiScene.highScore).ToString("mm\\:ss\\.f");
+        if (MultiScene.multiScene.difficulty == 0) sleepyButton.Select();
+        else if (MultiScene.multiScene.difficulty == 1) mightyButton.Select();
+        else if (MultiScene.multiScene.difficulty == 2) legendaryButton.Select();
     }
     void SetTimerText()
     {

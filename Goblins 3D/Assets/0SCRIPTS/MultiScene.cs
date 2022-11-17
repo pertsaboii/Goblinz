@@ -6,6 +6,8 @@ public class MultiScene : MonoBehaviour
 {
     public static MultiScene multiScene;
 
+    public int difficulty = 1;
+
     [HideInInspector] public float highScore;
     private void Awake()
     {

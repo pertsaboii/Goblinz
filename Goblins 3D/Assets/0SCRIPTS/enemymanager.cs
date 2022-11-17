@@ -15,6 +15,14 @@ public class enemymanager : MonoBehaviour
     [SerializeField] private float currentEnemyResources;
     [SerializeField] private float EnemyStartResources;
 
+    [Header("Difficulty Settings")]
+    [SerializeField] private float easyResPerSMult;
+    [SerializeField] private float easySpawnIntMult;
+    [SerializeField] private float hardResPerSMult;
+    [SerializeField] private float hardSpawnIntMult;
+    private float resourcesPerSMult = 1;
+    private float spawnIntervalMult = 1;
+
     [Header("Stages")]
     [SerializeField] private float stageChangeInterval;
     [SerializeField] private int stageAmount;
@@ -28,6 +36,7 @@ public class enemymanager : MonoBehaviour
     [SerializeField] private GameObject[] s3NewEnemies;
     [SerializeField] private float s4ResourcesPerS;
     [SerializeField] private float s4SpawnInterval;
+    [SerializeField] private GameObject[] s4NewEnemies;
     private float timeBtwSpawns;
 
     private int stage = 1;
@@ -36,6 +45,16 @@ public class enemymanager : MonoBehaviour
 
     void Start()
     {
+        if (MultiScene.multiScene.difficulty == 0)
+        {
+            resourcesPerSMult = easyResPerSMult;
+            spawnIntervalMult = easySpawnIntMult;
+        }
+        else if (MultiScene.multiScene.difficulty == 2)
+        {
+            resourcesPerSMult = hardResPerSMult;
+            spawnIntervalMult = hardSpawnIntMult;
+        }
         previousSpawnPoint = Random.Range(0, enemySpawnPoints.Length);
         currentEnemyResources = EnemyStartResources;
         timeBtwSpawns = 0;
@@ -44,9 +63,9 @@ public class enemymanager : MonoBehaviour
 
     void Update()
     {
-        if (currentEnemyResources < maxEnemyResources) currentEnemyResources += Time.deltaTime * s1ResourcesPerS;
+        if (currentEnemyResources < maxEnemyResources) currentEnemyResources += Time.deltaTime * s1ResourcesPerS * resourcesPerSMult;
 
-        if (timeBtwSpawns >= s1SpawnInterval)
+        if (timeBtwSpawns >= s1SpawnInterval * spawnIntervalMult)
         {
             SpawnEnemy();
             timeBtwSpawns = 0;
@@ -85,8 +104,8 @@ public class enemymanager : MonoBehaviour
 
         if (stage == 2)
         {
-            s1ResourcesPerS = s2ResourcesPerS;
-            s1SpawnInterval = s2SpawnInterval;
+            s1ResourcesPerS = s2ResourcesPerS * resourcesPerSMult;
+            s1SpawnInterval = s2SpawnInterval * spawnIntervalMult;
 
             foreach (GameObject newEnemy in s2NewEnemies)
             {
@@ -95,8 +114,8 @@ public class enemymanager : MonoBehaviour
         }
         if (stage == 3)
         {
-            s1ResourcesPerS = s3ResourcesPerS;
-            s1SpawnInterval = s3SpawnInterval;
+            s1ResourcesPerS = s3ResourcesPerS * resourcesPerSMult;
+            s1SpawnInterval = s3SpawnInterval * spawnIntervalMult;
 
             foreach (GameObject newEnemy in s3NewEnemies)
             {
@@ -105,10 +124,10 @@ public class enemymanager : MonoBehaviour
         }
         if (stage == 4)
         {
-            s1ResourcesPerS = s4ResourcesPerS;
-            s1SpawnInterval = s4SpawnInterval;
+            s1ResourcesPerS = s4ResourcesPerS * resourcesPerSMult;
+            s1SpawnInterval = s4SpawnInterval * spawnIntervalMult;
 
-            foreach (GameObject newEnemy in s3NewEnemies)
+            foreach (GameObject newEnemy in s4NewEnemies)
             {
                 enemies.Add(newEnemy);
             }
