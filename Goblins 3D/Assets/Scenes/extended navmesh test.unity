@@ -7794,7 +7794,8 @@ MonoBehaviour:
   - {fileID: 461058146}
   - {fileID: 1586246939}
   enemies:
-  - {fileID: 7055004966913796210, guid: a158a9d1cabe6bf45b1aad283c2b9c27, type: 3}
+  - {fileID: 4235148133687976138, guid: acd1c982552ea524e8cc4f7f0f81e13d, type: 3}
+  - {fileID: 8228460915799941162, guid: c7a40de86c2ea4f4eba96740d1eaa789, type: 3}
   currentEnemyResources: 0
   EnemyStartResources: 1
   stageChangeInterval: 30
@@ -7802,14 +7803,15 @@ MonoBehaviour:
   s1ResourcesPerS: 0.3
   s1SpawnInterval: 1.4
   s2ResourcesPerS: 0.5
-  s2SpawnInterval: 1
+  s2SpawnInterval: 1.2
   s2NewEnemies:
   - {fileID: 7055004966913796210, guid: a158a9d1cabe6bf45b1aad283c2b9c27, type: 3}
   s3ResourcesPerS: 0.7
-  s3SpawnInterval: 0.6
-  s3NewEnemies: []
-  s4ResourcesPerS: 2
-  s4SpawnInterval: 0.3
+  s3SpawnInterval: 1
+  s3NewEnemies:
+  - {fileID: 7324392575983048805, guid: e4ea516e949ff71408cd5e7fa8c40450, type: 3}
+  s4ResourcesPerS: 0.9
+  s4SpawnInterval: 0.8
 --- !u!1 &1816960998
 GameObject:
   m_ObjectHideFlags: 0
