@@ -12,6 +12,13 @@ public class PlayerCards : MonoBehaviour
 
     [SerializeField] private LayerMask layerMask;
 
+    private Animator chiefAnim;
+
+    private void Start()
+    {
+        chiefAnim = gamemanager.loseCon.GetComponent<Animator>();
+    }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0) && selectedCard != null && IsPointerOverUI() == false)
@@ -25,6 +32,9 @@ public class PlayerCards : MonoBehaviour
                         Ray ray = gamemanager.camera.ScreenPointToRay(Input.mousePosition);
                         if (Physics.Raycast(ray, out RaycastHit raycastHit))
                         {
+                            if (raycastHit.point.x > gamemanager.loseCon.transform.position.x) chiefAnim.SetTrigger("Command2");
+                            else chiefAnim.SetTrigger("Command1");
+
                             Instantiate(selectedCardUnit, new Vector3(raycastHit.point.x, 0, raycastHit.point.z), Quaternion.identity);
                             selectedCardUnit = null;
                             gamemanager.userInterface.resourceSlider.value -= selectedCardCost;
