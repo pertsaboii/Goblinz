@@ -1486,6 +1486,7 @@ MonoBehaviour:
   target: {fileID: 0}
   anim: {fileID: 7055004966695447496}
   warningUI: {fileID: 7055004965979445329}
+  value: 10
 --- !u!114 &7055004966913796215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1510,6 +1511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c59dc3c253459dd4284e87d520b4d388, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
   buildingDamage: 5
   unitColDamage: 4
   startSpeed: 3
@@ -1517,6 +1519,8 @@ MonoBehaviour:
   accelerationPerS: 0.8
   turnSpeed: 2
   hitFXSpawnPoint: {fileID: 7055004965733459248}
+  targetInSight: 1
+  triggerColEmpty: 1
   layerMask:
     serializedVersion: 2
     m_Bits: 192

@@ -9,6 +9,10 @@ public class MultiScene : MonoBehaviour
     public int difficulty = 1;
 
     [HideInInspector] public float highScore;
+    [HideInInspector] public float money;
+    [SerializeField] private float easyModeMoneyMult;
+    [SerializeField] private float hardModeMoneyMult;
+    [HideInInspector] public float moneyMult;
     private void Awake()
     {
         if (multiScene == null)
@@ -20,5 +24,11 @@ public class MultiScene : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+    private void Start()
+    {
+        if (difficulty == 0) moneyMult = easyModeMoneyMult;
+        else if (difficulty == 2) moneyMult = hardModeMoneyMult;
+        else moneyMult = 1;
     }
 }

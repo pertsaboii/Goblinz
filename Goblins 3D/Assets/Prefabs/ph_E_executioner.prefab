@@ -904,6 +904,7 @@ MonoBehaviour:
   target: {fileID: 0}
   anim: {fileID: 4950780360930319385}
   warningUI: {fileID: 1623785996167673687}
+  value: 20
 --- !u!114 &3818293609298406414
 MonoBehaviour:
   m_ObjectHideFlags: 0

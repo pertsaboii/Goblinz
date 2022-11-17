@@ -933,6 +933,7 @@ MonoBehaviour:
   target: {fileID: 0}
   anim: {fileID: 6682286791203654666}
   warningUI: {fileID: 1550891837606240781}
+  value: 10
 --- !u!114 &7754760104703628449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1095,7 +1096,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a2efdd681a8a04f81f56c653089e64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathFX: {fileID: 9067544875522874818, guid: b3ae2827ec1f47e46a0f228ecacfff62, type: 3}
   deathFXType: 1
   spawnsUnitOnDeath: 0
   spawningUnit: {fileID: 0}

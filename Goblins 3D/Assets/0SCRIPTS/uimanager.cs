@@ -31,6 +31,10 @@ public class uimanager : MonoBehaviour
     [SerializeField] private TMP_Text currentRunScore;
     [SerializeField] private TMP_Text newHighScoreText;
 
+    [Header("Money")]
+    [SerializeField] private TMP_Text moneyText;
+    private Vector3 originalMoneyTextScale;
+
     [Header("Resources")]
     public Slider resourceSlider;
     [SerializeField] private float refreshCooldown;
@@ -46,7 +50,7 @@ public class uimanager : MonoBehaviour
     [SerializeField] private TMP_Text difficultyText;
     [SerializeField] private Image difficultyPanel;
 
-    [Header("Card places")]
+    [Header("Card Places")]
     [SerializeField] private Button oneRefreshButton;
     [SerializeField] private Image oneRefButtonCD;
     [SerializeField] private Transform oneCardPlace;
@@ -90,6 +94,8 @@ public class uimanager : MonoBehaviour
             resourceSlider.value = startResources;
             currentResources = resourceSlider.value;
             resourceNumber.text = resourceSlider.value.ToString("0");
+            moneyText.text = MultiScene.multiScene.money.ToString();
+            originalMoneyTextScale = moneyText.rectTransform.localScale;
 
             if (MultiScene.multiScene.difficulty == 0)
             {
@@ -338,5 +344,16 @@ public class uimanager : MonoBehaviour
         startText.DOAnchorPosX(5, 1.5f);
         yield return new WaitForSeconds(1.4f);
         startText.DOAnchorPosX(900, .5f, false).SetEase(Ease.InCubic);
+    }
+    public void UpdateMoneyText()
+    {
+        moneyText.text = MultiScene.multiScene.money.ToString();
+        StartCoroutine(MoneyTextPop());
+    }
+    IEnumerator MoneyTextPop()
+    {
+        moneyText.rectTransform.DOPunchScale(Vector3.one * 0.3f, 0.25f, 5, 1f);
+        yield return new WaitForSeconds(.25f);
+        if (moneyText.rectTransform.localScale != originalMoneyTextScale) moneyText.rectTransform.DOScale(originalMoneyTextScale, 0.2f).SetEase(Ease.OutSine);
     }
 }

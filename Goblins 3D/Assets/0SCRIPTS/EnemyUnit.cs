@@ -16,6 +16,8 @@ public class EnemyUnit : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private GameObject warningUI;
 
+    public float value;
+
     private void Start()
     {
         gamemanager.enemies.Add(gameObject);

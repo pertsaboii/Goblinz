@@ -1437,6 +1437,7 @@ MonoBehaviour:
   target: {fileID: 0}
   anim: {fileID: 7290339201849691281}
   warningUI: {fileID: 8532993082821517858}
+  value: 10
 --- !u!95 &8753464096680098451
 Animator:
   serializedVersion: 4
@@ -1481,7 +1482,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a2efdd681a8a04f81f56c653089e64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathFX: {fileID: 0}
   deathFXType: 1
   spawnsUnitOnDeath: 0
   spawningUnit: {fileID: 0}
