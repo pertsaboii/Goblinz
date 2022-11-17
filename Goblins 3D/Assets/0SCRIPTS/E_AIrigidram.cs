@@ -10,7 +10,7 @@ public class E_AIrigidram : MonoBehaviour
     }
 
     private State state;
-    private GameObject target;
+    [SerializeField] private GameObject target;
 
     [SerializeField] private float buildingDamage;
     [SerializeField] private float unitColDamage;
@@ -27,7 +27,6 @@ public class E_AIrigidram : MonoBehaviour
     [SerializeField] private float accelerationPerS;
     [SerializeField] private float turnSpeed;
     private Vector3 targetDir;
-    private Collider targetCollider;
     private Transform localTransform;
 
     private EnemyUnit baseScript;
@@ -38,15 +37,14 @@ public class E_AIrigidram : MonoBehaviour
 
     private CameraShake cameraShake;
 
-    private bool targetInSight = true;
-    private bool triggerColEmpty = true;
+    [SerializeField] private bool targetInSight = true;
+    [SerializeField] private bool triggerColEmpty = true;
     [SerializeField] private LayerMask layerMask;
-    private GizmoDrawer gizmoScript;    // vain devausvaiheessa
     [SerializeField] private Transform rayCastPoint;
     private Vector3 rayDir;
     [SerializeField] private float rayRange;
+
     private float randomX;
-    private RaycastHit[] hits;
 
     void Start()
     {
@@ -67,7 +65,6 @@ public class E_AIrigidram : MonoBehaviour
             {
                 target = building;
                 state = State.ApproachTarget;
-                targetCollider = target.GetComponent<Collider>();
             }
         }
     }
@@ -82,10 +79,13 @@ public class E_AIrigidram : MonoBehaviour
                 rayDir = new Vector3(target.transform.position.x - rayCastPoint.position.x, rayCastPoint.position.y, target.transform.position.z - rayCastPoint.position.z);
                 RaycastHit hitInfo;
                 Debug.DrawRay(ray.origin, ray.direction * rayRange, Color.red, .1f);
-                if (Physics.BoxCast(rayCastPoint.position, new Vector3(2.5f, 0f, 0f), rayDir, out hitInfo, Quaternion.identity, rayRange, layerMask, QueryTriggerInteraction.Ignore))
+                if (Physics.BoxCast(rayCastPoint.position, new Vector3(3f, 0f, 0f), rayDir, out hitInfo, Quaternion.identity, rayRange, layerMask, QueryTriggerInteraction.Ignore))
                 {
-                    Debug.Log(hitInfo.transform.gameObject.name);
-                    if (hitInfo.transform.gameObject != gameObject && hitInfo.transform.gameObject != target) targetInSight = false;
+                    if (hitInfo.transform.gameObject != gameObject && hitInfo.transform.gameObject != target)
+                    {
+                        targetInSight = false;
+                        RandomX();
+                    }
                     else targetInSight = true;
                 }
                 else targetInSight = true;
@@ -102,8 +102,6 @@ public class E_AIrigidram : MonoBehaviour
         {
             if (targetInSight == true && triggerColEmpty == true)
             {
-                Debug.Log("normal movement");
-
                 rb.velocity = localTransform.forward * speed;
 
                 targetDir = target.transform.position - localTransform.position;                   // jos k‰‰ntyy vituiksi niin t‰t‰ muokkaamalla voi korjata
@@ -116,7 +114,7 @@ public class E_AIrigidram : MonoBehaviour
             {
                 rb.velocity = localTransform.forward * speed;
 
-                targetDir = new Vector3(randomX * 4, transform.position.y, transform.position.z) - localTransform.position;                   // jos k‰‰ntyy vituiksi niin t‰t‰ muokkaamalla voi korjata
+                targetDir = new Vector3(randomX, transform.position.y, transform.position.z) - localTransform.position;                   // jos k‰‰ntyy vituiksi niin t‰t‰ muokkaamalla voi korjata
 
                 var targetRotation = Quaternion.LookRotation(targetDir);
 
@@ -124,13 +122,18 @@ public class E_AIrigidram : MonoBehaviour
             }
         }
     }
+    void RandomX()
+    {
+        float randomFloat = Random.Range(0, 1f);
+        if (randomFloat < 0.5f) randomX = 1;
+        else randomX = -1;
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (state == State.ApproachTarget && collision.gameObject.CompareTag("Building"))
         {
             if (impactDone == false) ImpactToTarget();
         }
-        // unitin dmg testi
         else if (collision.collider.CompareTag("Unit"))
         {
             collision.collider.gameObject.GetComponent<ALL_Health>().UpdateHealth(-unitColDamage);
@@ -139,15 +142,15 @@ public class E_AIrigidram : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.gameObject != gameObject && other.transform.gameObject != target) triggerColEmpty = false;
+        if (other.transform.gameObject.layer == 6 || other.transform.gameObject.layer == 7) triggerColEmpty = false;
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.transform.gameObject != gameObject && other.transform.gameObject != target) triggerColEmpty = false;
+        if (other.transform.gameObject.layer == 6 || other.transform.gameObject.layer == 7) triggerColEmpty = false;
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.transform.gameObject != gameObject && other.transform.gameObject != target) triggerColEmpty = true;
+        if (other.transform.gameObject.layer == 6 || other.transform.gameObject.layer == 7) triggerColEmpty = true;
     }
     void ImpactToTarget()
     {

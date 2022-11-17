@@ -1,11 +1,17 @@
 fileFormatVersion: 2
-guid: 7bb9a685c9f0f434090a997fee1096f7
+guid: 6b73f0b6f0fd2f24bbba8f7663a6ca58
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
   - first:
-      74: -6307389943648032756
-    second: walk_humanram
+      74: 292783420101021761
+    second: idle_chief
+  - first:
+      74: 5687481168536163494
+    second: command1_chief
+  - first:
+      74: 5864085037233194157
+    second: command2_chief
   externalObjects: {}
   materials:
     materialImportMode: 2
