@@ -10,7 +10,7 @@ public class SoundManager : MonoBehaviour
     [HideInInspector] public float SFXVol, UIVol, MasterVol, MusicVol;
 
     [SerializeField] private AudioSource UISounds, SFXSounds;
-    [HideInInspector] public AudioSource music;
+    public AudioSource musicSounds;
 
     private void Awake()
     {
@@ -34,6 +34,10 @@ public class SoundManager : MonoBehaviour
     public void PlayUISound(AudioClip clip)
     {
         UISounds.PlayOneShot(clip);
+    }
+    public void PlayMusicSound(AudioClip clip)
+    {
+        musicSounds.PlayOneShot(clip);
     }
 
     // voluumien säätö

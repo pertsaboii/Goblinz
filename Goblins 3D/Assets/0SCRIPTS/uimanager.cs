@@ -97,6 +97,7 @@ public class uimanager : MonoBehaviour
             resourceNumber.text = resourceSlider.value.ToString("0");
             moneyText.text = MultiScene.multiScene.money.ToString();
             originalMoneyTextScale = moneyText.rectTransform.localScale;
+            SoundManager.Instance.PlayMusicSound(gamemanager.assetBank.FindSound(AssetBank.Sound.GameStartedJingle));
 
             if (MultiScene.multiScene.difficulty == 0)
             {
@@ -171,12 +172,13 @@ public class uimanager : MonoBehaviour
     {
         if (audioMenu.activeSelf == false) audioMenu.SetActive(true);
         else audioMenu.SetActive(false);
+        ButtonClickAudio();
     }
     public void PauseMenuOnOff()
     {
         if (pauseMenu.activeSelf == false) pauseMenu.SetActive(true);
         else pauseMenu.SetActive(false);
-
+        ButtonClickAudio();
     }
     public void GameOverMenu()
     {
@@ -205,6 +207,7 @@ public class uimanager : MonoBehaviour
         card1 = newCard;
         prevCard1 = randomCard;
         timer1 = refreshCooldown;
+        SpawnCardAudio();
     }
     public void RefreshTwo()
     {
@@ -221,6 +224,7 @@ public class uimanager : MonoBehaviour
         card2 = newCard;
         prevCard2 = randomCard;
         timer2 = refreshCooldown;
+        SpawnCardAudio();
     }
     public void RefreshThree()
     {
@@ -237,6 +241,7 @@ public class uimanager : MonoBehaviour
         card3 = newCard;
         prevCard3 = randomCard;
         timer3 = refreshCooldown;
+        SpawnCardAudio();
     }
     public void RefreshFour()
     {
@@ -253,6 +258,7 @@ public class uimanager : MonoBehaviour
         card4 = newCard;
         prevCard4 = randomCard;
         timer4 = refreshCooldown;
+        SpawnCardAudio();
     }
     IEnumerator StartCards()
     {
@@ -273,6 +279,7 @@ public class uimanager : MonoBehaviour
         oneCardPlace.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBounce);
         card1 = newCard1;
         prevCard1 = randomCard;
+        SpawnCardAudio();
     }
     public void SpawnCardTwo()
     {
@@ -283,6 +290,7 @@ public class uimanager : MonoBehaviour
         twoCardPlace.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBounce);
         card2 = newCard2;
         prevCard2 = randomCard;
+        SpawnCardAudio();
     }
     public void SpawnCardThree()
     {
@@ -293,6 +301,7 @@ public class uimanager : MonoBehaviour
         threeCardPlace.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBounce);
         card3 = newCard3;
         prevCard3 = randomCard;
+        SpawnCardAudio();
     }
     public void SpawnCardFour()
     {
@@ -303,6 +312,7 @@ public class uimanager : MonoBehaviour
         fourCardPlace.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBounce);
         card4 = newCard4;
         prevCard4 = randomCard;
+        SpawnCardAudio();
     }
     void Timers()
     {
@@ -337,10 +347,12 @@ public class uimanager : MonoBehaviour
     void ResourceCirclePop()
     {
         resourceCircle.transform.DOPunchScale(Vector3.one * 0.4f, 0.35f, 5, 1f);
+        SoundManager.Instance.PlayUISound(gamemanager.assetBank.FindSound(AssetBank.Sound.ResourcePlusOne));
     }
     public void InsufficientResourcesShake()
     {
         resourceBar.transform.DOShakePosition(.3f, Vector3.right * 15, 10, 0, false, false);
+        SoundManager.Instance.PlayUISound(gamemanager.assetBank.FindSound(AssetBank.Sound.InsufficientFunds));
     }
 
     IEnumerator StartText()
@@ -355,6 +367,7 @@ public class uimanager : MonoBehaviour
     public void UpdateMoneyText()
     {
         moneyText.text = MultiScene.multiScene.money.ToString();
+        SoundManager.Instance.PlayUISound(gamemanager.assetBank.FindSound(AssetBank.Sound.MoneyGained));
         StartCoroutine(MoneyTextPop());
     }
     IEnumerator MoneyTextPop()
@@ -362,5 +375,18 @@ public class uimanager : MonoBehaviour
         moneyText.rectTransform.DOPunchScale(Vector3.one * 0.3f, 0.25f, 5, 1f);
         yield return new WaitForSeconds(.25f);
         if (moneyText.rectTransform.localScale != originalMoneyTextScale) moneyText.rectTransform.DOScale(originalMoneyTextScale, 0.2f).SetEase(Ease.OutSine);
+    }
+    public void CardSelectedAudio()
+    {
+        SoundManager.Instance.PlayUISound(gamemanager.assetBank.FindSound(AssetBank.Sound.CardSelected));
+        Debug.Log("soundplayed");
+    }
+    void SpawnCardAudio()
+    {
+        SoundManager.Instance.PlayUISound(gamemanager.assetBank.FindSound(AssetBank.Sound.NewCardDrawn));
+    }
+    public void ButtonClickAudio()
+    {
+        SoundManager.Instance.PlayUISound(gamemanager.assetBank.FindSound(AssetBank.Sound.ButtonClicked));
     }
 }

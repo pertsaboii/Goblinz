@@ -13,9 +13,9 @@ public class MusicPlayer : MonoBehaviour
     [SerializeField] private AudioClip musicIntroClip;
     [SerializeField] private AudioClip musicLoopClip;
 
-    private void Start()
+    private void Awake()
     {
-        SoundManager.Instance.music.clip = musicLoopClip;
+        SoundManager.Instance.musicSounds.clip = musicLoopClip;
         PlayMusic();
     }
 
@@ -24,9 +24,9 @@ public class MusicPlayer : MonoBehaviour
     {
         if (musicIntroClip != null)
         {
-            SoundManager.Instance.music.PlayOneShot(musicIntroClip);
-            SoundManager.Instance.music.PlayScheduled(AudioSettings.dspTime + musicIntroClip.length);
+            SoundManager.Instance.musicSounds.PlayOneShot(musicIntroClip);
+            SoundManager.Instance.musicSounds.PlayScheduled(AudioSettings.dspTime + musicIntroClip.length);
         }
-        else if (musicLoopClip != null) SoundManager.Instance.music.Play();
+        else if (musicLoopClip != null) SoundManager.Instance.musicSounds.Play();
     }
 }

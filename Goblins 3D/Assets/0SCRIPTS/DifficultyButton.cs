@@ -16,5 +16,6 @@ public class DifficultyButton : MonoBehaviour
         else if (difficulty == Difficulty.MightyGoblin) MultiScene.multiScene.difficulty = 1;
         else if (difficulty == Difficulty.LegendaryGoblin) MultiScene.multiScene.difficulty = 2;
         MultiScene.multiScene.UpdateDifficulty(MultiScene.multiScene.difficulty);
+        gamemanager.userInterface.ButtonClickAudio();
     }
 }

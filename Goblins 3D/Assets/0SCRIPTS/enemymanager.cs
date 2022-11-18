@@ -65,7 +65,7 @@ public class enemymanager : MonoBehaviour
     {
         if (currentEnemyResources < maxEnemyResources) currentEnemyResources += Time.deltaTime * s1ResourcesPerS * resourcesPerSMult;
 
-        if (timeBtwSpawns >= s1SpawnInterval * spawnIntervalMult)
+        if (timeBtwSpawns >= s1SpawnInterval / spawnIntervalMult)
         {
             SpawnEnemy();
             timeBtwSpawns = 0;

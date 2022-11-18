@@ -29,10 +29,26 @@ public class Card : MonoBehaviour
             gamemanager.playercards.selectedCard = gameObject;
             gamemanager.playercards.selectedCardCost = cost;
             gamemanager.playercards.cardPlace = cardPlace;
-            if (cardPlace == "1") gamemanager.userInterface.anim.SetInteger("CardSelected", 1);
-            else if (cardPlace == "2") gamemanager.userInterface.anim.SetInteger("CardSelected", 2);
-            else if (cardPlace == "3") gamemanager.userInterface.anim.SetInteger("CardSelected", 3);
-            else if (cardPlace == "4") gamemanager.userInterface.anim.SetInteger("CardSelected", 4);
+            if (cardPlace == "1")
+            {
+                if (gamemanager.userInterface.anim.GetInteger("CardSelected") != 1) SoundManager.Instance.PlayUISound(gamemanager.assetBank.FindSound(AssetBank.Sound.CardSelected));
+                gamemanager.userInterface.anim.SetInteger("CardSelected", 1);
+            }
+            else if (cardPlace == "2")
+            {
+                if (gamemanager.userInterface.anim.GetInteger("CardSelected") != 2) SoundManager.Instance.PlayUISound(gamemanager.assetBank.FindSound(AssetBank.Sound.CardSelected));
+                gamemanager.userInterface.anim.SetInteger("CardSelected", 2);
+            }
+            else if (cardPlace == "3")
+            {
+                if (gamemanager.userInterface.anim.GetInteger("CardSelected") != 3) SoundManager.Instance.PlayUISound(gamemanager.assetBank.FindSound(AssetBank.Sound.CardSelected));
+                gamemanager.userInterface.anim.SetInteger("CardSelected", 3);
+            }
+            else if (cardPlace == "4")
+            {
+                if (gamemanager.userInterface.anim.GetInteger("CardSelected") != 4) SoundManager.Instance.PlayUISound(gamemanager.assetBank.FindSound(AssetBank.Sound.CardSelected));
+                gamemanager.userInterface.anim.SetInteger("CardSelected", 4);
+            }
         }
     }
     private void Update()

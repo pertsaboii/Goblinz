@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class gamemanager : MonoBehaviour
 {
+    public enum Scene
+    {
+        MainMenuScene,
+        PlayScene
+    }
+    [SerializeField] private Scene scene;
     public enum State
     {
-        RunTime, Pause, GameOver, HalfTime, DoubleTime
+        MainMenu, RunTime, Pause, GameOver, HalfTime, DoubleTime
     }
     public static State state;
 
@@ -27,26 +33,40 @@ public class gamemanager : MonoBehaviour
     public static AssetBank assetBank;
     private void Awake()
     {
-        Time.timeScale = 1;
+        if (scene == Scene.PlayScene)
+        {
+            Time.timeScale = 1;
 
-        camera = mainCam;
-        userInterface = UIScript;
-        loseCon = oldGobbo;
-        playercards = GetComponent<PlayerCards>();
-        assetBank = GetComponent<AssetBank>();
+            camera = mainCam;
+            userInterface = UIScript;
+            loseCon = oldGobbo;
+            playercards = GetComponent<PlayerCards>();
+            assetBank = GetComponent<AssetBank>();
 
-        buildings = new List<GameObject>();
-        enemies = new List<GameObject>();
-        viholliset = enemies;
-        buildingsAndUnits = new List<GameObject>();
+            buildings = new List<GameObject>();
+            enemies = new List<GameObject>();
+            viholliset = enemies;
+            buildingsAndUnits = new List<GameObject>();
 
-        state = State.RunTime;
+            state = State.RunTime;
+        }
+        else
+        {
+            Time.timeScale = 1;
+            assetBank = GetComponent<AssetBank>();
+            userInterface = UIScript;
+
+            state = State.MainMenu;
+        }
+
     }
     private void Update()
     {
         switch (state)
         {
             default:
+            case State.MainMenu:
+                break;
             case State.RunTime:
                 if (loseCon == null) GameOver();
                 break;

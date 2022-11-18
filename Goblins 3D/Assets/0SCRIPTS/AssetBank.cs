@@ -13,13 +13,33 @@ public class AssetBank : MonoBehaviour
         WanderingDeath,
         TrollUnitDeath,
     }
+
+    public enum Sound
+    {
+        ResourcePlusOne,
+        CardSelected,
+        CardDeselected,
+        InsufficientFunds,
+        ButtonClicked,
+        NewCardDrawn,
+        MoneyGained,
+        GameStartedJingle
+    }
+
     public FX[] FXArray;
+    public SoundType[] SoundArray;
 
     [System.Serializable]
     public class FX
     {
         public ParticleSystem particleSystem;
         public FXType fXType;
+    }
+    [System.Serializable]
+    public class SoundType
+    {
+        public AudioClip audioClip;
+        public Sound sound;
     }
     public ParticleSystem FindFX(FXType type)
     {
@@ -32,7 +52,17 @@ public class AssetBank : MonoBehaviour
         }
         return null;
     }
-
+    public AudioClip FindSound(Sound sound)
+    {
+        foreach (SoundType soundType in SoundArray)
+        {
+            if (soundType.sound == sound)
+            {
+                return soundType.audioClip;
+            }
+        }
+        return null;
+    }
 
 
 
