@@ -19,6 +19,7 @@ public class uimanager : MonoBehaviour
     [SerializeField] private GameObject gameOverMenu;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject runTimeUi;
+    [SerializeField] private GameObject audioMenu;
 
     [Header("Main Menu")]
     [SerializeField] private Button sleepyButton;
@@ -164,6 +165,12 @@ public class uimanager : MonoBehaviour
     void SetTimerText()
     {
         timerText.text = System.TimeSpan.FromSeconds(currentTime).ToString("mm\\:ss\\.f");
+    }
+
+    public void AudioMenuOnOff()
+    {
+        if (audioMenu.activeSelf == false) audioMenu.SetActive(true);
+        else audioMenu.SetActive(false);
     }
     public void PauseMenuOnOff()
     {
