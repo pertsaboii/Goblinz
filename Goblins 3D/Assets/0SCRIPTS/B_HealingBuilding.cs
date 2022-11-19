@@ -34,7 +34,7 @@ public class B_HealingBuilding : MonoBehaviour
             Heal();
         }
 
-        healingBar.transform.LookAt(new Vector3(1, gamemanager.camera.transform.position.y * 10, gamemanager.camera.transform.position.z * 10));
+        healingBar.transform.LookAt(new Vector3(transform.position.x - gamemanager.camera.transform.position.x, gamemanager.camera.transform.position.y * 10, gamemanager.camera.transform.position.z - transform.position.z));
 
         if (healthScript.isDead == true) healingBar.SetActive(false);   // jos suorituskykyongelmia niin tämä johkin voidiin
     }

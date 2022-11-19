@@ -34,7 +34,7 @@ public class All_AttackScript : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         state = State.NotAttacking;
-        if (gameObject.name == "U_tankgobbo(Clone)") cameraShake = gamemanager.camera.GetComponent<CameraShake>();         // tähän myöhemmin typet enumeilla
+        if (aoeFX != null) cameraShake = gamemanager.camera.GetComponent<CameraShake>();         // tähän myöhemmin typet enumeilla
     }
 
     void Update()

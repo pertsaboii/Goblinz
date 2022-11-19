@@ -93,12 +93,14 @@ public class gamemanager : MonoBehaviour
     public void PauseGame()
     {
         Time.timeScale = 0;
+        AudioListener.pause = true;
         state = State.Pause;
         userInterface.PauseMenuOnOff();
     }
     public void RunTime()
     {
         Time.timeScale = 1;
+        AudioListener.pause = false;
         state = State.RunTime;
         userInterface.PauseMenuOnOff();
     }
