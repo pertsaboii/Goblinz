@@ -26,7 +26,11 @@ public class gamemanager : MonoBehaviour
     public static List<GameObject> buildings;
     public static List<GameObject> buildingsAndUnits;
     public static List<GameObject> enemies;
+
+    [Header("For Debugging")]
     public List<GameObject> viholliset;
+    public List<GameObject> unititJaBuildingit;
+    public List<GameObject> buildingit;
 
     public static PlayerCards playercards;
 
@@ -45,8 +49,12 @@ public class gamemanager : MonoBehaviour
 
             buildings = new List<GameObject>();
             enemies = new List<GameObject>();
-            viholliset = enemies;
             buildingsAndUnits = new List<GameObject>();
+
+            // debuggaukseen
+            viholliset = enemies;
+            unititJaBuildingit = buildingsAndUnits;
+            buildingit = buildings;
 
             state = State.RunTime;
             AudioListener.pause = false;

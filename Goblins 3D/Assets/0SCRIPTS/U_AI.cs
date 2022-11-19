@@ -115,7 +115,7 @@ public class U_AI : MonoBehaviour
                     else
                     {
                         Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, layerMask);
-                        if (colliders != null)
+                        if (colliders.Length != 0)
                         {
                             foreach (Collider col in colliders)
                             {
@@ -126,9 +126,9 @@ public class U_AI : MonoBehaviour
                                     return;
                                 }
                             }
-                            if (target == null) ReturnToRoam();
                         }
                     }
+                    if (target == null) ReturnToRoam();
                 }
                 if (target != null) transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
                 break;
@@ -163,7 +163,7 @@ public class U_AI : MonoBehaviour
         else
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, layerMask);
-            if (colliders != null)
+            if (colliders.Length != 0)
             {
                 foreach (Collider col in colliders)
                 {
@@ -223,7 +223,7 @@ public class U_AI : MonoBehaviour
         else
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, layerMask);
-            if (colliders != null)
+            if (colliders.Length != 0)
             {
                 foreach (Collider col in colliders)
                 {

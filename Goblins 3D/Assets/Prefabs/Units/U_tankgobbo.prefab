@@ -574,7 +574,7 @@ MonoBehaviour:
   target: {fileID: 0}
   walkCycleTime: 4
   idleTime: 1
-  wanderingRange: 8
+  wanderingRange: 4
   attackRange: 3
   layerMask:
     serializedVersion: 2

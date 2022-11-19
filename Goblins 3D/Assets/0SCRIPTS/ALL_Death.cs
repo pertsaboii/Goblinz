@@ -28,6 +28,8 @@ public class ALL_Death : MonoBehaviour
 
     public IEnumerator Death()
     {
+        RemoveLayerAndTag(gameObject);
+
         if (gameObject.CompareTag("Enemy"))
         {
             MultiScene.multiScene.money += gameObject.GetComponent<EnemyUnit>().value * MultiScene.multiScene.moneyMult;
@@ -56,5 +58,14 @@ public class ALL_Death : MonoBehaviour
         else if (deathFXType == DeathFXType.EnemyDeath) Instantiate(gamemanager.assetBank.FindFX(AssetBank.FXType.BasicEnemyDeath), transform.position, Quaternion.identity);
         else if (deathFXType == DeathFXType.TrollDeath) Instantiate(gamemanager.assetBank.FindFX(AssetBank.FXType.TrollUnitDeath), transform.position, Quaternion.identity);
         else if (deathFXType == DeathFXType.WanderingDeath) Instantiate(gamemanager.assetBank.FindFX(AssetBank.FXType.WanderingDeath), transform.position, Quaternion.identity);
+    }
+    void RemoveLayerAndTag(GameObject go)
+    {
+        if (go == null) return;
+        foreach (Transform trans in go.GetComponentsInChildren<Transform>(true))
+        {
+            trans.gameObject.layer = 0;
+            trans.gameObject.tag = "Untagged";
+        }
     }
 }

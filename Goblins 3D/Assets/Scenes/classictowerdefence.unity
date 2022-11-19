@@ -98,8 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 9318ab90e1e976e42afff08e2beda039,
-    type: 2}
+  m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2768,6 +2767,7 @@ MonoBehaviour:
   - {fileID: 5627627272792343555, guid: e212a476e27813546bb18855299e030d, type: 3}
   - {fileID: 5627627272792343555, guid: 7c4b6922c1fda3b4ca8f6687a81a811b, type: 3}
   - {fileID: 5627627272792343555, guid: 8aa46fb0a0195004893bf90944e0370c, type: 3}
+  - {fileID: 5627627272792343555, guid: b06b3240619cda845a058653ac6c0c42, type: 3}
   - {fileID: 5627627272792343555, guid: 0a4e5085270b69a4f8f2cc214f464eb4, type: 3}
   - {fileID: 5627627272792343555, guid: fe355b85cbc4ba74ab747266314be8d7, type: 3}
   - {fileID: 5627627272792343555, guid: e3f25a6d0c1f3a74aba4051ede1abefa, type: 3}
@@ -6141,6 +6141,8 @@ MonoBehaviour:
   mainCam: {fileID: 963194227}
   oldGobbo: {fileID: 623403118}
   viholliset: []
+  unititJaBuildingit: []
+  buildingit: []
 --- !u!114 &1232587678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6159,7 +6161,7 @@ MonoBehaviour:
   cardPlace: 
   layerMask:
     serializedVersion: 2
-    m_Bits: 4049
+    m_Bits: 4048
 --- !u!114 &1232587679
 MonoBehaviour:
   m_ObjectHideFlags: 0

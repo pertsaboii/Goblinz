@@ -1128,9 +1128,9 @@ MonoBehaviour:
   walkAnimMult: 2.2
   targetScanningRange: 10
   target: {fileID: 0}
-  walkCycleTime: 2
-  idleTime: 0.7
-  wanderingRange: 8
+  walkCycleTime: 1
+  idleTime: 1
+  wanderingRange: 5
   attackRange: 1.6
   layerMask:
     serializedVersion: 2
