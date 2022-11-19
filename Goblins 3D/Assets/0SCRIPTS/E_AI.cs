@@ -102,6 +102,7 @@ public class E_AI : MonoBehaviour
                 break;
             case State.WalkToMiddle:
                 anim.SetInteger("State", 1);    // v‰lill‰ anim attack state j‰‰ p‰‰lle, t‰m‰ est‰‰ sen
+                if (agent.GetComponent<NavMeshAgent>().destination != gamemanager.loseCon.transform.position) agent.SetDestination(gamemanager.loseCon.transform.position); // testi
                 ScanArea();
                 if (target != null) StartChaseState();
                 break;

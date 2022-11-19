@@ -8,6 +8,7 @@ public class SceneManagement : MonoBehaviour
     public void StartGame()
     {
         gamemanager.userInterface.ButtonClickAudio();
+        SoundManager.Instance.musicSounds.Stop();
         SceneManager.LoadScene(1);
     }
 

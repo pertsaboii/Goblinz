@@ -13,6 +13,7 @@ public class MultiScene : MonoBehaviour
     [SerializeField] private float easyModeMoneyMult;
     [SerializeField] private float hardModeMoneyMult;
     [HideInInspector] public float moneyMult;
+    private bool difficultyUpdatedFirstTime;
     private void Awake()
     {
         if (multiScene == null)
@@ -24,9 +25,15 @@ public class MultiScene : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        if (difficultyUpdatedFirstTime == false)
+        {
+            difficulty = 1;
+            moneyMult = 1;
+        }
     }
     public void UpdateDifficulty(int difficultyLevel)
     {
+        difficultyUpdatedFirstTime = true;
         if (difficultyLevel == 0) moneyMult = easyModeMoneyMult;
         else if (difficultyLevel == 2) moneyMult = hardModeMoneyMult;
         else moneyMult = 1;

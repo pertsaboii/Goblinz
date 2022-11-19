@@ -49,6 +49,7 @@ public class gamemanager : MonoBehaviour
             buildingsAndUnits = new List<GameObject>();
 
             state = State.RunTime;
+            AudioListener.pause = false;
         }
         else
         {
