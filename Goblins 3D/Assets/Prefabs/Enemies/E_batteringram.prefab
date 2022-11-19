@@ -1323,7 +1323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   buildingDamage: 5
-  unitColDamage: 4
+  unitColDamage: 8
   startSpeed: 3
   maxSpeed: 12
   accelerationPerS: 0.8

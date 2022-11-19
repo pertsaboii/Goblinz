@@ -35,7 +35,7 @@ public class PlayerCards : MonoBehaviour
                             if (raycastHit.point.x < gamemanager.loseCon.transform.position.x) chiefAnim.SetTrigger("Command2");
                             else chiefAnim.SetTrigger("Command1");
 
-                            Instantiate(selectedCardUnit, new Vector3(raycastHit.point.x, 0, raycastHit.point.z), Quaternion.identity);
+                            Instantiate(selectedCardUnit, new Vector3(raycastHit.point.x, 0, raycastHit.point.z + 1f), Quaternion.identity);
                             selectedCardUnit = null;
                             gamemanager.userInterface.resourceSlider.value -= selectedCardCost;
 

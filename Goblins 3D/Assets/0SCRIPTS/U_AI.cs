@@ -177,6 +177,7 @@ public class U_AI : MonoBehaviour
             }
         }
         if (target == null) ReturnToRoam();
+        else StartChaseState();
     }
     void ScanArea()
     {
