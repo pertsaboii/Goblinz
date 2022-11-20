@@ -2407,6 +2407,16 @@ MonoBehaviour:
   deckTabMoneyText: {fileID: 650868128}
   cannotPlayPanel: {fileID: 765640539}
   infoPanel: {fileID: 1041823882}
+  deckTabCards:
+  - {fileID: 47766349}
+  - {fileID: 1390856273}
+  - {fileID: 1132079869}
+  - {fileID: 374732063}
+  - {fileID: 1598326885}
+  - {fileID: 1616889007}
+  - {fileID: 1100044425}
+  - {fileID: 2076135948}
+  - {fileID: 834788533}
   timerText: {fileID: 0}
   currentRunScore: {fileID: 0}
   newHighScoreText: {fileID: 0}
@@ -4258,7 +4268,7 @@ PrefabInstance:
     - target: {fileID: 2483704837671931921, guid: 219a307dbef06e241a18190c11b5ec35,
         type: 3}
       propertyPath: infoPanelText
-      value: A tree hut from which goblins will shoot arrows at any enemies nearby.
+      value: A tree hut from which goblins will shoot arrows at any nearby enemies.
       objectReference: {fileID: 0}
     - target: {fileID: 2483704837671931923, guid: 219a307dbef06e241a18190c11b5ec35,
         type: 3}

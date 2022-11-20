@@ -36,6 +36,7 @@ public class uimanager : MonoBehaviour
     public TMP_Text deckTabMoneyText;
     [SerializeField] private Image cannotPlayPanel;
     public InfoPanel infoPanel;
+    [SerializeField] private GameObject[] deckTabCards;
 
     [Header("Score")]
     public TMP_Text timerText;
@@ -418,6 +419,7 @@ public class uimanager : MonoBehaviour
             mainTab.DOLocalMoveX(-1080, .5f, true);
             deckTab.DOLocalMoveX(0, .5f, true);
             mainMenuTabs = MainMenuTabs.DeckTab;
+            StartCoroutine("DeckTabCardPops");
         }
         else
         {
@@ -433,5 +435,20 @@ public class uimanager : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         cannotPlayPanel.rectTransform.DOScale(Vector3.zero, .3f).SetEase(Ease.OutSine);
+    }
+    IEnumerator DeckTabCardPops()
+    {
+        foreach (GameObject card in deckTabCards)
+        {
+            card.transform.localScale = Vector3.zero;
+        }
+
+        yield return new WaitForSeconds(.1f);
+
+        foreach (GameObject card in deckTabCards)
+        {
+            card.transform.DOScale(Vector3.one, .3f).SetEase(Ease.OutBounce);
+            yield return new WaitForSeconds(.1f);
+        }
     }
 }
