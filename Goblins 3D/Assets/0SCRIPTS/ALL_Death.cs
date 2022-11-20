@@ -28,13 +28,12 @@ public class ALL_Death : MonoBehaviour
 
     public IEnumerator Death()
     {
-        RemoveLayerAndTag(gameObject);
-
         if (gameObject.CompareTag("Enemy"))
         {
             MultiScene.multiScene.money += gameObject.GetComponent<EnemyUnit>().value * MultiScene.multiScene.moneyMult;
             gamemanager.userInterface.UpdateMoneyText();
         }
+        RemoveLayerAndTag(gameObject);
         //gameObject.transform.DOScale(transform.localScale * 1.2f, deathAnimTime).SetEase(Ease.OutBounce);     // eri tyylejä death bouncelle
         //gameObject.transform.DOScale(0, deathAnimTime).SetEase(Ease.InBounce);
         gameObject.transform.DOPunchScale(transform.localScale * .3f, deathAnimTime, 5, 0.1f);

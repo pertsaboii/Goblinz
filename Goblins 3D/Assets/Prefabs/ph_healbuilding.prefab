@@ -5005,8 +5005,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ad4cbe42618f684390990c7538fd7ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healingInterval: 3
-  healAmount: 4
+  healingInterval: 4
+  healAmount: 3
   healingRange: 12
   healingBarSprite: {fileID: 8481251567207670242}
   healingBar: {fileID: 8481251566813565936}
