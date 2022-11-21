@@ -36,6 +36,7 @@ public class uimanager : MonoBehaviour
     public TMP_Text deckTabMoneyText;
     [SerializeField] private Image cannotPlayPanel;
     public InfoPanel infoPanel;
+    [SerializeField] private Animator sceneFaderAnim;
     [SerializeField] private GameObject[] deckTabCards;
 
     [Header("Score")]
@@ -80,8 +81,6 @@ public class uimanager : MonoBehaviour
     [SerializeField] private Transform fourCardPlace;
 
     [Header("Cards")]
-    [SerializeField] private GameObject[] emptyDeckCards;
-    //[SerializeField] private GameObject[] cards;
     [SerializeField] private List<GameObject> cardsOnDeck;
 
     private float timer1, timer2, timer3, timer4;
@@ -295,7 +294,8 @@ public class uimanager : MonoBehaviour
     }
     public void SpawnCardOne()
     {
-        int randomCard = Random.Range(0, cardsOnDeck.Count);
+        int randomCard = 0;
+        if (cardsOnDeck.Count != 1) randomCard = Random.Range(0, cardsOnDeck.Count);
         GameObject newCard1 = Instantiate(cardsOnDeck[randomCard], oneCardPlace.position, Quaternion.identity);
         newCard1.transform.SetParent(oneCardPlace.gameObject.transform);
         oneCardPlace.transform.localScale = Vector3.zero;
@@ -306,7 +306,8 @@ public class uimanager : MonoBehaviour
     }
     public void SpawnCardTwo()
     {
-        int randomCard = Random.Range(0, cardsOnDeck.Count);
+        int randomCard = 0;
+        if (cardsOnDeck.Count != 1) randomCard = Random.Range(0, cardsOnDeck.Count);
         GameObject newCard2 = Instantiate(cardsOnDeck[randomCard], twoCardPlace.position, Quaternion.identity);
         newCard2.transform.SetParent(twoCardPlace.gameObject.transform);
         twoCardPlace.transform.localScale = Vector3.zero;
@@ -317,7 +318,8 @@ public class uimanager : MonoBehaviour
     }
     public void SpawnCardThree()
     {
-        int randomCard = Random.Range(0, cardsOnDeck.Count);
+        int randomCard = 0;
+        if (cardsOnDeck.Count != 1) randomCard = Random.Range(0, cardsOnDeck.Count);
         GameObject newCard3 = Instantiate(cardsOnDeck[randomCard], threeCardPlace.position, Quaternion.identity);
         newCard3.transform.SetParent(threeCardPlace.gameObject.transform);
         threeCardPlace.transform.localScale = Vector3.zero;
@@ -328,7 +330,8 @@ public class uimanager : MonoBehaviour
     }
     public void SpawnCardFour()
     {
-        int randomCard = Random.Range(0, cardsOnDeck.Count);
+        int randomCard = 0;
+        if (cardsOnDeck.Count != 1) randomCard = Random.Range(0, cardsOnDeck.Count);
         GameObject newCard4 = Instantiate(cardsOnDeck[randomCard], fourCardPlace.position, Quaternion.identity);
         newCard4.transform.SetParent(fourCardPlace.gameObject.transform);
         fourCardPlace.transform.localScale = Vector3.zero;
@@ -450,5 +453,20 @@ public class uimanager : MonoBehaviour
             card.transform.DOScale(Vector3.one, .3f).SetEase(Ease.OutBounce);
             yield return new WaitForSeconds(.1f);
         }
+    }
+    public void MainMenuSceneFade()
+    {
+        gamemanager.userInterface.ButtonClickAudio();
+
+        if (MultiScene.multiScene.purchasedCards.Count != 0)
+        {
+            sceneFaderAnim.Play("SceneChange1");
+            Invoke("StartGame", .75f);
+        }
+        else StartCoroutine(gamemanager.userInterface.CannotStartGame());
+    }
+    void StartGame()
+    {
+        gamemanager.sceneManagement.StartGame();
     }
 }

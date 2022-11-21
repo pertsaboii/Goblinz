@@ -36,7 +36,7 @@ public class EnemyUnit : MonoBehaviour
                 if (target == null || target.name != "LoseCon") LoseConTargetOff();
                 break;
         }
-        warningUI.transform.LookAt(new Vector3(transform.position.x - gamemanager.camera.transform.position.x, gamemanager.camera.transform.position.y * 10, gamemanager.camera.transform.position.z - transform.position.z));
+        warningUI.transform.LookAt(new Vector3(transform.position.x - gamemanager.screenInputCamera.transform.position.x, gamemanager.screenInputCamera.transform.position.y * 10, gamemanager.screenInputCamera.transform.position.z - transform.position.z));
     }
     void LoseConTargetOn()
     {

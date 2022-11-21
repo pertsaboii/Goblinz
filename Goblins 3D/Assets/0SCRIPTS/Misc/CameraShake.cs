@@ -14,11 +14,11 @@ public class CameraShake : MonoBehaviour
 
     private IEnumerator ShakeCamera()
     {
-        gamemanager.camera.transform.DOShakePosition(shakeTime, .3f, 10, 90, false, true, ShakeRandomnessMode.Full);
+        gamemanager.mainCineCam.transform.DOShakePosition(shakeTime, .3f, 10, 90, false, true, ShakeRandomnessMode.Full);
         yield return new WaitForSeconds(shakeTime);
-        if (gamemanager.camera.transform.position != originalPos)
+        if (gamemanager.mainCineCam.transform.position != originalPos)
         {
-            gamemanager.camera.transform.DOMove(originalPos, 0.2f, false).SetEase(Ease.OutSine);
+            gamemanager.mainCineCam.transform.DOMove(originalPos, 0.2f, false).SetEase(Ease.OutSine);
         }
     }
     public void StartShakeCamera()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class gamemanager : MonoBehaviour
 {
@@ -16,12 +17,15 @@ public class gamemanager : MonoBehaviour
     }
     public static State state;
 
-    public static Camera camera;
+    public static Camera screenInputCamera;
     public static uimanager userInterface;
     public static GameObject loseCon;
+    public static CinemachineVirtualCamera mainCineCam;
+    public static SceneManagement sceneManagement;
     [SerializeField] private uimanager UIScript;
-    [SerializeField] private Camera mainCam;
+    [SerializeField] private Camera screenInputCam;
     [SerializeField] private GameObject oldGobbo;
+    [SerializeField] private CinemachineVirtualCamera cineMainCam;
 
     public static List<GameObject> buildings;
     public static List<GameObject> buildingsAndUnits;
@@ -37,11 +41,14 @@ public class gamemanager : MonoBehaviour
     public static AssetBank assetBank;
     private void Awake()
     {
+        sceneManagement = GetComponent<SceneManagement>();
+
         if (scene == Scene.PlayScene)
         {
             Time.timeScale = 1;
 
-            camera = mainCam;
+            screenInputCamera = screenInputCam;
+            mainCineCam = cineMainCam;
             userInterface = UIScript;
             loseCon = oldGobbo;
             playercards = GetComponent<PlayerCards>();

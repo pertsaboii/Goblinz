@@ -21,7 +21,7 @@ public class NMtestmove : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1) && isActive)
         {
-            Ray moveposition = gamemanager.camera.ScreenPointToRay(Input.mousePosition);
+            Ray moveposition = gamemanager.screenInputCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(moveposition, out var hitInfo))
             {
                 agent.SetDestination(hitInfo.point);

@@ -45,7 +45,7 @@ public class rigidram : MonoBehaviour
         healthScript = GetComponent<ALL_Health>();
         localTransform = GetComponent<Transform>();
         baseScript = GetComponent<EnemyUnit>();
-        cameraShake = gamemanager.camera.GetComponent<CameraShake>();
+        cameraShake = gamemanager.screenInputCamera.GetComponent<CameraShake>();
         LockOnTarget();
     }
 

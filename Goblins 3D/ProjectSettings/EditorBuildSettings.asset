@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/mainmenu.unity
     guid: 679c7f904b042a547b7a0bc69e20f0f4
   - enabled: 1
+    path: Assets/Scenes/cinemachinetest.unity
+    guid: 546a7efecbbce1a4d8f8d9f1979360c0
+  - enabled: 0
     path: Assets/Scenes/classictowerdefence.unity
     guid: ed977dc450058ab489d8b3bf91aed9a9
   - enabled: 0

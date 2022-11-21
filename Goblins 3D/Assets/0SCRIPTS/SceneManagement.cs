@@ -7,13 +7,8 @@ public class SceneManagement : MonoBehaviour
 {
     public void StartGame()
     {
-        gamemanager.userInterface.ButtonClickAudio();
-        if (MultiScene.multiScene.purchasedCards.Count != 0)
-        {
-            SoundManager.Instance.musicSounds.Stop();
-            SceneManager.LoadScene(1);
-        }
-        else StartCoroutine(gamemanager.userInterface.CannotStartGame());
+        SoundManager.Instance.musicSounds.Stop();
+        SceneManager.LoadScene(1);
     }
 
     public void MainMenu()

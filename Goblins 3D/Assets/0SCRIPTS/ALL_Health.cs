@@ -37,7 +37,7 @@ public class ALL_Health : MonoBehaviour
     {
         //hpBar.transform.LookAt(new Vector3(1, gamemanager.camera.transform.position.y * 10, gamemanager.camera.transform.position.z * 10));
         //hpBar.transform.LookAt(new Vector3(transform.localPosition.x, gamemanager.camera.transform.position.y * 10, transform.localPosition.z));
-        hpBar.transform.LookAt(new Vector3(transform.position.x - gamemanager.camera.transform.position.x, gamemanager.camera.transform.position.y * 10, transform.position.z - gamemanager.camera.transform.position.z));
+        hpBar.transform.LookAt(new Vector3(transform.position.x - gamemanager.screenInputCamera.transform.position.x, gamemanager.screenInputCamera.transform.position.y * 10, transform.position.z - gamemanager.screenInputCamera.transform.position.z));
         //hpBar.transform.LookAt(new Vector3(transform.position.x - gamemanager.camera.transform.position.x, gamemanager.camera.transform.position.y * 10, gamemanager.camera.transform.position.z - transform.position.z));
     }
     void ZeroHealthPoints()

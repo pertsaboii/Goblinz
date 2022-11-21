@@ -25,11 +25,11 @@ public class PlayerCards : MonoBehaviour
         {
             if (gamemanager.userInterface.resourceSlider.value >= selectedCardCost)
             {
-                Ray checkObjectsRay = gamemanager.camera.ScreenPointToRay(Input.mousePosition);
+                Ray checkObjectsRay = gamemanager.screenInputCamera.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(checkObjectsRay, out RaycastHit checkRaycastHit, layerMask) == true)
                     if (checkRaycastHit.collider.gameObject.layer == 11)
                     {
-                        Ray ray = gamemanager.camera.ScreenPointToRay(Input.mousePosition);
+                        Ray ray = gamemanager.screenInputCamera.ScreenPointToRay(Input.mousePosition);
                         if (Physics.Raycast(ray, out RaycastHit raycastHit))
                         {
                             if (raycastHit.point.x < gamemanager.loseCon.transform.position.x) chiefAnim.SetTrigger("Command2");

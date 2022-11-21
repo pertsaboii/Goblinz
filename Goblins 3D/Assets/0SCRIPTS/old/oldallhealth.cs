@@ -41,7 +41,7 @@ public class oldallhealth : MonoBehaviour
     }
     private void Update()
     {
-        hpBar.transform.LookAt(new Vector3(1, gamemanager.camera.transform.position.y * 10, gamemanager.camera.transform.position.z * 10));
+        hpBar.transform.LookAt(new Vector3(1, gamemanager.screenInputCamera.transform.position.y * 10, gamemanager.screenInputCamera.transform.position.z * 10));
     }
     void Death()
     {
