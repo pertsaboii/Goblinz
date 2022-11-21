@@ -10,10 +10,15 @@ public class MultiScene : MonoBehaviour
 
     [HideInInspector] public float highScore;
     [HideInInspector] public float money;
+    [SerializeField] private float raha;    // debuggaukseen
     [SerializeField] private float easyModeMoneyMult;
     [SerializeField] private float hardModeMoneyMult;
     [HideInInspector] public float moneyMult;
     private bool difficultyUpdatedFirstTime;
+    private bool gameStartedFirstTime;      // t‰m‰ pit‰‰ kattoa uudestaan sit kun on save file script
+
+    public List<GameObject> purchasedCards;
+    public List<GameObject> cardsOnDeck;
     private void Awake()
     {
         if (multiScene == null)
@@ -30,6 +35,15 @@ public class MultiScene : MonoBehaviour
             difficulty = 1;
             moneyMult = 1;
         }
+        if (gameStartedFirstTime == false)      // t‰m‰ pit‰‰ kattoa uudestaan sit kun on save file script
+        {
+            money = 300;
+            gameStartedFirstTime = true;
+        }
+    }
+    private void Update()
+    {
+        raha = money;   // debuggaukseen
     }
     public void UpdateDifficulty(int difficultyLevel)
     {
