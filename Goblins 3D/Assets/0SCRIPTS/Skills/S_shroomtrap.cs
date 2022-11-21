@@ -13,13 +13,12 @@ public class S_shroomtrap : MonoBehaviour
     [SerializeField] private int damageCycles;
     [SerializeField] private float cloudRadius;
     private Collider col;
-    private MeshRenderer mesh;
+    [SerializeField] MeshRenderer mesh;
     [SerializeField] private LayerMask layerMask;
 
     private void Start()
     {
         col = GetComponent<Collider>();
-        mesh = GetComponent<MeshRenderer>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -34,9 +33,8 @@ public class S_shroomtrap : MonoBehaviour
     IEnumerator DamageCloud()
     {
         Instantiate(ps, transform.position, Quaternion.identity);
-        transform.DOPunchScale(Vector3.one * 0.4f, .15f, 5, 0.1f);
-
         Invoke("DisableMesh", .15f);
+        transform.DOPunchScale(Vector3.one * 0.4f, .15f, 5, 0.1f);
 
         for (int i = 0; i < damageCycles; i++)
         {
@@ -56,6 +54,5 @@ public class S_shroomtrap : MonoBehaviour
     void DisableMesh()
     {
         mesh.enabled = false;
-        transform.DOScale(Vector3.zero, .1f); // tämän voi ottaa pois sit kun on valmis model
     }
 }

@@ -6,9 +6,9 @@ public class S_speartrap : MonoBehaviour
 {
     private Animator anim;
     private BoxCollider bc;
-    private ALL_Health targetHealth;
 
     [SerializeField] private float damage;
+    [SerializeField] private LayerMask layerMask;
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -19,14 +19,18 @@ public class S_speartrap : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            targetHealth = other.gameObject.GetComponent<ALL_Health>();
             bc.enabled = false;
             anim.SetTrigger("Activate");
         }
     }
     public void TrapDamage()
     {
-        if (targetHealth.isDead == false) targetHealth.UpdateHealth(-damage);
+        Collider[] cols = Physics.OverlapSphere(transform.position, 1.2f, layerMask);
+        foreach  (Collider enemy in cols)
+        {
+            if (enemy.gameObject.GetComponent<ALL_Health>().isDead == false) enemy.gameObject.GetComponent<ALL_Health>().UpdateHealth(-damage);
+        }
+        
     }
     public void DestroyTrap()
     {

@@ -10,7 +10,9 @@ public class ALL_Death : MonoBehaviour
         GobboUnitDeath, EnemyDeath, WanderingDeath, TrollDeath, BuildingDeath
     }
     [Header("General")]
-    private float deathAnimTime = 0.15f;
+    private float deathTweenTime = 0.15f;
+    [SerializeField] private bool hasDeathAnim;
+    [SerializeField] private float deathAnimDuration;
     [SerializeField] private DeathFXType deathFXType;
     [Header("Unit Spawn Upon Death")]
     [SerializeField] private bool spawnsUnitOnDeath;
@@ -34,14 +36,21 @@ public class ALL_Death : MonoBehaviour
             gamemanager.userInterface.UpdateMoneyText();
         }
         RemoveLayerAndTag(gameObject);
-        //gameObject.transform.DOScale(transform.localScale * 1.2f, deathAnimTime).SetEase(Ease.OutBounce);     // eri tyylejä death bouncelle
-        //gameObject.transform.DOScale(0, deathAnimTime).SetEase(Ease.InBounce);
-        gameObject.transform.DOPunchScale(transform.localScale * .3f, deathAnimTime, 5, 0.1f);
-        yield return new WaitForSeconds(deathAnimTime / 2);
 
-        InstantiateDeathFX();
+        if (hasDeathAnim == false)
+        {
+            gameObject.transform.DOPunchScale(transform.localScale * .3f, deathTweenTime, 5, 0.1f);
+            yield return new WaitForSeconds(deathTweenTime / 2);
 
-        yield return new WaitForSeconds(deathAnimTime / 2);
+            InstantiateDeathFX();
+
+            yield return new WaitForSeconds(deathTweenTime / 2);
+        }
+        else
+        {
+            yield return new WaitForSeconds(deathAnimDuration);
+            InstantiateDeathFX();
+        }
 
         if (spawnsUnitOnDeath == true) Instantiate(spawningUnit, transform.position, Quaternion.identity);
         if (dealsAoeDmgOnDeath == true)

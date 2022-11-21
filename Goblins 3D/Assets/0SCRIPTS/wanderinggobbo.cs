@@ -8,7 +8,7 @@ public class wanderinggobbo : MonoBehaviour
 {
     private enum State
     {
-        Roaming
+        Roaming, Death
     }
 
     private ObstacleAgent agent;
@@ -20,9 +20,11 @@ public class wanderinggobbo : MonoBehaviour
     private float timeBtwWalks;
     [SerializeField] private float walkCycleTime;
     [SerializeField] private float idleTime;
+    [SerializeField] private float walkAnimMult = 2;
     private Vector3 originalPos;
     [SerializeField] private float wanderingRange;
     private Vector3 randomPos;
+    private bool deathAnimTriggered;
 
     private Animator anim;
 
@@ -33,7 +35,7 @@ public class wanderinggobbo : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
-        anim.SetFloat("WalkSpeed", moveSpeed / 2);        //--- jos run anim on liian hidas/nopea niin t‰t‰ voi s‰‰t‰‰
+        anim.SetFloat("WalkSpeed", moveSpeed / walkAnimMult);        //--- jos run anim on liian hidas/nopea niin t‰t‰ voi s‰‰t‰‰
         timeBtwWalks = 0;
         state = State.Roaming;
         anim.SetInteger("State", 0);
@@ -62,6 +64,15 @@ public class wanderinggobbo : MonoBehaviour
                     timeBtwWalks = walkCycleTime + idleTime;
                 }
                 else timeBtwWalks -= Time.deltaTime;
+                if (healthScript.isDead == true && deathAnimTriggered == false)
+                {
+                    deathAnimTriggered = true;
+                    if (navMeshAgent.enabled == true) navMeshAgent.ResetPath();
+                    state = State.Death;
+                    anim.SetInteger("State", 2);
+                }
+                break;
+            case State.Death:              
                 break;
         }
 

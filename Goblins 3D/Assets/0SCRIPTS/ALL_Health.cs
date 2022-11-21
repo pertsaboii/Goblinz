@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 [RequireComponent(typeof(ALL_Death))]
 public class ALL_Health : MonoBehaviour
@@ -14,8 +15,13 @@ public class ALL_Health : MonoBehaviour
 
     [HideInInspector] public bool isDead;
     private ALL_Death deathScript;
+
+    [Header("Scale Pop When Damaged")]
+    [SerializeField] private bool scalePopsWhenDamaged;
+    private Vector3 originalScale;
     void Start()
     {
+        originalScale = transform.localScale;
         deathScript = GetComponent<ALL_Death>();
         currentHealth = maxHealth;
         hpSprite.fillAmount = currentHealth / maxHealth;
@@ -26,6 +32,7 @@ public class ALL_Health : MonoBehaviour
         if (currentHealth <= maxHealth) hpBar.SetActive(true);
         currentHealth += healthChange;
         hpSprite.fillAmount = currentHealth / maxHealth;
+        if (healthChange < 0 && scalePopsWhenDamaged == true) StartCoroutine("ScalePop");
         if (currentHealth <= 0 && isDead == false) ZeroHealthPoints();
         if (currentHealth >= maxHealth)
         {
@@ -48,5 +55,14 @@ public class ALL_Health : MonoBehaviour
         if (gameObject.CompareTag("Building") == true) gamemanager.buildings.Remove(gameObject);
         hpBar.SetActive(false);
         StartCoroutine(deathScript.Death());
+    }
+    IEnumerator ScalePop()
+    {
+        gameObject.transform.DOPunchScale(transform.localScale * .1f, .15f, 5, 0.1f);
+        yield return new WaitForSeconds(.15f);
+        if (transform.localScale != originalScale)
+        {
+            transform.DOScale(originalScale, 0.2f).SetEase(Ease.OutSine);
+        }
     }
 }

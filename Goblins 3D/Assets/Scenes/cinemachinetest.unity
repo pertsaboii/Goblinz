@@ -3703,6 +3703,7 @@ MonoBehaviour:
   hpSprite: {fileID: 753247956}
   hpBar: {fileID: 1993769015}
   isDead: 0
+  scalePopsWhenDamaged: 0
 --- !u!114 &623403125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3727,6 +3728,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a2efdd681a8a04f81f56c653089e64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasDeathAnim: 0
+  deathAnimDuration: 0
   deathFXType: 0
   spawnsUnitOnDeath: 0
   spawningUnit: {fileID: 0}
@@ -6470,7 +6473,7 @@ MonoBehaviour:
   SoundArray:
   - audioClip: {fileID: 8300000, guid: a6753a47df2e2da4da22e0122ca34c4b, type: 3}
     sound: 0
-  - audioClip: {fileID: 8300000, guid: 84f4916952ca26f4898e845d018e5c45, type: 3}
+  - audioClip: {fileID: 8300000, guid: 1a24b2136dab8a949992a5030a428183, type: 3}
     sound: 1
   - audioClip: {fileID: 8300000, guid: ed047b9003236974f94aec932f502b21, type: 3}
     sound: 2
@@ -6478,9 +6481,9 @@ MonoBehaviour:
     sound: 3
   - audioClip: {fileID: 8300000, guid: f9fbc7aeb1a58b348b41a3ef53580e7c, type: 3}
     sound: 4
-  - audioClip: {fileID: 8300000, guid: d6630bd1ffc6ee541b5f7c63890ecd2d, type: 3}
+  - audioClip: {fileID: 8300000, guid: c1dc03b8ab0bc2b43b074d1f9260e0b9, type: 3}
     sound: 5
-  - audioClip: {fileID: 8300000, guid: ed047b9003236974f94aec932f502b21, type: 3}
+  - audioClip: {fileID: 8300000, guid: 8c46a16592cc34043bee76f94d9b8a86, type: 3}
     sound: 6
   - audioClip: {fileID: 8300000, guid: 42019c9997b375e47a9fb80db201b172, type: 3}
     sound: 7
