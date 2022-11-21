@@ -14,7 +14,7 @@ public class uimanager : MonoBehaviour
     }
     private enum State
     {
-        MainMenu, Play
+        MainMenu, Play, RunTimeCutscene
     }
 
     private State state;
@@ -25,6 +25,8 @@ public class uimanager : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject runTimeUi;
     [SerializeField] private GameObject audioMenu;
+    [SerializeField] private RectTransform runTimeDownPanel;
+    [SerializeField] private RectTransform runTimeUpPanel;
 
     [Header("Main Menu")]
     [SerializeField] private RectTransform mainTab;
@@ -97,45 +99,56 @@ public class uimanager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
-            state = State.Play;
-
-            isTiming = true;
-            currentTime = 0;
-
-            if (MultiScene.multiScene.cardsOnDeck.Count == 0) cardsOnDeck.AddRange(MultiScene.multiScene.purchasedCards);
-            else cardsOnDeck.AddRange(MultiScene.multiScene.cardsOnDeck);
-
-            resourceSlider.maxValue = 10;
-            pauseMenu.SetActive(false);
-            gameOverMenu.SetActive(false);
-            resourceSlider.value = startResources;
-            currentResources = resourceSlider.value;
-            resourceNumber.text = resourceSlider.value.ToString("0");
-            moneyText.text = MultiScene.multiScene.money.ToString();
-            originalMoneyTextScale = moneyText.rectTransform.localScale;
-            SoundManager.Instance.PlayMusicSound(gamemanager.assetBank.FindSound(AssetBank.Sound.GameStartedJingle));
-
-            if (MultiScene.multiScene.difficulty == 0)
-            {
-                difficultyText.text = "Sleepy Goblin";
-                difficultyPanel.color = Color.green;
-            }
-            else if (MultiScene.multiScene.difficulty == 1)
-            {
-                difficultyText.text = "Mighty Goblin";
-                difficultyPanel.color = Color.yellow;
-            }
-            else if (MultiScene.multiScene.difficulty == 2)
-            {
-                difficultyText.text = "Legendary Goblin";
-                difficultyPanel.color = Color.red;
-            }
-            StartCoroutine("StartCards");
-            StartCoroutine("StartText");
-
-            anim = GetComponent<Animator>();
+            InitializeRuntime();
         }
         else MainMenuState();
+    }
+    void InitializeRuntime()
+    {
+        state = State.RunTimeCutscene;
+
+        if (MultiScene.multiScene.cardsOnDeck.Count == 0) cardsOnDeck.AddRange(MultiScene.multiScene.purchasedCards);
+        else cardsOnDeck.AddRange(MultiScene.multiScene.cardsOnDeck);
+
+        anim = GetComponent<Animator>();
+        resourceSlider.maxValue = 10;
+        pauseMenu.SetActive(false);
+        gameOverMenu.SetActive(false);
+        resourceSlider.value = startResources;
+        currentResources = resourceSlider.value;
+        resourceNumber.text = resourceSlider.value.ToString("0");
+        moneyText.text = MultiScene.multiScene.money.ToString();
+        originalMoneyTextScale = moneyText.rectTransform.localScale;
+        SoundManager.Instance.PlayMusicSound(gamemanager.assetBank.FindSound(AssetBank.Sound.GameStartedJingle));
+        runTimeUpPanel.anchoredPosition = new Vector3(0, 690, 0);
+        runTimeDownPanel.anchoredPosition = new Vector3(0, -240, 0);
+
+        if (MultiScene.multiScene.difficulty == 0)
+        {
+            difficultyText.text = "Sleepy Goblin";
+            difficultyPanel.color = Color.green;
+        }
+        else if (MultiScene.multiScene.difficulty == 1)
+        {
+            difficultyText.text = "Mighty Goblin";
+            difficultyPanel.color = Color.yellow;
+        }
+        else if (MultiScene.multiScene.difficulty == 2)
+        {
+            difficultyText.text = "Legendary Goblin";
+            difficultyPanel.color = Color.red;
+        }
+        StartCoroutine("StartText");
+        Invoke("StartPlayState", 2f);
+    }
+    public void StartPlayState()
+    {
+        state = State.Play;
+
+        isTiming = true;
+        currentTime = 0;
+
+        StartCoroutine("StartRunTimeUI");
     }
     void Update()
     {
@@ -282,14 +295,17 @@ public class uimanager : MonoBehaviour
         timer4 = refreshCooldown;
         SpawnCardAudio();
     }
-    IEnumerator StartCards()
+    IEnumerator StartRunTimeUI()
     {
+        runTimeUpPanel.DOAnchorPosY(-910, .5f).SetEase(Ease.OutSine);
+        runTimeDownPanel.DOAnchorPosY(0, .5f).SetEase(Ease.OutSine);
+        yield return new WaitForSeconds(.3f);
         SpawnCardOne();
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(.2f);
         SpawnCardTwo();
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(.2f);
         SpawnCardThree();
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(.2f);
         SpawnCardFour();
     }
     public void SpawnCardOne()
@@ -384,10 +400,11 @@ public class uimanager : MonoBehaviour
     IEnumerator StartText()
     {
         startText.transform.localPosition = new Vector3(-900f, startText.transform.localPosition.y, startText.transform.localPosition.z);
+        yield return new WaitForSeconds(.1f);
         startText.DOAnchorPosX(-45, .5f, false).SetEase(Ease.OutSine);
         yield return new WaitForSeconds(.5f);
         startText.DOAnchorPosX(5, 1.5f);
-        yield return new WaitForSeconds(1.4f);
+        yield return new WaitForSeconds(1.3f);
         startText.DOAnchorPosX(900, .5f, false).SetEase(Ease.InCubic);
     }
     public void UpdateMoneyText()
@@ -405,7 +422,6 @@ public class uimanager : MonoBehaviour
     public void CardSelectedAudio()
     {
         SoundManager.Instance.PlayUISound(gamemanager.assetBank.FindSound(AssetBank.Sound.CardSelected));
-        Debug.Log("soundplayed");
     }
     void SpawnCardAudio()
     {
@@ -417,6 +433,7 @@ public class uimanager : MonoBehaviour
     }
     public void DeckTabOnOff()
     {
+        ButtonClickAudio();
         if (mainMenuTabs == MainMenuTabs.MainTab)
         {
             mainTab.DOLocalMoveX(-1080, .5f, true);
@@ -450,13 +467,14 @@ public class uimanager : MonoBehaviour
 
         foreach (GameObject card in deckTabCards)
         {
+            SpawnCardAudio();
             card.transform.DOScale(Vector3.one, .3f).SetEase(Ease.OutBounce);
             yield return new WaitForSeconds(.1f);
         }
     }
     public void MainMenuSceneFade()
     {
-        gamemanager.userInterface.ButtonClickAudio();
+        ButtonClickAudio();
 
         if (MultiScene.multiScene.purchasedCards.Count != 0)
         {

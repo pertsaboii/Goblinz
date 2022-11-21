@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/cinemachinetest.unity
     guid: 546a7efecbbce1a4d8f8d9f1979360c0
   - enabled: 0
-    path: Assets/Scenes/classictowerdefence.unity
+    path: Assets/Scenes/old/classictowerdefence.unity
     guid: ed977dc450058ab489d8b3bf91aed9a9
   - enabled: 0
     path: Assets/Scenes/old/extended navmesh test.unity

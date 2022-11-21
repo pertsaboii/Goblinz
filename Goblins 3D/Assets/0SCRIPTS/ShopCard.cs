@@ -69,6 +69,7 @@ public class ShopCard : MonoBehaviour
         if (MultiScene.multiScene.money >= cardCost)
         {
             MultiScene.multiScene.money -= cardCost;
+            SoundManager.Instance.PlayUISound(gamemanager.assetBank.FindSound(AssetBank.Sound.MoneyGained));
             gamemanager.userInterface.deckTabMoneyText.text = MultiScene.multiScene.money.ToString();
             MultiScene.multiScene.purchasedCards.Add(cardPrefab);
             PurchasedState();
