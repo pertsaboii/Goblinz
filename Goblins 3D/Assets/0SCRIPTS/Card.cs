@@ -11,7 +11,7 @@ public class Card : MonoBehaviour
 
     // nämä korvautuu mustavalkokuvalla myöhemmin
     [SerializeField] private Image insufFundsImage;
-    [SerializeField] private Image costCircle;
+    public Image costCircle;
     private Color32 originalCircleColor;
 
     private bool insufficientFunds;

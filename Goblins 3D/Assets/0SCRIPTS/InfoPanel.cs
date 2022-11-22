@@ -14,6 +14,7 @@ public class InfoPanel : MonoBehaviour
 
     public void InfoPanelOn(string name, string text, VideoClip clip)
     {
+        SoundManager.Instance.PlayUISound(gamemanager.assetBank.FindSound(AssetBank.Sound.ButtonClicked));
         gameObject.transform.DOScale(Vector3.one, .3f).SetEase(Ease.OutSine);
         cardName.text = name;
         descriptionText.text = text;
