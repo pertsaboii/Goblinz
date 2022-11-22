@@ -39,6 +39,7 @@ public class ShopCard : MonoBehaviour
     [SerializeField] private Image notPurchasedImage;
     [SerializeField] private Button purchaseButton;
     [SerializeField] private float cardCost;
+    [SerializeField] private AudioClip unitSpawnSound;
 
     [Header("Card Prefab")]
     [SerializeField] private GameObject cardPrefab;
@@ -90,8 +91,10 @@ public class ShopCard : MonoBehaviour
             gamemanager.userInterface.deckTabMoneyText.text = MultiScene.multiScene.money.ToString();
             gamemanager.userInterface.deckTabMoneyText.rectTransform.DOPunchScale(Vector3.one * -0.3f, 0.25f, 5, 1f);
             MultiScene.multiScene.purchasedCards.Add(cardPrefab);
+            SoundManager.Instance.PlaySFXSound(unitSpawnSound);
             PurchasedState();
         }
+        else CantBuyCard();
     }
     public void CardOnOffDeck()
     {
@@ -122,5 +125,10 @@ public class ShopCard : MonoBehaviour
     void CardPop()
     {
         gameObject.transform.DOPunchScale(transform.localScale * .1f, .15f, 5, 0.1f);
+    }
+    void CantBuyCard()
+    {
+        SoundManager.Instance.PlayUISound(gamemanager.assetBank.FindSound(AssetBank.Sound.InsufficientFunds));
+        // tänne myöhemmin jotain juicea
     }
 }

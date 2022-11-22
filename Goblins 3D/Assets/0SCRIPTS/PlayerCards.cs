@@ -49,7 +49,6 @@ public class PlayerCards : MonoBehaviour
                         }
                     }
             }
-            else gamemanager.userInterface.InsufficientResourcesShake();
         }
     }
     private bool IsPointerOverUI()

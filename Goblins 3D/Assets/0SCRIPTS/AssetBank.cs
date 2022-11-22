@@ -18,12 +18,12 @@ public class AssetBank : MonoBehaviour
     {
         ResourcePlusOne,
         CardSelected,
-        CardDeselected,
         InsufficientFunds,
         ButtonClicked,
         NewCardDrawn,
         MoneyGained,
-        GameStartedJingle
+        GameStartedJingle,
+        NewHighScoreJingle
     }
 
     public FX[] FXArray;

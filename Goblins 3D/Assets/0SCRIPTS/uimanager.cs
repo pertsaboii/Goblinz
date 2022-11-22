@@ -95,6 +95,8 @@ public class uimanager : MonoBehaviour
     [HideInInspector] public bool isTiming;
 
     [HideInInspector] public Animator anim;
+
+    private bool newHighScoreAchieved;
     private void Start()
     {
         if (SceneManager.GetActiveScene().buildIndex == 1)
@@ -179,6 +181,11 @@ public class uimanager : MonoBehaviour
                     currentResources = Mathf.Floor(resourceSlider.value);
                     resourceNumber.text = currentResources.ToString("0");
                 }
+                if (currentTime > MultiScene.multiScene.highScore && newHighScoreAchieved == false)
+                {
+                    newHighScoreAchieved = true;
+                    NewHighScore();
+                } 
                 break;
             case State.MainMenu:
                 break;
@@ -391,11 +398,6 @@ public class uimanager : MonoBehaviour
         resourceCircle.transform.DOPunchScale(Vector3.one * 0.4f, 0.35f, 5, 1f);
         SoundManager.Instance.PlayUISound(gamemanager.assetBank.FindSound(AssetBank.Sound.ResourcePlusOne));
     }
-    public void InsufficientResourcesShake()
-    {
-        resourceBar.transform.DOShakePosition(.3f, Vector3.right * 15, 10, 0, false, false);
-        SoundManager.Instance.PlayUISound(gamemanager.assetBank.FindSound(AssetBank.Sound.InsufficientFunds));
-    }
 
     IEnumerator StartText()
     {
@@ -486,5 +488,10 @@ public class uimanager : MonoBehaviour
     void StartGame()
     {
         gamemanager.sceneManagement.StartGame();
+    }
+    void NewHighScore()
+    {
+        SoundManager.Instance.PlayMusicSound(gamemanager.assetBank.FindSound(AssetBank.Sound.NewHighScoreJingle));
+        // tänne myöhemmin jotain juicea
     }
 }

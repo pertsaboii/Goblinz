@@ -9,10 +9,12 @@ public class S_speartrap : MonoBehaviour
 
     [SerializeField] private float damage;
     [SerializeField] private LayerMask layerMask;
+    [SerializeField] private AudioClip spawnSound;
     void Start()
     {
         anim = GetComponent<Animator>();
         bc = GetComponent<BoxCollider>();
+        SoundManager.Instance.PlaySFXSound(spawnSound);
     }
 
     private void OnTriggerEnter(Collider other)

@@ -13,12 +13,14 @@ public class B_HealingBuilding : MonoBehaviour
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private ParticleSystem ps;
     private ALL_Health healthScript;
+    [SerializeField] private AudioClip spawnSound;
 
     void Start()
     {
         gamemanager.buildings.Add(gameObject);
         gamemanager.buildingsAndUnits.Add(gameObject);
         healingBarSprite.fillAmount = 0;
+        SoundManager.Instance.PlaySFXSound(spawnSound);
         healthScript = GetComponent<ALL_Health>();
         ParticleSystem.ShapeModule psShape = ps.shape;
         psShape.radius = healingRange;

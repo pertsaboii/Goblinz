@@ -47,7 +47,7 @@ public class projectile : MonoBehaviour
     }
     private void Update()
     {
-        if (target == null) StartCoroutine(TargetlessProjectile());
+        if (target == null || targetHealth.isDead == true) StartCoroutine(TargetlessProjectile());
     }
     private void OnTriggerEnter(Collider other)
     {

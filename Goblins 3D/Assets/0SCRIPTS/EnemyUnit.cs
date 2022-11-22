@@ -16,11 +16,14 @@ public class EnemyUnit : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private GameObject warningUI;
 
+    //[SerializeField] private AudioClip spawnSound;        jos haluaa spawn soundit enemyille
+
     public float value;
 
     private void Start()
     {
         gamemanager.enemies.Add(gameObject);
+        //SoundManager.Instance.PlaySFXSound(spawnSound);   jos haluaa spawn soundit enemyille
         LoseConTargetOff();
     }
     private void Update()

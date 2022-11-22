@@ -19,6 +19,7 @@ public class B_rangedtower : MonoBehaviour
     [SerializeField] private float attackSpeed;
     private float timeBtwAttacks;
     [SerializeField] private float attackRange;
+    [SerializeField] private AudioClip spawnSound;
 
     private ALL_Health targetHealth;
     public GameObject target;
@@ -27,6 +28,7 @@ public class B_rangedtower : MonoBehaviour
     {
         gamemanager.buildings.Add(gameObject);
         gamemanager.buildingsAndUnits.Add(gameObject);
+        SoundManager.Instance.PlaySFXSound(spawnSound);
         state = State.ScanForEnemies;
     }
     void Update()

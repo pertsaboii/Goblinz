@@ -843,6 +843,7 @@ MonoBehaviour:
   hpSprite: {fileID: 5711104206639604240}
   hpBar: {fileID: 5711104206140120294}
   isDead: 0
+  scalePopsWhenDamaged: 0
 --- !u!114 &7306894873283525644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -856,7 +857,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetInRange: 0
-  attackSpeed: 1
+  attackSpeed: 0.9
   attackDamage: 0
   target: {fileID: 0}
   targetHealth: {fileID: 0}
@@ -980,6 +981,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a2efdd681a8a04f81f56c653089e64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasDeathAnim: 0
+  deathAnimDuration: 0
   deathFXType: 0
   spawnsUnitOnDeath: 0
   spawningUnit: {fileID: 0}

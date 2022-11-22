@@ -15,10 +15,12 @@ public class S_shroomtrap : MonoBehaviour
     private Collider col;
     [SerializeField] MeshRenderer mesh;
     [SerializeField] private LayerMask layerMask;
+    [SerializeField] private AudioClip spawnSound;
 
     private void Start()
     {
         col = GetComponent<Collider>();
+        SoundManager.Instance.PlaySFXSound(spawnSound);
     }
 
     private void OnTriggerEnter(Collider other)
