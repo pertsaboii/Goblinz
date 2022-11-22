@@ -750,12 +750,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FXArray: []
   SoundArray:
-  - audioClip: {fileID: 8300000, guid: 2a0f207271f5949448bab855a18a184e, type: 3}
-    sound: 4
   - audioClip: {fileID: 8300000, guid: c1dc03b8ab0bc2b43b074d1f9260e0b9, type: 3}
-    sound: 5
+    sound: 4
   - audioClip: {fileID: 8300000, guid: 8c46a16592cc34043bee76f94d9b8a86, type: 3}
-    sound: 6
+    sound: 5
+  - audioClip: {fileID: 8300000, guid: 2a0f207271f5949448bab855a18a184e, type: 3}
+    sound: 3
   - audioClip: {fileID: 8300000, guid: 1a24b2136dab8a949992a5030a428183, type: 3}
     sound: 1
   - audioClip: {fileID: 8300000, guid: ed047b9003236974f94aec932f502b21, type: 3}
@@ -7709,6 +7709,7 @@ GameObject:
   - component: {fileID: 1512114385}
   - component: {fileID: 1512114384}
   - component: {fileID: 1512114383}
+  - component: {fileID: 1512114386}
   m_Layer: 5
   m_Name: playbutton
   m_TagString: Untagged
@@ -7831,6 +7832,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1512114381}
   m_CullTransparentMesh: 1
+--- !u!114 &1512114386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512114381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &1545928994
 GameObject:
   m_ObjectHideFlags: 0
@@ -9029,7 +9043,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Buy cards to add them to your deck.
 
-    Tap card  for card info.'
+    Tap card for card info.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

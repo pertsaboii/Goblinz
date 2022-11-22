@@ -810,6 +810,7 @@ MonoBehaviour:
   hpSprite: {fileID: 1424213569131766137}
   hpBar: {fileID: 1424213569891032975}
   isDead: 0
+  scalePopsWhenDamaged: 0
 --- !u!114 &4235148133687976177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -943,6 +944,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a2efdd681a8a04f81f56c653089e64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasDeathAnim: 0
+  deathAnimDuration: 0
   deathFXType: 1
   spawnsUnitOnDeath: 0
   spawningUnit: {fileID: 0}

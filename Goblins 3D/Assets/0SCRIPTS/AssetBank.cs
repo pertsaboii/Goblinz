@@ -12,6 +12,7 @@ public class AssetBank : MonoBehaviour
         BasicEnemyDeath,
         WanderingDeath,
         TrollUnitDeath,
+        GroundDustWave
     }
 
     public enum Sound
