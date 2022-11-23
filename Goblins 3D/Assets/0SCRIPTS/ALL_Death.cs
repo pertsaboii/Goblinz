@@ -14,6 +14,7 @@ public class ALL_Death : MonoBehaviour
     [SerializeField] private bool hasDeathAnim;
     [SerializeField] private float deathAnimDuration;
     [SerializeField] private DeathFXType deathFXType;
+    [SerializeField] private Collider col;
     [Header("Unit Spawn Upon Death")]
     [SerializeField] private bool spawnsUnitOnDeath;
     [SerializeField] private GameObject spawningUnit;
@@ -26,10 +27,13 @@ public class ALL_Death : MonoBehaviour
     void Start()
     {
         if (spawnPoint == null) spawnPoint = transform;
+        col = GetComponent<Collider>();
     }
 
     public IEnumerator Death()
     {
+        col.enabled = false;       // jos jotain menee rikki nii tästä ehkä johtuu
+
         if (gameObject.CompareTag("Enemy"))
         {
             MultiScene.multiScene.money += gameObject.GetComponent<EnemyUnit>().value * MultiScene.multiScene.moneyMult;

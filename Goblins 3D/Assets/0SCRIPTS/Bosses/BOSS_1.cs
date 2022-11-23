@@ -7,13 +7,16 @@ public class BOSS_1 : MonoBehaviour
 {
     private enum State
     {
-        Spawn, WalkToChief, MeleeAttacking
+        Spawn, WalkToChief, MeleeAttacking, ThrowAttacking, FetchingSpear, PickingUpSpear
     }
     private State state;
 
     [Header("Setup")]
     [SerializeField] private GameObject spear;
     [SerializeField] private LayerMask dropLayerMask;
+    [SerializeField] private Transform spearParent;
+    private Quaternion spearOriginalRotation;
+    private Vector3 spearOriginalPos;
     private B1_Spear spearScript;
     private NavMeshAgent navMeshAgent;
     private Animator anim;
@@ -44,6 +47,9 @@ public class BOSS_1 : MonoBehaviour
     private Vector3 targetDir;
     private Transform localTransform;
 
+    // throw variables
+    private Vector3 targetCurrentPos;
+
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -57,9 +63,12 @@ public class BOSS_1 : MonoBehaviour
         localTransform = GetComponent<Transform>();
         spearScript = spear.GetComponent<B1_Spear>();
         spearScript.sweepDamage = sweepDamage;
+        spearScript.throwDamage = throwDamage;
+        spearOriginalRotation = spear.transform.localRotation;
+        spearOriginalPos = spear.transform.localPosition;
         state = State.Spawn;
 
-        Invoke("DropFromSky", 6f);
+        Invoke("DropFromSky", 4f);
     }
     
     void Update()
@@ -75,6 +84,15 @@ public class BOSS_1 : MonoBehaviour
                 break;
             case State.MeleeAttacking:
                 LookAtTarget();
+                break;
+            case State.ThrowAttacking:
+                LookAtTarget();
+                break;
+            case State.FetchingSpear:
+                LookAtTarget();
+                if (Vector3.Distance(spear.transform.position, transform.position) < 4) PickUpSpear();
+                break;
+            case State.PickingUpSpear:
                 break;
         }
         currentState = state.ToString();
@@ -118,6 +136,7 @@ public class BOSS_1 : MonoBehaviour
     void StartWalkToChief()
     {
         if (navMeshAgent.enabled == false) navMeshAgent.enabled = true;
+        if (navMeshAgent.isStopped == true) navMeshAgent.isStopped = false;
         anim.SetTrigger("Walk");
         state = State.WalkToChief;
         navMeshAgent.speed = walkSpeed;
@@ -125,7 +144,7 @@ public class BOSS_1 : MonoBehaviour
     }
     void ScanArea()
     {
-        foreach (GameObject unitOrBuilding in gamemanager.buildingsAndUnits)
+        foreach (GameObject unitOrBuilding in gamemanager.buildingsAndUnits)    // melee attack scan
         {
             if (Vector3.Distance(unitOrBuilding.transform.position, transform.position) < sweepAttackRange && (target == null || targetHealth.isDead == true || Vector3.Distance(target.transform.position, transform.position) > Vector3.Distance(unitOrBuilding.transform.position, transform.position)))
             {
@@ -133,12 +152,33 @@ public class BOSS_1 : MonoBehaviour
                 baseScript.target = target;
                 targetHealth = target.GetComponent<ALL_Health>();
             }
-            if (target != null)     // jos lyö herkästi yhen ylimääräisen niin voi lisätä isDead checkin
+
+        }
+        if (target != null)
+        {
+            if (targetHealth.isDead == false)
+                if (Vector3.Distance(target.transform.position, transform.position) < sweepAttackRange)
+                {
+                    if (state != State.MeleeAttacking) StartMeleeAttacking();
+                    return;
+                }
+        }
+        foreach (GameObject unitOrBuilding in gamemanager.buildingsAndUnits)    // ranged attack scan
+        {
+            if (Vector3.Distance(unitOrBuilding.transform.position, transform.position) < throwAttackRange && (target == null || targetHealth.isDead == true || Vector3.Distance(target.transform.position, transform.position) > Vector3.Distance(unitOrBuilding.transform.position, transform.position)))
             {
-                if (state != State.MeleeAttacking) StartMeleeAttacking();
+                target = unitOrBuilding;
+                baseScript.target = target;
+                targetHealth = target.GetComponent<ALL_Health>();              
+            }
+
+        }
+        if (target != null)
+            if (targetHealth.isDead == false)
+            {
+                StartThrowAttacking();
                 return;
             }
-        }
         if (state != State.WalkToChief)
         {
             target = null;
@@ -155,7 +195,8 @@ public class BOSS_1 : MonoBehaviour
     void LookAtTarget()
     {
         if (state == State.WalkToChief) targetDir = chief.transform.position - localTransform.position;
-        else if (state == State.MeleeAttacking && target != null) targetDir = target.transform.position - localTransform.position;
+        else if ((state == State.MeleeAttacking || state == State.ThrowAttacking) && target != null) targetDir = target.transform.position - localTransform.position;
+        else if (state == State.FetchingSpear) targetDir = spear.transform.position - localTransform.position;
 
         var lookAtTargetRotation = Quaternion.LookRotation(targetDir);
 
@@ -164,5 +205,49 @@ public class BOSS_1 : MonoBehaviour
     void SpearDamageable()
     {
         spearScript.canDamage = !spearScript.canDamage;
+    }
+    void StartThrowAttacking()
+    {
+        if (navMeshAgent.enabled == true)
+        {
+            navMeshAgent.isStopped = true;
+            navMeshAgent.enabled = false;
+        }
+        anim.SetTrigger("Throw");
+        state = State.ThrowAttacking;
+        targetCurrentPos = target.GetComponent<Collider>().bounds.center;
+    }
+    void ThrowSpear()
+    {
+        spearScript.spearLookAtTarget = !spearScript.spearLookAtTarget;
+        spearScript.targetPos = targetCurrentPos;
+        spearScript.meleeTriggerCol.enabled = false;
+        spearScript.throwTriggerCol.enabled = true;
+        spear.transform.parent = null;
+        spearScript.rb.isKinematic = false;
+        if (target != null && targetHealth.isDead == false) spearScript.rb.AddForce((target.GetComponent<Collider>().bounds.center - spear.transform.position) * 200);
+        else spearScript.rb.AddForce((targetCurrentPos - spear.transform.position) * 200);
+    }
+    void StartFetching()
+    {
+        if (navMeshAgent.enabled == false) navMeshAgent.enabled = true;
+        state = State.FetchingSpear;
+        navMeshAgent.speed = runSpeed;
+        navMeshAgent.SetDestination(spear.transform.position);
+    }
+    void PickUpSpear()
+    {
+        state = State.PickingUpSpear;
+        navMeshAgent.isStopped = true;
+        spearScript.spearObstacle.enabled = false;
+        spearScript.onGroundCol.enabled = false;
+        anim.SetTrigger("PickSpear");
+    }
+    void ReturnSpearParent()    // callataan pick-animaation lopussa
+    {
+        spear.transform.SetParent(spearParent);
+        spear.transform.localPosition = spearOriginalPos;
+        spear.transform.localRotation = spearOriginalRotation;
+        spearScript.meleeTriggerCol.enabled = true;
     }
 }
