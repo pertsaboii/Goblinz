@@ -68,7 +68,7 @@ public class BOSS_1 : MonoBehaviour
         spearOriginalPos = spear.transform.localPosition;
         state = State.Spawn;
 
-        Invoke("DropFromSky", 4f);
+        Invoke("DropFromSky", 2f);
     }
     
     void Update()
@@ -91,14 +91,18 @@ public class BOSS_1 : MonoBehaviour
             case State.FetchingSpear:
                 LookAtTarget();
                 if (Vector3.Distance(spear.transform.position, transform.position) < 4) PickUpSpear();
+                Debug.Log(navMeshAgent.destination);
                 break;
             case State.PickingUpSpear:
+                LookAtTarget();
                 break;
         }
         currentState = state.ToString();
         if (state != State.Spawn && rb.velocity != Vector3.zero) rb.velocity = Vector3.zero;
         if (target != null)
             if (targetHealth.isDead == true) target = null;
+
+
     }
     void DropFromSky()
     {
@@ -196,7 +200,7 @@ public class BOSS_1 : MonoBehaviour
     {
         if (state == State.WalkToChief) targetDir = chief.transform.position - localTransform.position;
         else if ((state == State.MeleeAttacking || state == State.ThrowAttacking) && target != null) targetDir = target.transform.position - localTransform.position;
-        else if (state == State.FetchingSpear) targetDir = spear.transform.position - localTransform.position;
+        else if (state == State.FetchingSpear || state == State.PickingUpSpear) targetDir = spear.transform.position - localTransform.position;
 
         var lookAtTargetRotation = Quaternion.LookRotation(targetDir);
 

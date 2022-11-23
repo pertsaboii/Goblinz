@@ -27,7 +27,7 @@ public class S_speartrap : MonoBehaviour
     }
     public void TrapDamage()
     {
-        Collider[] cols = Physics.OverlapSphere(transform.position, 1.2f, layerMask);
+        Collider[] cols = Physics.OverlapSphere(transform.position, 1.3f, layerMask);
         foreach  (Collider enemy in cols)
         {
             if (enemy.gameObject.GetComponent<ALL_Health>().isDead == false) enemy.gameObject.GetComponent<ALL_Health>().UpdateHealth(-damage);

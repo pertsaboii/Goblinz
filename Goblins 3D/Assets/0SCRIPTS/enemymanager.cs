@@ -4,44 +4,65 @@ using UnityEngine;
 
 public class enemymanager : MonoBehaviour
 {
+    [System.Serializable]
+    public class Enemy
+    {
+        public GameObject enemyPrefab;
+        public List<int> stages;
+    }
+    [System.Serializable]
+    public class Boss
+    {
+        public GameObject bossPrefab;
+        public List<int> spawnsInDay;
+        public Transform spawnPoint;
+    }
+
+    [SerializeField] private Enemy[] enemies;
+    [SerializeField] private Boss[] bosses;
     [SerializeField] private Transform[] enemySpawnPoints;
-    private int previousSpawnPoint;
 
-    [SerializeField] private List<GameObject> enemies;
-    private GameObject nextEnemy;
+    [Header("Debug")]
+    [SerializeField] private List<GameObject> enemySpawnPool;
+    [SerializeField] private int stage = 1;
+    [SerializeField] private int day = 0;
 
-    private float maxEnemyResources = 10;
     [Header("Enemy Resources")]
-    [SerializeField] private float currentEnemyResources;
     [SerializeField] private float EnemyStartResources;
+    private float currentEnemyResources;
 
     [Header("Difficulty Settings")]
     [SerializeField] private float easyResPerSMult;
     [SerializeField] private float easySpawnIntMult;
     [SerializeField] private float hardResPerSMult;
     [SerializeField] private float hardSpawnIntMult;
+    [SerializeField] private float dayMult;
     private float resourcesPerSMult = 1;
     private float spawnIntervalMult = 1;
 
     [Header("Stages")]
+    [SerializeField] private int stagesInDay;
     [SerializeField] private float stageChangeInterval;
-    [SerializeField] private int stageAmount;
     [SerializeField] private float s1ResourcesPerS;
     [SerializeField] private float s1SpawnInterval;
     [SerializeField] private float s2ResourcesPerS;
     [SerializeField] private float s2SpawnInterval;
-    [SerializeField] private GameObject[] s2NewEnemies;
     [SerializeField] private float s3ResourcesPerS;
     [SerializeField] private float s3SpawnInterval;
-    [SerializeField] private GameObject[] s3NewEnemies;
     [SerializeField] private float s4ResourcesPerS;
     [SerializeField] private float s4SpawnInterval;
-    [SerializeField] private GameObject[] s4NewEnemies;
+    [SerializeField] private float s5ResourcesPerS;
+    [SerializeField] private float s5SpawnInterval;
+
+    private float resourcesPerS;
+    private float spawnInterval;
+    private GameObject nextEnemy;
+    private int previousSpawnPoint;
+    private float maxEnemyResources = 10;
     private float timeBtwSpawns;
-
-    private int stage = 1;
-
     private float timeBtwStageChanges;
+    private GameObject currentBoss;
+    private ALL_Health bossHealthScript;
 
     void Start()
     {
@@ -55,29 +76,46 @@ public class enemymanager : MonoBehaviour
             resourcesPerSMult = hardResPerSMult;
             spawnIntervalMult = hardSpawnIntMult;
         }
+        enemySpawnPool = new List<GameObject>();
         previousSpawnPoint = Random.Range(0, enemySpawnPoints.Length);
+        spawnInterval = s1SpawnInterval;
+        resourcesPerS = s1ResourcesPerS;
         currentEnemyResources = EnemyStartResources;
         timeBtwSpawns = 0;
+        UpdateEnemyList();
         PickRandomEnemy();
     }
 
     void Update()
     {
-        if (currentEnemyResources < maxEnemyResources) currentEnemyResources += Time.deltaTime * s1ResourcesPerS * resourcesPerSMult;
+        if (currentEnemyResources < maxEnemyResources) currentEnemyResources += Time.deltaTime * resourcesPerS * resourcesPerSMult * (dayMult * day +1);
 
-        if (timeBtwSpawns >= s1SpawnInterval / spawnIntervalMult)
+        if (timeBtwSpawns >= spawnInterval / spawnIntervalMult / (dayMult * day +1))
         {
             SpawnEnemy();
             timeBtwSpawns = 0;
         }
         else timeBtwSpawns += Time.deltaTime;
 
-        if (timeBtwStageChanges >= stageChangeInterval && stage <= stageAmount)
+        if (timeBtwStageChanges >= stageChangeInterval && stage != 5)
         {
             timeBtwStageChanges = 0;
             NextStage();
         }
         else timeBtwStageChanges += Time.deltaTime;
+        if (stage == 5 && bossHealthScript != null) if (bossHealthScript.isDead == true)
+            {
+                timeBtwStageChanges = 0;
+                NextStage();
+            }
+    }
+    void UpdateEnemyList()
+    {
+        if (enemySpawnPool.Count != 0) enemySpawnPool.Clear();
+        foreach (Enemy enemy in enemies)
+        {
+            if (enemy.stages.Contains(stage)) enemySpawnPool.Add(enemy.enemyPrefab);
+        }
     }
     void SpawnEnemy()
     {
@@ -95,42 +133,54 @@ public class enemymanager : MonoBehaviour
     }
     void PickRandomEnemy()
     {
-        int randomEnemy = Random.Range(0, enemies.Count);
-        nextEnemy = enemies[randomEnemy];
+        int randomEnemy = Random.Range(0, enemySpawnPool.Count);
+        nextEnemy = enemySpawnPool[randomEnemy];
     }
     void NextStage()
     {
-        stage += 1;
-
-        if (stage == 2)
+        if (stage == stagesInDay)
         {
-            s1ResourcesPerS = s2ResourcesPerS * resourcesPerSMult;
-            s1SpawnInterval = s2SpawnInterval * spawnIntervalMult;
-
-            foreach (GameObject newEnemy in s2NewEnemies)
-            {
-                enemies.Add(newEnemy);
-            }
+            stage = 1;
+            day += 1;
         }
-        if (stage == 3)
-        {
-            s1ResourcesPerS = s3ResourcesPerS * resourcesPerSMult;
-            s1SpawnInterval = s3SpawnInterval * spawnIntervalMult;
+        else stage += 1;
 
-            foreach (GameObject newEnemy in s3NewEnemies)
-            {
-                enemies.Add(newEnemy);
-            }
+        if (stage == stagesInDay) SpawnBoss();
+
+        UpdateEnemyList();
+
+        if (stage == 1)
+        {
+            spawnInterval = s1SpawnInterval;
+            resourcesPerS = s1ResourcesPerS;
         }
-        if (stage == 4)
+        else if (stage == 2)
         {
-            s1ResourcesPerS = s4ResourcesPerS * resourcesPerSMult;
-            s1SpawnInterval = s4SpawnInterval * spawnIntervalMult;
-
-            foreach (GameObject newEnemy in s4NewEnemies)
-            {
-                enemies.Add(newEnemy);
-            }
+            spawnInterval = s2SpawnInterval;
+            resourcesPerS = s2ResourcesPerS;
+        }
+        else if (stage == 3)
+        {
+            spawnInterval = s3SpawnInterval;
+            resourcesPerS = s3ResourcesPerS;
+        }
+        else if (stage == 4)
+        {
+            spawnInterval = s4SpawnInterval;
+            resourcesPerS = s4ResourcesPerS;
+        }
+        else if (stage == 5)
+        {
+            spawnInterval = s5SpawnInterval;
+            resourcesPerS = s5ResourcesPerS;
+        }
+    }
+    void SpawnBoss()
+    {
+        foreach (Boss boss in bosses)
+        {
+            if (boss.spawnsInDay.Contains(day)) currentBoss = Instantiate(boss.bossPrefab, boss.spawnPoint.position, Quaternion.identity);     // sit kun on useempi bossi niin if(boss.spawnsInDay == day)
+            bossHealthScript = currentBoss.GetComponent<ALL_Health>();
         }
     }
 }
