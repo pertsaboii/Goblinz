@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class B_HealingBuilding : MonoBehaviour
 {
     [SerializeField] private int healingInterval;
-    [SerializeField] private float healAmount;
+    [SerializeField] private float unitHealAmount;
+    [SerializeField] private float buildingHealAmount;
     [SerializeField] private float healingRange;
     [SerializeField] private Image healingBarSprite;
     [SerializeField] private GameObject healingBar;
@@ -49,7 +50,8 @@ public class B_HealingBuilding : MonoBehaviour
         {
             foreach (Collider col in colliders)
             {
-                if (col.gameObject != gameObject) col.gameObject.GetComponent<ALL_Health>().UpdateHealth(healAmount);
+                if (col.gameObject != gameObject && col.gameObject.CompareTag("Unit")) col.gameObject.GetComponent<ALL_Health>().UpdateHealth(unitHealAmount);
+                else if (col.gameObject != gameObject && col.gameObject.CompareTag("Building")) col.gameObject.GetComponent<ALL_Health>().UpdateHealth(buildingHealAmount);
             }
         }
     }

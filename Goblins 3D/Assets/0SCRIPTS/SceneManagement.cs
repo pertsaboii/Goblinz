@@ -7,6 +7,7 @@ public class SceneManagement : MonoBehaviour
 {
     public void StartGame()
     {
+        if (SceneManager.GetActiveScene().buildIndex == 1) gamemanager.userInterface.ButtonClickAudio();
         SoundManager.Instance.musicSounds.Stop();
         SceneManager.LoadScene(1);
     }
