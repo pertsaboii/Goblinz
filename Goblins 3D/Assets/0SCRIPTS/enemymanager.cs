@@ -64,6 +64,9 @@ public class enemymanager : MonoBehaviour
     private GameObject currentBoss;
     private ALL_Health bossHealthScript;
 
+    //day night cycle
+    private Animator anim;
+
     void Start()
     {
         if (MultiScene.multiScene.difficulty == 0)
@@ -77,6 +80,8 @@ public class enemymanager : MonoBehaviour
             spawnIntervalMult = hardSpawnIntMult;
         }
         enemySpawnPool = new List<GameObject>();
+        anim = GetComponent<Animator>();
+        gamemanager.dayCycleAnim.SetFloat("AnimLenght", 1 / (stageChangeInterval * 4) * 6);
         previousSpawnPoint = Random.Range(0, enemySpawnPoints.Length);
         spawnInterval = s1SpawnInterval;
         resourcesPerS = s1ResourcesPerS;
@@ -106,6 +111,7 @@ public class enemymanager : MonoBehaviour
         if (stage == 5 && bossHealthScript != null) if (bossHealthScript.isDead == true)
             {
                 timeBtwStageChanges = 0;
+                gamemanager.dayCycleAnim.SetTrigger("BossKilled");
                 NextStage();
             }
     }
@@ -179,7 +185,7 @@ public class enemymanager : MonoBehaviour
     {
         foreach (Boss boss in bosses)
         {
-            if (boss.spawnsInDay.Contains(day)) currentBoss = Instantiate(boss.bossPrefab, boss.spawnPoint.position, Quaternion.identity);     // sit kun on useempi bossi niin if(boss.spawnsInDay == day)
+            if (boss.spawnsInDay.Contains(day)) currentBoss = Instantiate(boss.bossPrefab, boss.spawnPoint.position, boss.spawnPoint.rotation);     // sit kun on useempi bossi niin if(boss.spawnsInDay == day)
             bossHealthScript = currentBoss.GetComponent<ALL_Health>();
         }
     }

@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 6290840d7f1ea854fae04e0014d3654c, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: af665c25ddcc1024f9dab5fa939107b8, type: 2}
 --- !u!1 &66242302
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,14 +622,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 141808668}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 32, z: 16.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1772397011}
   m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &142995786
 GameObject:
   m_ObjectHideFlags: 0
@@ -4477,11 +4477,11 @@ GameObject:
   - component: {fileID: 774196040}
   - component: {fileID: 774196039}
   m_Layer: 0
-  m_Name: Floor Mesh
+  m_Name: Floor Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &774196037
 Transform:
@@ -6440,10 +6440,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scene: 1
+  anim: {fileID: 1232587681}
   UIScript: {fileID: 513856045}
   screenInputCam: {fileID: 963194227}
   oldGobbo: {fileID: 623403118}
   cineMainCam: {fileID: 1690330395}
+  debugModeSlowTime: 0
   viholliset: []
   unititJaBuildingit: []
   buildingit: []
@@ -8451,9 +8453,9 @@ MonoBehaviour:
   stageChangeInterval: 30
   s1ResourcesPerS: 0.3
   s1SpawnInterval: 1.4
-  s2ResourcesPerS: 0.5
+  s2ResourcesPerS: 0.45
   s2SpawnInterval: 1.2
-  s3ResourcesPerS: 0.7
+  s3ResourcesPerS: 0.6
   s3SpawnInterval: 1
   s4ResourcesPerS: 0.2
   s4SpawnInterval: 1.6

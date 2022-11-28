@@ -19,6 +19,8 @@ public class B1_Spear : MonoBehaviour
     [HideInInspector] public bool spearLookAtTarget;
     [HideInInspector] public Vector3 targetPos;
     private Transform localTransform;
+    [HideInInspector] public GameObject target;
+    [HideInInspector] public ALL_Health targetHealth;
 
     //debug
     [SerializeField] private bool debugMode;
@@ -31,6 +33,15 @@ public class B1_Spear : MonoBehaviour
     private void Update()
     {
         if (spearLookAtTarget == true || debugMode == true) SpearLookAtTarget();
+        if (target != null && gameObject.transform.parent == null)                       // t‰m‰n pit‰isi est‰‰ sen ett‰ spear lent‰‰ ikuisesti mutta aiheuttaa spearin bugaamista
+            if (targetHealth.isDead == true)
+            {
+                throwTriggerCol.enabled = false;
+                spearLookAtTarget = false;
+                rb.isKinematic = true;
+                onGroundCol.enabled = true;
+                spearObstacle.enabled = true;
+            }
     }
 
     private void OnTriggerEnter(Collider other)

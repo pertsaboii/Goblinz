@@ -68,7 +68,7 @@ public class BOSS_1 : MonoBehaviour
         spearOriginalPos = spear.transform.localPosition;
         state = State.Spawn;
 
-        Invoke("DropFromSky", 2f);
+        Invoke("DropFromSky", 0);
     }
     
     void Update()
@@ -91,7 +91,6 @@ public class BOSS_1 : MonoBehaviour
             case State.FetchingSpear:
                 LookAtTarget();
                 if (Vector3.Distance(spear.transform.position, transform.position) < 4) PickUpSpear();
-                Debug.Log(navMeshAgent.destination);
                 break;
             case State.PickingUpSpear:
                 LookAtTarget();
@@ -107,7 +106,7 @@ public class BOSS_1 : MonoBehaviour
     void DropFromSky()
     {
         rb.useGravity = true;
-        rb.AddForce(Vector3.down * 7000, ForceMode.Impulse);
+        rb.AddForce(Vector3.down * 28000, ForceMode.Impulse);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -123,7 +122,7 @@ public class BOSS_1 : MonoBehaviour
             }
             anim.SetTrigger("Land");
             rb.useGravity = false;
-            rb.constraints = RigidbodyConstraints.FreezePositionY;
+            rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
             gameObject.layer = 6;
             Instantiate(gamemanager.assetBank.FindFX(AssetBank.FXType.GroundDustWave), transform.position, Quaternion.identity);
             cameraShake.StartShakeCamera();
@@ -173,7 +172,9 @@ public class BOSS_1 : MonoBehaviour
             {
                 target = unitOrBuilding;
                 baseScript.target = target;
-                targetHealth = target.GetComponent<ALL_Health>();              
+                targetHealth = target.GetComponent<ALL_Health>();
+                spearScript.target = target;
+                spearScript.targetHealth = targetHealth;
             }
 
         }

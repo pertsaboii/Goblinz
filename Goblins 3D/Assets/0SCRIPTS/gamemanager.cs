@@ -22,6 +22,8 @@ public class gamemanager : MonoBehaviour
     public static GameObject loseCon;
     public static CinemachineVirtualCamera mainCineCam;
     public static SceneManagement sceneManagement;
+    public static Animator dayCycleAnim;
+    [SerializeField] private Animator anim;
     [SerializeField] private uimanager UIScript;
     [SerializeField] private Camera screenInputCam;
     [SerializeField] private GameObject oldGobbo;
@@ -32,6 +34,7 @@ public class gamemanager : MonoBehaviour
     public static List<GameObject> enemies;
 
     [Header("For Debugging")]
+    [SerializeField] private bool debugModeSlowTime;
     public List<GameObject> viholliset;
     public List<GameObject> unititJaBuildingit;
     public List<GameObject> buildingit;
@@ -51,6 +54,7 @@ public class gamemanager : MonoBehaviour
             mainCineCam = cineMainCam;
             userInterface = UIScript;
             loseCon = oldGobbo;
+            dayCycleAnim = anim;
             playercards = GetComponent<PlayerCards>();
             assetBank = GetComponent<AssetBank>();
 
@@ -62,6 +66,7 @@ public class gamemanager : MonoBehaviour
             viholliset = enemies;
             unititJaBuildingit = buildingsAndUnits;
             buildingit = buildings;
+            if (debugModeSlowTime == true) Time.timeScale = 0.3f;
 
             state = State.RunTime;
             AudioListener.pause = false;
