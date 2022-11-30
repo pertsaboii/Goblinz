@@ -24,7 +24,7 @@ public class enemymanager : MonoBehaviour
 
     [Header("Debug")]
     [SerializeField] private List<GameObject> enemySpawnPool;
-    [SerializeField] private int stage = 1;
+    public int stage = 1;
     [SerializeField] private int day = 0;
 
     [Header("Enemy Resources")]

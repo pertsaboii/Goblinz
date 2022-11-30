@@ -42,7 +42,7 @@ public class uimanager : MonoBehaviour
     [SerializeField] private GameObject[] deckTabCards;
 
     [Header("Score")]
-    public TMP_Text timerText;
+    public TMP_Text scoreText;
     [SerializeField] private TMP_Text currentRunScore;
     [SerializeField] private TMP_Text newHighScoreText;
 
@@ -91,10 +91,13 @@ public class uimanager : MonoBehaviour
 
     private int prevCard1, prevCard2, prevCard3, prevCard4;
 
-    [HideInInspector] public float currentTime;
+    [HideInInspector] public float timeBtwScoreIncrease;
     [HideInInspector] public bool isTiming;
 
     [HideInInspector] public Animator anim;
+    [HideInInspector] public float score;
+    private float scoreInterval = 2;
+    private Vector3 originalScoreTextScale;
 
     private bool newHighScoreAchieved;
     private void Start()
@@ -121,6 +124,7 @@ public class uimanager : MonoBehaviour
         resourceNumber.text = resourceSlider.value.ToString("0");
         moneyText.text = MultiScene.multiScene.money.ToString();
         originalMoneyTextScale = moneyText.rectTransform.localScale;
+        originalScoreTextScale = scoreText.rectTransform.localScale;
         SoundManager.Instance.PlayMusicSound(gamemanager.assetBank.FindSound(AssetBank.Sound.GameStartedJingle));
         runTimeUpPanel.anchoredPosition = new Vector3(0, 690, 0);
         runTimeDownPanel.anchoredPosition = new Vector3(0, -240, 0);
@@ -148,7 +152,8 @@ public class uimanager : MonoBehaviour
         state = State.Play;
 
         isTiming = true;
-        currentTime = 0;
+        timeBtwScoreIncrease = 0;
+        score = 0;
 
         StartCoroutine("StartRunTimeUI");
     }
@@ -165,10 +170,15 @@ public class uimanager : MonoBehaviour
 
                 Timers();
 
-                if (isTiming == true)
-                {
-                    currentTime += Time.deltaTime;
-                    SetTimerText();
+                if (isTiming == true && gamemanager.enemyManager.stage != 5)
+                {                   
+                    if (timeBtwScoreIncrease >= scoreInterval)
+                    {
+                        timeBtwScoreIncrease = 0;
+                        score += 5;
+                        UpdateScoreText();
+                    }
+                    else timeBtwScoreIncrease += Time.deltaTime;
                 }
                 if (resourceSlider.value >= currentResources + 1)
                 {
@@ -181,7 +191,7 @@ public class uimanager : MonoBehaviour
                     currentResources = Mathf.Floor(resourceSlider.value);
                     resourceNumber.text = currentResources.ToString("0");
                 }
-                if (currentTime > MultiScene.multiScene.highScore && newHighScoreAchieved == false)
+                if (timeBtwScoreIncrease > MultiScene.multiScene.highScore && newHighScoreAchieved == false)
                 {
                     newHighScoreAchieved = true;
                     NewHighScore();
@@ -196,14 +206,21 @@ public class uimanager : MonoBehaviour
         state = State.MainMenu;
         mainMenuTabs = MainMenuTabs.MainTab;
         deckTabMoneyText.text = MultiScene.multiScene.money.ToString();
-        mainMenuHighScoreText.text = "High Score: " + System.TimeSpan.FromSeconds(MultiScene.multiScene.highScore).ToString("mm\\:ss\\.f");
+        mainMenuHighScoreText.text = "High Score: " + MultiScene.multiScene.highScore.ToString();
         if (MultiScene.multiScene.difficulty == 0) sleepyButton.Select();
         else if (MultiScene.multiScene.difficulty == 1) mightyButton.Select();
         else if (MultiScene.multiScene.difficulty == 2) legendaryButton.Select();
     }
-    void SetTimerText()
+    public void UpdateScoreText()
     {
-        timerText.text = System.TimeSpan.FromSeconds(currentTime).ToString("mm\\:ss\\.f");
+        scoreText.text = "SCORE: " + score.ToString();
+        StartCoroutine("ScoreTextPop");
+    }
+    IEnumerator ScoreTextPop()
+    {
+        scoreText.transform.DOPunchScale(Vector3.one * 0.2f, 0.25f, 5, 1f);
+        yield return new WaitForSeconds(.25f);
+        if (scoreText.rectTransform.localScale != originalScoreTextScale) scoreText.rectTransform.DOScale(originalScoreTextScale, 0.2f).SetEase(Ease.OutSine);
     }
 
     public void AudioMenuOnOff()
@@ -221,9 +238,9 @@ public class uimanager : MonoBehaviour
     public void GameOverMenu()
     {
         isTiming = false;
-        currentRunScore.text = "Your time: " + System.TimeSpan.FromSeconds(currentTime).ToString("mm\\:ss\\.f");
-        if (MultiScene.multiScene.highScore < gamemanager.userInterface.currentTime) MultiScene.multiScene.highScore = gamemanager.userInterface.currentTime;
-        if (currentTime == MultiScene.multiScene.highScore) newHighScoreText.enabled = true;
+        currentRunScore.text = "Your score: " + score.ToString();
+        if (MultiScene.multiScene.highScore < score) MultiScene.multiScene.highScore = score;
+        if (score == MultiScene.multiScene.highScore) newHighScoreText.enabled = true;
         gameOverMenu.SetActive(true);
     }
     public void DisableRunTimeUI()

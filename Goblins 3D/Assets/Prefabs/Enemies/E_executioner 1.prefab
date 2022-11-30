@@ -151,11 +151,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a74f28841252414fbd3130631b6daa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitCost: 3
+  unitCost: 2
   target: {fileID: 0}
   anim: {fileID: 3319863678481440236}
   warningUI: {fileID: 8948346991720740514}
-  value: 30
+  value: 20
 --- !u!114 &6799167845021314555
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -37,7 +37,9 @@ public class ALL_Death : MonoBehaviour
         if (gameObject.CompareTag("Enemy"))
         {
             MultiScene.multiScene.money += gameObject.GetComponent<EnemyUnit>().value * MultiScene.multiScene.moneyMult;
+            gamemanager.userInterface.score += gameObject.GetComponent<EnemyUnit>().value * MultiScene.multiScene.moneyMult;
             gamemanager.userInterface.UpdateMoneyText();
+            gamemanager.userInterface.UpdateScoreText();
         }
         RemoveLayerAndTag(gameObject);
 

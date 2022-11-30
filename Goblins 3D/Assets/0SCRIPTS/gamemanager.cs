@@ -23,11 +23,13 @@ public class gamemanager : MonoBehaviour
     public static CinemachineVirtualCamera mainCineCam;
     public static SceneManagement sceneManagement;
     public static Animator dayCycleAnim;
+    public static enemymanager enemyManager;
     [SerializeField] private Animator anim;
     [SerializeField] private uimanager UIScript;
     [SerializeField] private Camera screenInputCam;
     [SerializeField] private GameObject oldGobbo;
     [SerializeField] private CinemachineVirtualCamera cineMainCam;
+    [SerializeField] private enemymanager enemymanager;
 
     public static List<GameObject> buildings;
     public static List<GameObject> buildingsAndUnits;
@@ -55,6 +57,7 @@ public class gamemanager : MonoBehaviour
             userInterface = UIScript;
             loseCon = oldGobbo;
             dayCycleAnim = anim;
+            enemyManager = enemymanager;
             playercards = GetComponent<PlayerCards>();
             assetBank = GetComponent<AssetBank>();
 

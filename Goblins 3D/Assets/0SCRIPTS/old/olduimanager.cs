@@ -198,7 +198,7 @@ public class olduimanager : MonoBehaviour
     {
         isTiming = false;
         currentRunScore.text = "Your time: " + System.TimeSpan.FromSeconds(currentTime).ToString("mm\\:ss\\.f");
-        if (MultiScene.multiScene.highScore < gamemanager.userInterface.currentTime) MultiScene.multiScene.highScore = gamemanager.userInterface.currentTime;
+        if (MultiScene.multiScene.highScore < gamemanager.userInterface.timeBtwScoreIncrease) MultiScene.multiScene.highScore = gamemanager.userInterface.timeBtwScoreIncrease;
         if (currentTime == MultiScene.multiScene.highScore) newHighScoreText.enabled = true;
         gameOverMenu.SetActive(true);
     }
