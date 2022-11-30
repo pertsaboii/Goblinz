@@ -15,7 +15,6 @@ public class MultiScene : MonoBehaviour
     [SerializeField] private float hardModeMoneyMult;
     [HideInInspector] public float moneyMult;
     private bool difficultyUpdatedFirstTime;
-    private bool gameStartedFirstTime;      // t‰m‰ pit‰‰ kattoa uudestaan sit kun on save file script
 
     public List<GameObject> purchasedCards;
     public List<GameObject> cardsOnDeck;
@@ -35,10 +34,10 @@ public class MultiScene : MonoBehaviour
             difficulty = 1;
             moneyMult = 1;
         }
-        if (gameStartedFirstTime == false)      // t‰m‰ pit‰‰ kattoa uudestaan sit kun on save file script
+        if (SaveManager.Instance.gameStartedFirstTime == false)      // t‰m‰ pit‰‰ kattoa uudestaan sit kun on save file script
         {
             money = 300;
-            gameStartedFirstTime = true;
+            SaveManager.Instance.gameStartedFirstTime = true;
         }
     }
     private void Update()

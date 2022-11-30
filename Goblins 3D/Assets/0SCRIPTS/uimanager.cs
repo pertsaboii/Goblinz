@@ -34,12 +34,13 @@ public class uimanager : MonoBehaviour
     [SerializeField] private Button sleepyButton;
     [SerializeField] private Button mightyButton;
     [SerializeField] private Button legendaryButton;
-    [SerializeField] private TMP_Text mainMenuHighScoreText;
+    public TMP_Text mainMenuHighScoreText;
     public TMP_Text deckTabMoneyText;
     [SerializeField] private Image cannotPlayPanel;
     public InfoPanel infoPanel;
     [SerializeField] private Animator sceneFaderAnim;
     [SerializeField] private GameObject[] deckTabCards;
+    [SerializeField] private Button resetProgressButton;
 
     [Header("Score")]
     public TMP_Text scoreText;
@@ -207,6 +208,7 @@ public class uimanager : MonoBehaviour
         mainMenuTabs = MainMenuTabs.MainTab;
         deckTabMoneyText.text = MultiScene.multiScene.money.ToString();
         mainMenuHighScoreText.text = "High Score: " + MultiScene.multiScene.highScore.ToString();
+        resetProgressButton.onClick.AddListener(SaveManager.Instance.ResetSave);
         if (MultiScene.multiScene.difficulty == 0) sleepyButton.Select();
         else if (MultiScene.multiScene.difficulty == 1) mightyButton.Select();
         else if (MultiScene.multiScene.difficulty == 2) legendaryButton.Select();

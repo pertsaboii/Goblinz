@@ -43,12 +43,13 @@ public class ShopCard : MonoBehaviour
 
     [Header("Card Prefab")]
     [SerializeField] private GameObject cardPrefab;
+    [SerializeField] private string cardID;
     void Start()
     {
         card = cardPrefab.GetComponent<Card>();
         resCircleColor.color = card.costCircle.color;
         infoPanelButton.onClick.AddListener(OpenInfoPanel);
-        if (MultiScene.multiScene.purchasedCards.Contains(cardPrefab)) PurchasedState();
+        if (MultiScene.multiScene.purchasedCards.Contains(cardPrefab) || SaveManager.Instance.purchasedCards.Contains(cardID)) PurchasedState();
         else NotPurchasedState();
     }
     void NotPurchasedState()
@@ -93,6 +94,7 @@ public class ShopCard : MonoBehaviour
             MultiScene.multiScene.purchasedCards.Add(cardPrefab);
             SoundManager.Instance.PlaySFXSound(unitSpawnSound);
             PurchasedState();
+            SaveManager.Instance.purchasedCards += cardID;
         }
         else CantBuyCard();
     }
