@@ -7,7 +7,7 @@ using System.IO;                                        //(input output)
 
 public class SaveManager : MonoBehaviour
 {
-    public static SaveManager Instance;
+    /*public static SaveManager Instance;
 
     public bool gameStartedFirstTime;
     public float highScore;             // SIIRRÄ MULTISCENEN HIGHSCORE-REFERENSSI TÄHÄN
@@ -88,5 +88,5 @@ class PlayerData    //asiat joita tallennetaan ja lueataan save filestä, pohja n
     public float highScore;
     public float money;
     public bool gameStartedFirstTime;
-    public string purchasedCards;
+    public string purchasedCards;*/
 }

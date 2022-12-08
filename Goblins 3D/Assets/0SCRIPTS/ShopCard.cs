@@ -43,27 +43,32 @@ public class ShopCard : MonoBehaviour
 
     [Header("Card Prefab")]
     [SerializeField] private GameObject cardPrefab;
-    [SerializeField] private string cardID;
+    public string cardID;
     void Start()
     {
         card = cardPrefab.GetComponent<Card>();
         resCircleColor.color = card.costCircle.color;
         infoPanelButton.onClick.AddListener(OpenInfoPanel);
-        if (MultiScene.multiScene.purchasedCards.Contains(cardPrefab) || SaveManager.Instance.purchasedCards.Contains(cardID)) PurchasedState();
+        if (MultiScene.multiScene.purchasedCards.Contains(cardPrefab) || MultiScene.multiScene.cardIDs.Contains(cardID)) PurchasedState();
         else NotPurchasedState();
     }
-    void NotPurchasedState()
+    public void NotPurchasedState()
     {
         state = State.NotPurchased;
         selectedPanel.transform.localScale = Vector3.zero;
         purResCostText.text = card.cost.ToString();
         notPurResCostText.text = card.cost.ToString();
         purchaseCostText.text = cardCost.ToString();
+        notPurchasedCard.SetActive(true);
+        purchaseButton.onClick.RemoveAllListeners();
         purchaseButton.onClick.AddListener(PurchaseCard);
         // kun valmiit kuvat niin tänne koodi joka hakee kortin kuvat prefabista
     }
     void PurchasedState()
     {
+        if (MultiScene.multiScene.purchasedCards.Contains(cardPrefab) == false) MultiScene.multiScene.purchasedCards.Add(cardPrefab);
+        if (MultiScene.multiScene.deckCards.Contains(cardID) && MultiScene.multiScene.cardsOnDeck.Contains(cardPrefab) == false) MultiScene.multiScene.cardsOnDeck.Add(cardPrefab);
+
         if (MultiScene.multiScene.cardsOnDeck.Contains(cardPrefab))
         {
             toDeckButton.image.color = inDeckColor;
@@ -75,6 +80,7 @@ public class ShopCard : MonoBehaviour
             deckButtonText.text = "Add To Deck";
         }
         purResCostText.text = card.cost.ToString();
+        toDeckButton.onClick.RemoveAllListeners();
         toDeckButton.onClick.AddListener(CardOnOffDeck);
         // kun valmiit kuvat niin tänne koodi joka hakee kortin kuvat prefabista
         notPurchasedCard.SetActive(false);
@@ -90,11 +96,10 @@ public class ShopCard : MonoBehaviour
             MultiScene.multiScene.money -= cardCost;
             SoundManager.Instance.PlayUISound(gamemanager.assetBank.FindSound(AssetBank.Sound.MoneyGained));
             gamemanager.userInterface.deckTabMoneyText.text = MultiScene.multiScene.money.ToString();
-            gamemanager.userInterface.deckTabMoneyText.rectTransform.DOPunchScale(Vector3.one * -0.3f, 0.25f, 5, 1f);
-            MultiScene.multiScene.purchasedCards.Add(cardPrefab);
+            gamemanager.userInterface.deckTabMoneyText.rectTransform.DOPunchScale(Vector3.one * -0.3f, 0.25f, 5, 1f);           
             SoundManager.Instance.PlaySFXSound(unitSpawnSound);
+            MultiScene.multiScene.cardIDs += cardID;
             PurchasedState();
-            SaveManager.Instance.purchasedCards += cardID;
         }
         else CantBuyCard();
     }
@@ -107,6 +112,7 @@ public class ShopCard : MonoBehaviour
         {
             selectedPanel.transform.DOScale(Vector3.zero, .1f).SetEase(Ease.InSine);
             MultiScene.multiScene.cardsOnDeck.Remove(cardPrefab);
+            MultiScene.multiScene.deckCards = MultiScene.multiScene.deckCards.Replace(cardID, "");
             toDeckButton.image.color = notInDeckColor;
             deckButtonText.text = "Add To Deck";
         }
@@ -115,6 +121,7 @@ public class ShopCard : MonoBehaviour
             SoundManager.Instance.PlayUISound(gamemanager.assetBank.FindSound(AssetBank.Sound.CardSelected));
             selectedPanel.transform.DOScale(Vector3.one, .1f);
             MultiScene.multiScene.cardsOnDeck.Add(cardPrefab);
+            MultiScene.multiScene.deckCards += cardID;
             toDeckButton.image.color = inDeckColor;
             deckButtonText.text = "Remove";
         }

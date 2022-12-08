@@ -22,7 +22,6 @@ public class SceneManagement : MonoBehaviour
     public void ExitGame()
     {
         gamemanager.userInterface.ButtonClickAudio();
-        SaveManager.Instance.Save();    // ei tarvii todnäk
         Application.Quit();
     }
 }
