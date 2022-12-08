@@ -24,6 +24,8 @@ public class gamemanager : MonoBehaviour
     public static SceneManagement sceneManagement;
     public static Animator dayCycleAnim;
     public static enemymanager enemyManager;
+    public static MusicPlayer musicPlayer;
+    [SerializeField] private MusicPlayer musicplayer;
     [SerializeField] private Animator anim;
     [SerializeField] private uimanager UIScript;
     [SerializeField] private Camera screenInputCam;
@@ -58,6 +60,7 @@ public class gamemanager : MonoBehaviour
             loseCon = oldGobbo;
             dayCycleAnim = anim;
             enemyManager = enemymanager;
+            musicPlayer = musicplayer;
             playercards = GetComponent<PlayerCards>();
             assetBank = GetComponent<AssetBank>();
 
@@ -79,6 +82,7 @@ public class gamemanager : MonoBehaviour
             Time.timeScale = 1;
             assetBank = GetComponent<AssetBank>();
             userInterface = UIScript;
+            AudioListener.pause = false;
 
             state = State.MainMenu;
         }
@@ -111,6 +115,9 @@ public class gamemanager : MonoBehaviour
         state = State.GameOver;
         userInterface.DisableRunTimeUI();
         userInterface.GameOverMenu();
+
+        if (enemymanager.stage == 5) SoundManager.Instance.FadeMusic(1.5f, false, 1);
+        else SoundManager.Instance.FadeMusic(2, false, 0);
 
         // tänne myöhemmin void joka aktivoi cheering animaatiot vihollisilla
     }

@@ -64,6 +64,9 @@ public class enemymanager : MonoBehaviour
     private GameObject currentBoss;
     private ALL_Health bossHealthScript;
 
+    //sounds
+    private bool dayEndMusicFadeStarted;
+
     //day night cycle
     private Animator anim;
 
@@ -110,10 +113,20 @@ public class enemymanager : MonoBehaviour
         else timeBtwStageChanges += Time.deltaTime;
         if (stage == 5 && bossHealthScript != null) if (bossHealthScript.isDead == true)
             {
+                dayEndMusicFadeStarted = false;
                 timeBtwStageChanges = 0;
                 gamemanager.dayCycleAnim.SetTrigger("BossKilled");
+                StartCoroutine(SoundManager.Instance.DayFade());
                 NextStage();
             }
+        if (stage == 4 && timeBtwStageChanges >= stageChangeInterval - 3 && dayEndMusicFadeStarted == false) StartCoroutine(DayEndMusicFade());
+    }
+    IEnumerator DayEndMusicFade()
+    {
+        dayEndMusicFadeStarted = true;
+        SoundManager.Instance.FadeMusic(3, false, 0);
+        yield return new WaitForSeconds(2);
+        gamemanager.musicPlayer.PlaySecondaryMusic();
     }
     void UpdateEnemyList()
     {
@@ -187,6 +200,6 @@ public class enemymanager : MonoBehaviour
         {
             if (boss.spawnsInDay.Contains(day)) currentBoss = Instantiate(boss.bossPrefab, boss.spawnPoint.position, boss.spawnPoint.rotation);     // sit kun on useempi bossi niin if(boss.spawnsInDay == day)
             bossHealthScript = currentBoss.GetComponent<ALL_Health>();
-        }
+        }       
     }
 }

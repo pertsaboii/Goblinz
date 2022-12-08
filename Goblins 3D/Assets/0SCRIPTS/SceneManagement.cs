@@ -14,9 +14,10 @@ public class SceneManagement : MonoBehaviour
 
     public void MainMenu()
     {
-        gamemanager.userInterface.ButtonClickAudio();
+        SoundManager.Instance.musicSounds.Stop();
         if (gamemanager.userInterface.score > MultiScene.multiScene.highScore) MultiScene.multiScene.highScore = gamemanager.userInterface.score;
         SceneManager.LoadScene(0);
+        SoundManager.Instance.musicSounds2.Stop();
     }
 
     public void ExitGame()

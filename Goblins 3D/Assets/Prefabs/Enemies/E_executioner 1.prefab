@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetInRange: 0
-  attackSpeed: 1.3
+  attackSpeed: 1.5
   attackDamage: 100
   target: {fileID: 0}
   targetHealth: {fileID: 0}

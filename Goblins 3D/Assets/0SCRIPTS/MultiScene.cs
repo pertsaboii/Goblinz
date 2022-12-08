@@ -88,7 +88,6 @@ public class MultiScene : MonoBehaviour
             if (data.cardIDs != null) cardIDs = data.cardIDs;
             if (data.deckCards != null) deckCards = data.deckCards;
             Debug.Log("game loaded");
-            Debug.Log(data.gameStartedFirstTime);
         }
         if (gameStartedFirstTime == false)
         {

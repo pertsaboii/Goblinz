@@ -1085,6 +1085,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2baea74291bd5004b8fd56d66d6a5f20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnSound: {fileID: 0}
 --- !u!114 &8109951086228174996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1148,11 +1149,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62daf9a693e29b745ad723a2ad23f146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 8
+  maxHealth: 6
   currentHealth: 0
   hpSprite: {fileID: 6995992861569033682}
   hpBar: {fileID: 6995992861103299364}
   isDead: 0
+  scalePopsWhenDamaged: 0
 --- !u!114 &8109951086228174993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1238,7 +1240,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a2efdd681a8a04f81f56c653089e64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasDeathAnim: 0
+  deathAnimDuration: 0
   deathFXType: 0
+  col: {fileID: 0}
   spawnsUnitOnDeath: 0
   spawningUnit: {fileID: 0}
   spawnPoint: {fileID: 0}

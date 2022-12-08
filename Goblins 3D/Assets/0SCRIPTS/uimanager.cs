@@ -65,6 +65,7 @@ public class uimanager : MonoBehaviour
     [SerializeField] private RectTransform startText;
     [SerializeField] private TMP_Text difficultyText;
     [SerializeField] private Image difficultyPanel;
+    [SerializeField] private GameObject runTimeMenuFade;
 
     [Header("Card Places")]
     [SerializeField] private Button oneRefreshButton;
@@ -500,6 +501,7 @@ public class uimanager : MonoBehaviour
         if (MultiScene.multiScene.purchasedCards.Count != 0)
         {
             sceneFaderAnim.Play("SceneChange1");
+            SoundManager.Instance.FadeMusic(0.75f, false, 0);
             Invoke("StartGame", .75f);
         }
         else StartCoroutine(gamemanager.userInterface.CannotStartGame());
@@ -512,5 +514,16 @@ public class uimanager : MonoBehaviour
     {
         SoundManager.Instance.PlayMusicSound(gamemanager.assetBank.FindSound(AssetBank.Sound.NewHighScoreJingle));
         // tänne myöhemmin jotain juicea
+    }
+    public void BackToMainMenuFade()
+    {
+        StartCoroutine(StartMenuFade());
+    }
+    IEnumerator StartMenuFade()
+    {
+        ButtonClickAudio();
+        runTimeMenuFade.GetComponent<Animator>().SetTrigger("Fade");
+        yield return new WaitForSecondsRealtime(1);
+        gamemanager.sceneManagement.MainMenu();
     }
 }
