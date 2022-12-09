@@ -10373,7 +10373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicIntroClip: {fileID: 0}
-  musicLoopClip: {fileID: 8300000, guid: b9580b97689de094eabfbd0178790f26, type: 3}
+  musicLoopClip: {fileID: 8300000, guid: bd05d87254e30ce48ad7c1346ec875b1, type: 3}
   secondaryMusicIntroClip: {fileID: 8300000, guid: 4669baa928c7e434897c8ac1d5314373,
     type: 3}
   secondaryMusicLoopClip: {fileID: 8300000, guid: 101e6658be8e81d41bdff60971045a8e,

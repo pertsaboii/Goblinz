@@ -102,11 +102,11 @@ public class SoundManager : MonoBehaviour
         gamemanager.musicPlayer.PlayMusic();
 
         musicSounds.volume = 0;
-        float fadeTime = 5;
+        float fadeTime = 3;
         while (fadeTime >= 0)
         {
-            musicSounds.volume += .05f / 5;
-            musicSounds2.volume -= .05f / 5;
+            musicSounds.volume += .05f / 3;
+            musicSounds2.volume -= .05f / 3;
             fadeTime -= .05f;
             if (musicSounds2.volume <= 0) break;
             yield return new WaitForSeconds(.05f);
